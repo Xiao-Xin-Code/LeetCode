@@ -178,4 +178,47 @@ public:
 		return s.substr(max_start, max_length);
 	}
 
+public:
+	string convert(string s, int numRows) {
+		vector<string> strs = vector<string>(numRows);
+		int curIndex = 0;
+		int dir = 1;
+		for (int i = 0;i < s.length();i++) {
+			strs[curIndex] = strs[curIndex] + s[i];
+			if (curIndex == numRows - 1) {
+				dir = -1;
+			}
+			else if (curIndex == 0) {
+				dir = 1;
+			}
+			curIndex = curIndex + dir;
+		}
+
+		string result;
+		for (int i = 0;i < strs.size();i++) {
+			result.append(strs[i]);
+		}
+		return result;
+	}
+
+public:
+	int reverse(int x) {
+		long long result = 0;
+		while (x != 0) {
+			int temp = x % 10;
+			result = result * 10 + temp;
+			x = x / 10;
+		}
+
+		if (result > INT_MAX) {
+			return INT_MAX;
+		}
+		else if (result < INT_MIN) {
+			return INT_MIN;
+		}
+		else {
+			return result;
+		}
+	}
+
 };
