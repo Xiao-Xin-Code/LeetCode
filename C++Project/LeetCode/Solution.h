@@ -102,4 +102,80 @@ public:
 		}
 		return length;
 	}
+
+public:
+	double finMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+		int length = static_cast<int>(nums1.size() + nums2.size());
+		int target = length / 2;
+
+		int curIndex;
+		int n1Index;
+		int n2Index;
+		double prev;
+		double cur;
+
+		while (curIndex <= target) {
+			prev = cur;
+			if (n1Index < nums1.size() && n2Index < nums2.size()) {
+				if (nums1[n1Index] <= nums2[n2Index]) {
+					cur = nums1[n1Index];
+					n1Index++;
+				}
+				else {
+					cur = nums2[n2Index];
+					n2Index++;
+				}
+			}
+			else if (n1Index < nums1.size()) {
+				cur = nums1[n1Index];
+				n1Index++;
+			}
+			else if (n2Index < nums2.size()) {
+				cur = nums2[n2Index];
+				n2Index++;
+			}
+			curIndex++;
+		}
+
+		if (length % 2 == 0) {
+			return (prev + cur) / 2;
+		}
+		else {
+			return cur;
+		}
+	}
+
+public:
+	string longestPalindrome(string s) {
+		int max_length = 0;
+		int max_start = 0;
+
+		for (int i = 0;i < s.length();i++) {
+			int left = i;
+			int right = i;
+			while (left >= 0 && right < s.length() && s[left] == s[right]) {
+				int tempLength = right - left + 1;
+				if (max_length < tempLength) {
+					max_length = tempLength;
+					max_start = left;
+				}
+				left--;
+				right++;
+			}
+			left = i;
+			right = i + 1;
+			while (left >= 0 && right < s.length() && s[left] == s[right]) {
+				int tempLength = right - left + 1;
+				if (max_length < tempLength) {
+					max_length = tempLength;
+					max_start = left;
+				}
+				left--;
+				right++;
+			}
+		}
+
+		return s.substr(max_start, max_length);
+	}
+
 };
