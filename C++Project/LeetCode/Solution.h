@@ -260,4 +260,29 @@ public:
 		}
 		return false;
 	}
+
+public:
+	int maxLength(vector<int> nums) {
+
+		int left = 0;
+		int right = nums.size() - 1;
+		int maxHigh = 0;
+
+		while (left < right) {
+			int count = right - left;
+			int lHigh = nums[left];
+			int rHigh = nums[right];
+			
+			if (lHigh < rHigh) {
+				maxHigh = maxHigh < lHigh* count ? lHigh * count : maxHigh;
+				left++;
+			}
+			else {
+				maxHigh = maxHigh < rHigh * count ? rHigh * count : maxHigh;
+				right--;
+			}
+		}
+
+
+	}
 };
