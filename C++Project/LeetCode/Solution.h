@@ -221,4 +221,43 @@ public:
 		}
 	}
 
+public:
+	int myAtoi(string s) {
+		bool isNeg = false;
+		int cur = 0;
+		for (int i = 0;i < s.length();i++) {
+			if (s[i] >= '0' && s[i] <= '9') {
+				cur = cur * 10 + (s[i] - '0');
+			}
+			else {
+				if (i == 0 && s[i] == '-') {
+					isNeg = true;
+				}
+				else {
+					break;
+				}
+			}
+		}
+
+		return isNeg ? -cur : cur;
+	}
+
+public:
+	bool isPalindrome(int v) {
+		if (v < 0)return false;
+		if (v == 0)return true;
+
+		int result = 0;
+		while (v > result) {
+			result = result * 10 + v % 10;
+			if (result == v) {
+				return true;
+			}
+			v = v / 10;
+			if (result == v) {
+				return true;
+			}
+		}
+		return false;
+	}
 };
