@@ -262,27 +262,62 @@ public:
 	}
 
 public:
-	int maxLength(vector<int> nums) {
-
+	int maxArea(vector<int>& height) {
 		int left = 0;
-		int right = nums.size() - 1;
-		int maxHigh = 0;
+		int right = height.size() - 1;
+		int maxHeight = 0;
 
 		while (left < right) {
 			int count = right - left;
-			int lHigh = nums[left];
-			int rHigh = nums[right];
+			int lHeight = height[left];
+			int rHeight = height[right];
 			
-			if (lHigh < rHigh) {
-				maxHigh = maxHigh < lHigh* count ? lHigh * count : maxHigh;
+			if (lHeight < rHeight) {
+				maxHeight = maxHeight < lHeight* count ? lHeight * count : maxHeight;
 				left++;
 			}
 			else {
-				maxHigh = maxHigh < rHigh * count ? rHigh * count : maxHigh;
+				maxHeight = maxHeight < rHeight * count ? rHeight * count : maxHeight;
 				right--;
 			}
 		}
 
+		return maxHeight;
+	}
 
+public:
+	string intToRoman(int num) {
+		vector<pair< int, string>> maps = { {1000, "M"}, {900,"CM"}, {500,"D"}, {400,"CD"}, {100,"C"}, {90,"XC"}, {50,"L"}, {40,"XL"}, {10,"X"}, {9,"IX"}, {5,"V"}, {4,"IV"}, {1,"I"} };
+		string result;
+		
+		for (int i = 0;i < maps.size();i++) {
+			int count = num / maps[i].first;
+			for (int c = 0;c < count;c++) {
+				result.append(maps[i].second);
+			}
+			num = num - count * maps[i].first;
+		}
+		return result;
+	}
+
+public:
+	int romanToInt(string s) {
+		unordered_map<string, int> maps = { {"M",1000},{"CM",900},{"D",500},{"CD",400},{"C",100},{"XC",90},{"L",50},{"XL",40},{"X",10},{"IX",9},{"V",5},{"IV",4},{"I",1} };
+		int result = 0;
+		for (int i = 0;i < s.length();) {
+			if (maps.count(s.substr(i, 2))) {
+				result += maps[s.substr(i, 2)];
+				i += 2;
+			}
+			else if (maps.count(s.substr(i, 1))) {
+				result += maps[s.substr(i, 1)];
+				i++;
+			}
+			else {
+				throw invalid_argument(s.substr(i, 1));
+			}
+		}
+		
+		return result;
 	}
 };

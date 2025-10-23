@@ -14,5 +14,5 @@ int main()
 
     //cout << solution.myAtoi("-12-3") << endl;
    
-    cout << solution.Find(12321) << endl;
+    cout << solution.romanToInt(solution.intToRoman(3999)) << endl;
 }
