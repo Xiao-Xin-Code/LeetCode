@@ -2,6 +2,9 @@
 
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
+
+
 
 #include "Extension.h"
 
@@ -320,4 +323,87 @@ public:
 		
 		return result;
 	}
+
+public:
+	string longestCommonPrefix(vector<string>& strs) {
+		string result;
+		for (int i = 0;i < strs[0].length();i++) {
+
+
+			for (int j = 1;j < strs.size();j++) {
+				if (strs[j][i] != strs[0][i]) {
+					return result;
+				}
+			}
+			result += strs[0][i];
+		}
+		return result;
+
+	}
+
+public:
+	vector<vector<int>> threeSum(vector<int>& nums) {
+		vector<vector<int>> result;
+		sort(nums.begin(), nums.end());
+		for (int i = 0;i < nums.size() - 2;i++) {
+			if (i > 0 && nums[i] == nums[i - 1]) continue;
+			int target = -nums[i];
+			int l = i + 1;
+			int r = nums.size() - 1;
+
+			while (l < r) {
+				int cur = nums[l] + nums[r];
+
+				if (target == cur) {
+					vector<int> temp = { nums[i],nums[l],nums[r] };
+					result.push_back(temp);
+
+					while (l < r && nums[l + 1] == nums[l]) l++;
+					while (l < r && nums[r - 1] == nums[r]) r--;
+					l++;
+					r--;
+				}
+				else if (cur < target) {
+					l++;
+				}
+				else
+				{
+					r--;
+				}
+			}
+		}
+		return result;
+	}
+
+public:
+	int threeSumClosest(vector<int>& nums, int target) {
+		sort(nums.begin(), nums.end());
+		int result = nums[0] + nums[1] + nums[2];
+		for (int i = 0;i < nums.size() - 2;i++) {
+			if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+			int l = i + 1;
+			int r = nums.size() - 1;
+
+			while (l < r) {
+				int cur = nums[i] + nums[l] + nums[r];
+
+				if (abs(target - cur) < abs(target - result)) {
+					result = cur;
+				}
+				else if (cur == target) {
+					return cur;
+				}
+				else if (cur < target) {
+					l++;
+				}
+				else {
+					r--;
+				}	
+			}
+		}
+		return result;
+	}
+
+
 };

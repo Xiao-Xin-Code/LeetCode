@@ -14,5 +14,15 @@ int main()
 
     //cout << solution.myAtoi("-12-3") << endl;
    
-    cout << solution.romanToInt(solution.intToRoman(3999)) << endl;
+    vector<int> temp = { -1,-1,0,1,3,2,-2 };
+    vector<vector<int>> result = solution.threeSum(temp);
+    for (int i = 0;i < result.size();i++) {
+
+        for (int j = 0;j < result[i].size();j++) {
+            cout << result[i][j];
+        }
+        cout << endl;
+    }
+
+    cout << solution.threeSumClosest(temp, 7) << endl;
 }
