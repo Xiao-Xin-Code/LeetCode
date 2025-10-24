@@ -405,5 +405,94 @@ public:
 		return result;
 	}
 
+public:
+	vector<string> letterCombinations(string digits) {
+		unordered_map<char, string> maps = { {'2',"abc"},{'3',"def"},{'4',"ghi"},{'5',"jkl"},{'6',"mno"},{'7',"pqrs"},{'8',"tuv"},{'9',"wxyz"} };
+		vector<string> results;
 
+		letterCombinationsExtension(maps, results, digits, "", 0);
+
+		return results;
+	}
+
+private:
+	void letterCombinationsExtension(unordered_map<char,string>& maps, vector<string>& results, string digits, string result, int curIndex) {
+		if (curIndex == digits.length()) {
+			results.push_back(result);
+		}
+		else {
+			for (int i = 0;i < maps[digits[curIndex]].length();i++) {
+				letterCombinationsExtension(maps, results, digits, result + maps[digits[curIndex]][i], curIndex + 1);
+			}
+		}
+	}
+
+public:
+	vector<vector<int>> fourSum(vector<int>& nums, int target) {
+		sort(nums.begin(), nums.end());
+		vector<vector<int>> result;
+		for (int i = 0;i < nums.size() - 3;i++) {
+			if (i > 0 && nums[i] == nums[i - 1])continue;
+			int cur = target - nums[i];
+			for (int j = i + 1;j < nums.size() - 2;j++) {
+				if (j > i + 1 && nums[j] == nums[j - 1])continue;
+				int curTarget = cur;
+				int l = j + 1;
+				int r = nums.size() - 1;
+
+				while (l < r) {
+					int sum = nums[l] + nums[r];
+					if (sum == curTarget) {
+						vector<int> temp = { nums[i],nums[j],nums[l],nums[r] };
+						result.push_back(temp);
+
+						l++;
+						r--;
+
+						while (l < r && nums[l + 1] == nums[l]) l++;
+						while (l < r && nums[r - 1] == nums[r])r--;
+					}
+					else if (sum < curTarget) {
+						l++;
+					}
+					else {
+						r--;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+public:
+	ListNode* removeNthFromEnd(ListNode* head, int n) {
+		if (head == nullptr) return nullptr;
+		ListNode* fast = head;
+		ListNode* slow = head;
+
+		while (n > 0) {
+			if (fast == nullptr) {
+				fast = head;
+			}
+			else {
+				fast = fast->next;
+			}
+			n--;
+		}
+
+		while (n > 0) {
+			fast = fast->next;
+			n--;
+		}
+
+		while (fast->next != nullptr) {
+			slow = slow->next;
+			fast = fast->next;
+		}
+
+		if (slow->next != nullptr) {
+			slow->next = slow->next->next;
+		}
+		return head;
+	}
 };

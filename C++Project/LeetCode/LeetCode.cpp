@@ -14,7 +14,7 @@ int main()
 
     //cout << solution.myAtoi("-12-3") << endl;
    
-    vector<int> temp = { -1,-1,0,1,3,2,-2 };
+   /* vector<int> temp = { -1,-1,0,1,3,2,-2 };
     vector<vector<int>> result = solution.threeSum(temp);
     for (int i = 0;i < result.size();i++) {
 
@@ -24,5 +24,24 @@ int main()
         cout << endl;
     }
 
-    cout << solution.threeSumClosest(temp, 7) << endl;
+    cout << solution.threeSumClosest(temp, 7) << endl;*/
+
+    vector<string> result = solution.letterCombinations("23");
+    for (int i = 0;i < result.size();i++) {
+        cout << result[i] << endl;
+    }
+
+
+    ListNode* l = new ListNode(1);
+    l->next = new ListNode(2);
+    l->next->next = new ListNode(3);
+    l->next->next->next = new ListNode(4);
+    l->next->next->next->next = new ListNode(5);
+
+    ListNode* n = solution.removeNthFromEnd(l, 2);
+    while (n != nullptr) {
+        cout << n->val << endl;
+        n = n->next;
+    }
+
 }
