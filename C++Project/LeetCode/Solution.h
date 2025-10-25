@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
+#include <stack>
 
 
 
@@ -220,7 +221,7 @@ public:
 			return INT_MIN;
 		}
 		else {
-			return result;
+			return static_cast<int>(result);
 		}
 	}
 
@@ -267,7 +268,7 @@ public:
 public:
 	int maxArea(vector<int>& height) {
 		int left = 0;
-		int right = height.size() - 1;
+		int right = static_cast<int>(height.size()) - 1;
 		int maxHeight = 0;
 
 		while (left < right) {
@@ -349,7 +350,7 @@ public:
 			if (i > 0 && nums[i] == nums[i - 1]) continue;
 			int target = -nums[i];
 			int l = i + 1;
-			int r = nums.size() - 1;
+			int r = static_cast<int>(nums.size()) - 1;
 
 			while (l < r) {
 				int cur = nums[l] + nums[r];
@@ -383,7 +384,7 @@ public:
 			if (i > 0 && nums[i] == nums[i - 1]) continue;
 
 			int l = i + 1;
-			int r = nums.size() - 1;
+			int r = static_cast<int>(nums.size()) - 1;
 
 			while (l < r) {
 				int cur = nums[i] + nums[l] + nums[r];
@@ -438,7 +439,7 @@ public:
 				if (j > i + 1 && nums[j] == nums[j - 1])continue;
 				int curTarget = cur;
 				int l = j + 1;
-				int r = nums.size() - 1;
+				int r = static_cast<int>(nums.size()) - 1;
 
 				while (l < r) {
 					int sum = nums[l] + nums[r];
@@ -470,19 +471,9 @@ public:
 		ListNode* fast = head;
 		ListNode* slow = head;
 
-		while (n > 0) {
-			if (fast == nullptr) {
-				fast = head;
-			}
-			else {
-				fast = fast->next;
-			}
-			n--;
-		}
-
-		while (n > 0) {
-			fast = fast->next;
-			n--;
+		for (int i = 0;i < n;i++) {
+			if (fast == nullptr) return head->next;
+			else fast = fast->next;
 		}
 
 		while (fast->next != nullptr) {
@@ -494,5 +485,176 @@ public:
 			slow->next = slow->next->next;
 		}
 		return head;
+	}
+
+public:
+	bool isValid(string s) {
+		stack<char> stackL;
+		for (int i = 0;i < s.length();i++) {
+			if (s[i] == '[' || s[i] == '(') {
+				stackL.push(s[i]);
+			}
+			else {
+				if (stackL.empty()) return false;
+				if (s[i] == ']' && stackL.top() != '[') {
+					return false;
+				}
+				if (s[i] == ')' && stackL.top() != '(') {
+					return false;
+				}
+				stackL.pop();
+			}
+		}
+		return stackL.empty();
+	}
+
+public: 
+	ListNode* mergeTwoLists(ListNode* list1,ListNode* list2) {
+		ListNode* head = nullptr;
+		ListNode* cur = head;
+		while (list1 != nullptr && list2 != nullptr) {
+			if (list1->val < list2->val) {
+				if (head == nullptr) {
+					head = list1;
+					cur = head;
+				}
+				else {
+					cur->next = list1;
+					cur = cur->next;
+				}
+				list1 = list1->next;
+			}
+			else {
+				if (head == nullptr) {
+					head = list2;
+					cur = head;
+				}
+				else {
+					cur->next = list2;
+					cur = cur->next;
+				}
+				list2 = list2->next;
+			}
+		}
+		
+		if (list1 != nullptr) {
+			cur->next = list1;
+		}
+		if (list2 != nullptr) {
+			cur->next = list2;
+		}
+
+		return head;
+	}
+
+public:
+	vector<string> generateParenthesis(int n) {
+		vector<string> results;
+		generateParenthesisExtension(results, "", n, 0, 0, 0);
+		return results;
+	}
+
+private:
+	void generateParenthesisExtension(vector<string> results, string result,int n, int curCount,int leftCount,int rightCount) {
+		
+		if (curCount == 2 * n) {
+			cout << result << endl;
+			results.push_back(result);
+			return;
+		}
+		else {
+			if (leftCount < n) {
+				generateParenthesisExtension(results, result + '(', n, curCount + 1, leftCount + 1, rightCount);
+			}
+
+			if (rightCount < n && leftCount > rightCount) {
+				generateParenthesisExtension(results, result + ')', n, curCount + 1, leftCount, rightCount + 1);
+			}
+			
+		}
+	}
+
+public:
+	ListNode* swapPairs(ListNode* head) {
+		if (head == nullptr || head->next == nullptr) {
+			return head;
+		}
+
+		ListNode* l1 = head;
+		ListNode* l2 = head->next;
+
+		l1->next = swapPairs(l2->next);
+		l2->next = l1;
+
+		return l2;
+	}
+
+public:
+	int removeDuplicates(vector<int>& nums) {
+		if (nums.empty()) return 0;
+		if (nums.size() == 1) return 1;
+
+		int count = 1;
+		for (int i = 1;i < nums.size();i++) {
+			if (nums[i] != nums[i - 1]) {
+				nums[count] = nums[i];
+				count++;
+			}
+		}
+		return count;
+	}
+
+public:
+	int remove(vector<int>& nums,int target) {
+		int count = 0;
+		for (int i = 0;i < nums.size();i++) {
+
+			if (nums[i] != target) {
+				nums[count] = nums[i];
+				count++;
+			}
+		}
+		return count;
+	}
+
+public:
+	ListNode* nnn(vector<ListNode*> listNode) {
+		ListNode* head = nullptr;
+		ListNode* cur = nullptr;
+		while (!listNode.empty()) {
+			if (head == nullptr) {
+				head = listNode[nnnExtension(listNode, 0, 0)];
+				cur = head;
+			}
+			else {
+				cur->next = listNode[nnnExtension(listNode, 0, 0)];
+				cur = cur->next;
+			}
+		}
+		return head;
+	}
+
+public:
+	int nnnExtension(vector<ListNode*> listNode, int minIndex, int curIndex) {
+		if (curIndex == listNode.size()) {
+			//listNode[minIndex] = listNode[minIndex]->next;
+			return minIndex;
+		}
+
+		if (listNode[curIndex] == nullptr) {
+			cout << "ÒÆ³ý" << endl;
+			listNode.erase(listNode.begin() + curIndex);
+			nnnExtension(listNode, minIndex, curIndex);
+		}
+		else {
+			if (listNode[curIndex]->val < listNode[minIndex]->val) {
+				nnnExtension(listNode, minIndex, curIndex + 1);
+			}
+			else {
+				nnnExtension(listNode, curIndex, curIndex + 1);
+			}
+		}
+
+		return minIndex;
 	}
 };
