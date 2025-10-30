@@ -618,43 +618,41 @@ public:
 	}
 
 public:
-	ListNode* nnn(vector<ListNode*> listNode) {
+	ListNode* mergeKLists(vector<ListNode*> listNode) {
 		ListNode* head = nullptr;
 		ListNode* cur = nullptr;
-		while (!listNode.empty()) {
-			if (head == nullptr) {
-				head = listNode[nnnExtension(listNode, 0, 0)];
-				cur = head;
-			}
-			else {
-				cur->next = listNode[nnnExtension(listNode, 0, 0)];
-				cur = cur->next;
-			}
-		}
-		return head;
+
+		mergeKListsExtension(listNode, 0, listNode[0]);
+		cout << (listNode[1] == nullptr) << endl;
+		return nullptr;
 	}
 
-public:
-	int nnnExtension(vector<ListNode*> listNode, int minIndex, int curIndex) {
-		if (curIndex == listNode.size()) {
-			//listNode[minIndex] = listNode[minIndex]->next;
-			return minIndex;
-		}
-
-		if (listNode[curIndex] == nullptr) {
-			cout << "ÒÆ³ý" << endl;
-			listNode.erase(listNode.begin() + curIndex);
-			nnnExtension(listNode, minIndex, curIndex);
+private:
+	void mergeKListsExtension(vector<ListNode*> lists,int curIndex,ListNode* minNode) {
+		cout << lists.size() << endl;
+		if (curIndex == lists.size()) {
+			cout << minNode->val << endl;
+			minNode = minNode->next;
+			return;
 		}
 		else {
-			if (listNode[curIndex]->val < listNode[minIndex]->val) {
-				nnnExtension(listNode, minIndex, curIndex + 1);
+			if (lists[curIndex] == nullptr) {
+				cout << "nullptr" << endl;
+				mergeKListsExtension(lists, curIndex + 1, minNode);
 			}
 			else {
-				nnnExtension(listNode, curIndex, curIndex + 1);
+				cout << "has" << endl;
+				if (lists[curIndex]->val < minNode->val) {
+					cout << "<" << endl;
+					mergeKListsExtension(lists, curIndex + 1, lists[curIndex]);
+				}
+				else {
+					cout << ">" << endl;
+					mergeKListsExtension(lists, curIndex + 1, minNode);
+				}
 			}
 		}
-
-		return minIndex;
 	}
+
+
 };

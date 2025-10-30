@@ -79,21 +79,18 @@ int main()
     list1->next->next = new ListNode(3);
     list1->next->next->next = new ListNode(4);*/
 
-    ListNode* list2 = new ListNode(1);
+    ListNode* list2 = new ListNode(0);
     /*list2->next = new ListNode(2);
     list2->next->next = new ListNode(3);
     list2->next->next->next = new ListNode(4);*/
 
-    ListNode* list3 = new ListNode(1);
+    ListNode* list3 = new ListNode(2);
    /* list3->next = new ListNode(2);
     list3->next->next = new ListNode(3);
     list3->next->next->next = new ListNode(4);*/
 
     vector<ListNode*> nodes = { list1,list2,list3 };
 
-   /* ListNode* head = solution.nnn(nodes);
-    while (head != nullptr) {
-        cout << head->val << endl;
-        head = head->next;
-    }*/
+    ListNode* head = solution.mergeKLists(nodes);
+    //cout << head->val << endl;
 }
