@@ -92,5 +92,9 @@ int main()
     vector<ListNode*> nodes = { list1,list2,list3 };
 
     ListNode* head = solution.mergeKLists(nodes);
-    //cout << head->val << endl;
+    cout << "是否为空" << (head == nullptr) << endl;
+    while (head != nullptr) {
+        cout << "结果" << head->val << endl;
+        head = head->next;
+    }
 }

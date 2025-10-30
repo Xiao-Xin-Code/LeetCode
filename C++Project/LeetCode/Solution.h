@@ -622,33 +622,54 @@ public:
 		ListNode* head = nullptr;
 		ListNode* cur = nullptr;
 
-		mergeKListsExtension(listNode, 0, listNode[0]);
-		cout << (listNode[1] == nullptr) << endl;
-		return nullptr;
+		while (!listNode.empty()) {
+			if (head == nullptr) {
+				mergeKListsExtension(listNode, 0, listNode[0], cur);
+				//cout << "CUR" << (cur == nullptr) << endl;
+				head = cur;
+			}
+			else {
+				mergeKListsExtension(listNode, 0, listNode[0], cur);
+			}
+
+			
+		}
+		//cout << "数量" << listNode.size() << endl;
+		return head;
 	}
 
 private:
-	void mergeKListsExtension(vector<ListNode*> lists,int curIndex,ListNode* minNode) {
-		cout << lists.size() << endl;
+	void mergeKListsExtension(vector<ListNode*>& lists, int curIndex, ListNode*& minNode, ListNode*& curNode) {
+		//cout << lists.size() << endl;
 		if (curIndex == lists.size()) {
-			cout << minNode->val << endl;
+			//cout << "返回数值"<< minNode->val << endl;
+			if (minNode == nullptr) return;
+			if (curNode == nullptr) {
+				curNode = minNode;
+			}
+			else {
+				curNode->next = minNode;
+				curNode = curNode->next;
+			}
 			minNode = minNode->next;
 			return;
 		}
 		else {
 			if (lists[curIndex] == nullptr) {
-				cout << "nullptr" << endl;
-				mergeKListsExtension(lists, curIndex + 1, minNode);
+				//cout << "nullptr" << endl;
+				lists.erase(lists.begin() + curIndex);
+				//cout << "运行中数量"<<lists.size() << endl;
+				mergeKListsExtension(lists, curIndex, minNode, curNode);
 			}
 			else {
-				cout << "has" << endl;
+				//cout << "has" << endl;
 				if (lists[curIndex]->val < minNode->val) {
-					cout << "<" << endl;
-					mergeKListsExtension(lists, curIndex + 1, lists[curIndex]);
+					//cout << "<" << endl;
+					mergeKListsExtension(lists, curIndex + 1, lists[curIndex], curNode);
 				}
 				else {
-					cout << ">" << endl;
-					mergeKListsExtension(lists, curIndex + 1, minNode);
+					//cout << ">" << endl;
+					mergeKListsExtension(lists, curIndex + 1, minNode, curNode);
 				}
 			}
 		}
