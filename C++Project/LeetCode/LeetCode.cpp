@@ -91,10 +91,30 @@ int main()
 
     vector<ListNode*> nodes = { list1,list2,list3 };
 
-    ListNode* head = solution.mergeKLists(nodes);
+   /* ListNode* head = solution.mergeKLists(nodes);
     cout << "是否为空" << (head == nullptr) << endl;
     while (head != nullptr) {
         cout << "结果" << head->val << endl;
         head = head->next;
+    }*/
+    //vector<string> words = { "ab","cd","ef" };
+
+    //cout << solution.findSubstring("abcdef", words).size() << endl;
+
+    vector<int> nums = { 1,2,3,4 };
+
+    solution.nextPermutation(nums);
+    for (int i = 0;i < nums.size();i++) {
+        cout << nums[i];
     }
+    solution.nextPermutation(nums);
+    for (int i = 0;i < nums.size();i++) {
+        cout << nums[i];
+    }
+    solution.nextPermutation(nums);
+    for (int i = 0;i < nums.size();i++) {
+        cout << nums[i];
+    }
+
+   
 }

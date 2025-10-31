@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <stack>
+#include <set>
 
 
 
@@ -12,7 +13,7 @@
 using namespace std;
 
 class Solution {
-
+//001
 public:
 	vector<int> twoSum(vector<int>& nums, int target) {
 		unordered_map<int, int> maps;
@@ -26,7 +27,7 @@ public:
 		}
 		return {};
 	}
-
+//002
 public:
 	ListNode* addTwoSum(ListNode* l1, ListNode* l2) {
 		int carry = 0;
@@ -91,7 +92,7 @@ public:
 
 		return head;
 	}
-
+//003
 public:
 	int lengthOfLongestSubstring(string s) {
 		int left = 0;
@@ -106,7 +107,7 @@ public:
 		}
 		return length;
 	}
-
+//004
 public:
 	double finMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 		int length = static_cast<int>(nums1.size() + nums2.size());
@@ -148,7 +149,7 @@ public:
 			return cur;
 		}
 	}
-
+//005
 public:
 	string longestPalindrome(string s) {
 		int max_length = 0;
@@ -181,7 +182,7 @@ public:
 
 		return s.substr(max_start, max_length);
 	}
-
+//006
 public:
 	string convert(string s, int numRows) {
 		vector<string> strs = vector<string>(numRows);
@@ -204,7 +205,7 @@ public:
 		}
 		return result;
 	}
-
+//007
 public:
 	int reverse(int x) {
 		long long result = 0;
@@ -224,7 +225,7 @@ public:
 			return static_cast<int>(result);
 		}
 	}
-
+//008
 public:
 	int myAtoi(string s) {
 		bool isNeg = false;
@@ -245,7 +246,7 @@ public:
 
 		return isNeg ? -cur : cur;
 	}
-
+//009
 public:
 	bool isPalindrome(int v) {
 		if (v < 0)return false;
@@ -264,7 +265,109 @@ public:
 		}
 		return false;
 	}
+//010
+public:
+	bool isMatch(string s, string p) {
+		int sIndex = 0;
+		int pIndex = 0;
 
+		/*if (pIndex + 1 < p.length()) {
+			if (p[pIndex + 1] == '*') {
+				if (s[sIndex - 1] == s[sIndex] && (s[sIndex] == p[pIndex] || p[pIndex] == '.')) {
+					sIndex++;
+				}
+				else {
+					pIndex++;
+				}
+			}
+			else {
+				if (s[sIndex] == p[pIndex] || p[pIndex] == '.') {
+					sIndex++;
+					pIndex++;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		else {
+			if (s[sIndex] == p[pIndex] || p[pIndex] == '.') {
+				sIndex++;
+				pIndex++;
+			}
+			else {
+				return false;
+			}
+		}*/
+		
+
+
+		while (sIndex < s.length() && pIndex < p.length()) {
+			if (p[pIndex] == '.') {
+				sIndex++;
+				pIndex++;
+			}
+			else if (p[pIndex] == '*') {
+				if (sIndex - 1 >= 0) {
+					if (s[sIndex - 1] == s[sIndex]) {
+						sIndex++;
+					}
+					else {
+						pIndex++;
+					}
+				}
+				else {
+					pIndex++;
+				}
+			}
+			else if (p[pIndex] == s[sIndex]) {
+				sIndex++;
+				pIndex++;
+			}
+			else if (p[pIndex != s[sIndex]]) {
+				if (p[pIndex + 1] == '*') {
+					pIndex += 2;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+
+		if (sIndex < s.length()) {
+			return false;
+		}
+
+		while (pIndex < p.length()) {
+			if (p[pIndex] != '*') {
+				if (pIndex + 1 < p.length()) {
+					if (p[pIndex + 1] == '*') {
+						pIndex += 2;
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				pIndex++;
+			}
+		}
+		return true;
+	}
+
+private:
+	void isMatchExtension(string s, string p, int sIndex, int pIndex) {
+
+
+
+		
+
+	}
+//011
 public:
 	int maxArea(vector<int>& height) {
 		int left = 0;
@@ -288,7 +391,7 @@ public:
 
 		return maxHeight;
 	}
-
+//012
 public:
 	string intToRoman(int num) {
 		vector<pair< int, string>> maps = { {1000, "M"}, {900,"CM"}, {500,"D"}, {400,"CD"}, {100,"C"}, {90,"XC"}, {50,"L"}, {40,"XL"}, {10,"X"}, {9,"IX"}, {5,"V"}, {4,"IV"}, {1,"I"} };
@@ -303,7 +406,7 @@ public:
 		}
 		return result;
 	}
-
+//013
 public:
 	int romanToInt(string s) {
 		unordered_map<string, int> maps = { {"M",1000},{"CM",900},{"D",500},{"CD",400},{"C",100},{"XC",90},{"L",50},{"XL",40},{"X",10},{"IX",9},{"V",5},{"IV",4},{"I",1} };
@@ -324,7 +427,7 @@ public:
 		
 		return result;
 	}
-
+//014
 public:
 	string longestCommonPrefix(vector<string>& strs) {
 		string result;
@@ -341,7 +444,7 @@ public:
 		return result;
 
 	}
-
+//015
 public:
 	vector<vector<int>> threeSum(vector<int>& nums) {
 		vector<vector<int>> result;
@@ -375,7 +478,7 @@ public:
 		}
 		return result;
 	}
-
+//016
 public:
 	int threeSumClosest(vector<int>& nums, int target) {
 		sort(nums.begin(), nums.end());
@@ -405,7 +508,7 @@ public:
 		}
 		return result;
 	}
-
+//017
 public:
 	vector<string> letterCombinations(string digits) {
 		unordered_map<char, string> maps = { {'2',"abc"},{'3',"def"},{'4',"ghi"},{'5',"jkl"},{'6',"mno"},{'7',"pqrs"},{'8',"tuv"},{'9',"wxyz"} };
@@ -427,7 +530,7 @@ private:
 			}
 		}
 	}
-
+//018
 public:
 	vector<vector<int>> fourSum(vector<int>& nums, int target) {
 		sort(nums.begin(), nums.end());
@@ -464,7 +567,7 @@ public:
 		}
 		return result;
 	}
-
+//019
 public:
 	ListNode* removeNthFromEnd(ListNode* head, int n) {
 		if (head == nullptr) return nullptr;
@@ -486,7 +589,7 @@ public:
 		}
 		return head;
 	}
-
+//020
 public:
 	bool isValid(string s) {
 		stack<char> stackL;
@@ -507,7 +610,7 @@ public:
 		}
 		return stackL.empty();
 	}
-
+//021
 public: 
 	ListNode* mergeTwoLists(ListNode* list1,ListNode* list2) {
 		ListNode* head = nullptr;
@@ -546,7 +649,7 @@ public:
 
 		return head;
 	}
-
+//022
 public:
 	vector<string> generateParenthesis(int n) {
 		vector<string> results;
@@ -573,50 +676,7 @@ private:
 			
 		}
 	}
-
-public:
-	ListNode* swapPairs(ListNode* head) {
-		if (head == nullptr || head->next == nullptr) {
-			return head;
-		}
-
-		ListNode* l1 = head;
-		ListNode* l2 = head->next;
-
-		l1->next = swapPairs(l2->next);
-		l2->next = l1;
-
-		return l2;
-	}
-
-public:
-	int removeDuplicates(vector<int>& nums) {
-		if (nums.empty()) return 0;
-		if (nums.size() == 1) return 1;
-
-		int count = 1;
-		for (int i = 1;i < nums.size();i++) {
-			if (nums[i] != nums[i - 1]) {
-				nums[count] = nums[i];
-				count++;
-			}
-		}
-		return count;
-	}
-
-public:
-	int remove(vector<int>& nums,int target) {
-		int count = 0;
-		for (int i = 0;i < nums.size();i++) {
-
-			if (nums[i] != target) {
-				nums[count] = nums[i];
-				count++;
-			}
-		}
-		return count;
-	}
-
+//023
 public:
 	ListNode* mergeKLists(vector<ListNode*> listNode) {
 		ListNode* head = nullptr;
@@ -632,7 +692,7 @@ public:
 				mergeKListsExtension(listNode, 0, listNode[0], cur);
 			}
 
-			
+
 		}
 		//cout << "ÊýÁ¿" << listNode.size() << endl;
 		return head;
@@ -675,5 +735,117 @@ private:
 		}
 	}
 
+//024
+public:
+	ListNode* swapPairs(ListNode* head) {
+		if (head == nullptr || head->next == nullptr) {
+			return head;
+		}
+
+		ListNode* l1 = head;
+		ListNode* l2 = head->next;
+
+		l1->next = swapPairs(l2->next);
+		l2->next = l1;
+
+		return l2;
+	}
+
+
+	
+//026
+public:
+	int removeDuplicates(vector<int>& nums) {
+		if (nums.empty()) return 0;
+		if (nums.size() == 1) return 1;
+
+		int count = 1;
+		for (int i = 1;i < nums.size();i++) {
+			if (nums[i] != nums[i - 1]) {
+				nums[count] = nums[i];
+				count++;
+			}
+		}
+		return count;
+	}
+//027
+public:
+	int remove(vector<int>& nums,int target) {
+		int count = 0;
+		for (int i = 0;i < nums.size();i++) {
+
+			if (nums[i] != target) {
+				nums[count] = nums[i];
+				count++;
+			}
+		}
+		return count;
+	}
+//028
+public:
+	int strStr(string haystack, string needle) {
+		for (int i = 0;i <= haystack.length() - needle.length();i++) {
+			if (haystack[i] == needle[0]) {
+				if (needle == haystack.substr(i, needle.length())) {
+					return i;
+				}
+			}
+		}
+		return 0;
+	}
+//029
+public:
+	int divide(int dividend,int divisor) {
+		int count = 0;
+		while (dividend >= divisor) {
+			int tempdivisor = divisor;
+			int curMul = 1;
+			while (dividend-tempdivisor > tempdivisor) {
+				tempdivisor += tempdivisor;
+				curMul += curMul;
+			}
+			dividend -= tempdivisor;
+			count += curMul;
+		}
+		return count;
+	}
+
+public:
+	vector<int> findSubstring(string s, vector<string>& words) {
+		int index = 0;
+		vector<int> result;
+		set<int> hashset;
+
+		while (index < s.length()) {
+			for (int i = 0;i < words.size();i++) {
+				if (hashset.count(i)) {
+					continue;
+				}
+				else {
+					if (s.substr(index, words[i].length()) == words[i]) {
+						hashset.insert(i);
+						result.push_back(i);
+						index += words[i].length();
+						break;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+public:
+	void nextPermutation(vector<int>& nums) {
+		int index = nums.size() - 2;
+		while (index >= 0 && nums[index] > nums[index + 1])index--;
+		
+		if (index >= 0) {
+			int i = nums.size() - 1;
+			while (nums[i] <= nums[index])i--;
+			swap(nums[index], nums[i]);
+		}
+
+		sort(nums.begin() + index + 1, nums.end());
+	}
 
 };
