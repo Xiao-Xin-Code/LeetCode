@@ -809,7 +809,7 @@ public:
 		}
 		return count;
 	}
-
+//030
 public:
 	vector<int> findSubstring(string s, vector<string>& words) {
 		int index = 0;
@@ -825,7 +825,7 @@ public:
 					if (s.substr(index, words[i].length()) == words[i]) {
 						hashset.insert(i);
 						result.push_back(i);
-						index += words[i].length();
+						index += static_cast<int>(words[i].length());
 						break;
 					}
 				}
@@ -833,19 +833,90 @@ public:
 		}
 		return result;
 	}
-
+//031
 public:
 	void nextPermutation(vector<int>& nums) {
-		int index = nums.size() - 2;
+		int index = static_cast<int>(nums.size()) - 2;
 		while (index >= 0 && nums[index] > nums[index + 1])index--;
 		
 		if (index >= 0) {
-			int i = nums.size() - 1;
+			int i = static_cast<int>(nums.size()) - 1;
 			while (nums[i] <= nums[index])i--;
 			swap(nums[index], nums[i]);
 		}
 
 		sort(nums.begin() + index + 1, nums.end());
+	}
+//032
+public:
+	int longestValidParenttheses(string s) {
+		int maxLength = 0;
+		for (int start = 0;start < s.length() - 1;start++) {
+			int leftCount = 0;
+			int curLength = 0;
+			for (int cur = start;cur < s.length();cur++) {
+				if (s[cur] == '(') {
+					leftCount++;
+					curLength++;
+				}
+				else {
+					if (leftCount > 0) {
+						leftCount--;
+						curLength++;
+					}
+					else {
+						break;
+					}
+				}
+			}
+			if (leftCount > 0) {
+				continue;
+			}
+			else {
+				maxLength = maxLength > curLength ? maxLength : curLength;
+			}
+		}
+		return maxLength;
+
+	}
+
+
+public:
+	int EE(vector<int>& nums, int target) {
+		int index = search(nums, target, 0, nums.size() - 1);
+		int left = index;
+		int right = index;
+		while (index > 0) {
+			if (nums[index - 1] != target) {
+				left = index;
+				break;
+			}
+			index--;
+		}
+		while (index < nums.size() - 1) {
+			if (nums[index + 1] != target) {
+				right = index;
+				break;
+			}
+			index++;
+		}
+
+	}
+
+public:
+	int search(vector<int>& nums, int target,int left,int right) {
+		if (left > right) return -1;
+		int mid = (left + right) / 2;
+		if (nums[mid] == target) {
+			return mid;
+		}
+		else if (nums[mid] > target) {
+			return search(nums, target, left, mid - 1);
+		}
+		else {
+			return search(nums, target, mid + 1, right);
+		}
+		
 	}
 
 };

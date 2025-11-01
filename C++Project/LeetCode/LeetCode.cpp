@@ -101,7 +101,7 @@ int main()
 
     //cout << solution.findSubstring("abcdef", words).size() << endl;
 
-    vector<int> nums = { 1,2,3,4 };
+  /*  vector<int> nums = { 1,2,3,4 };
 
     solution.nextPermutation(nums);
     for (int i = 0;i < nums.size();i++) {
@@ -114,7 +114,8 @@ int main()
     solution.nextPermutation(nums);
     for (int i = 0;i < nums.size();i++) {
         cout << nums[i];
-    }
+    }*/
 
    
+    cout << solution.strStr("(()") << endl;
 }
