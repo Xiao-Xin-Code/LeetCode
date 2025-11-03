@@ -1046,7 +1046,7 @@ public:
 		}
 		return temp;
 	}
-
+//039
 public:
 	vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 		vector<vector<int>> results;
@@ -1071,6 +1071,40 @@ private:
 			else if (cur + candidates[i] < target) {
 				result.push_back(candidates[i]);
 				commbinationSumExtension(candidates, target, i, results, result, cur + candidates[i]);
+				result.pop_back();
+			}
+			else {
+				return;
+			}
+		}
+	}
+
+public:
+	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+		vector<vector<int>> results;
+		sort(candidates.begin(), candidates.end());
+		combinationSum2Extension(candidates, target, 0, results, {}, 0);
+		cout << results.size() << endl;
+		return results;
+	}
+
+private:
+	void combinationSum2Extension(vector<int>& candidates, int target, int start, vector<vector<int>>& results, vector<int> result, int cur) {
+		for (int i = start;i < candidates.size();i++) {
+			if (i > start && candidates[i] == candidates[i - 1]) continue;
+			if (cur + candidates[i] == target) {
+				result.push_back(candidates[i]);
+
+				for (int j = 0;j < result.size();j++) {
+					cout << result[j];
+				}
+				cout << endl;
+				results.push_back(result);
+				return;
+			}
+			else if (cur + candidates[i] < target) {
+				result.push_back(candidates[i]);
+				combinationSum2Extension(candidates, target, i + 1, results, result, cur + candidates[i]);
 				result.pop_back();
 			}
 			else {
