@@ -716,19 +716,14 @@ private:
 		}
 		else {
 			if (lists[curIndex] == nullptr) {
-				//cout << "nullptr" << endl;
 				lists.erase(lists.begin() + curIndex);
-				//cout << "运行中数量"<<lists.size() << endl;
 				mergeKListsExtension(lists, curIndex, minNode, curNode);
 			}
 			else {
-				//cout << "has" << endl;
 				if (lists[curIndex]->val < minNode->val) {
-					//cout << "<" << endl;
 					mergeKListsExtension(lists, curIndex + 1, lists[curIndex], curNode);
 				}
 				else {
-					//cout << ">" << endl;
 					mergeKListsExtension(lists, curIndex + 1, minNode, curNode);
 				}
 			}
@@ -750,7 +745,7 @@ public:
 
 		return l2;
 	}
-
+//025
 
 	
 //026
@@ -879,44 +874,209 @@ public:
 		return maxLength;
 
 	}
-
-
+//033
 public:
-	int EE(vector<int>& nums, int target) {
-		int index = search(nums, target, 0, nums.size() - 1);
-		int left = index;
-		int right = index;
-		while (index > 0) {
-			if (nums[index - 1] != target) {
-				left = index;
-				break;
-			}
-			index--;
+	int search(vector<int>& nums, int target) {
+		if (target<nums[0] && target>nums[nums.size()]) {
+			return -1;
 		}
-		while (index < nums.size() - 1) {
-			if (nums[index + 1] != target) {
-				right = index;
+
+		int l = 0, r = nums.size() - 1;
+		while (l < r) {
+
+			int mid = (l + r) / 2;
+			if (nums[mid] == target) {
+				return mid;
+			}
+			else if (nums[mid] > target) {
+				if (nums[mid - 1] > nums[mid]) {
+					return -1;
+				}
+				r = mid - 1;
+			}
+			else {
+				if (nums[mid + 1] < nums[mid]) {
+					return -1;
+				}
+				l = mid + 1;
+			}
+		}
+		return l;
+	}
+//034
+public:
+	int searchRange(vector<int>& nums, int target) {
+		int left = 0, right = nums.size() - 1;
+		int index = -1;
+		while (left <= right) {
+			int mid = (left + right) / 2;
+			if (nums[mid] == target) {
+				left = mid;
+				right = right;
 				break;
 			}
-			index++;
+			else if (nums[mid] > target) {
+				right = mid - 1;
+			}
+			else {
+				left = mid + 1;
+			}
+		}
+
+		while (left > 0) {
+			if (nums[left -1] != target) {
+				break;
+			}
+			left--;
+		}
+		while (right < nums.size() - 1) {
+			if (nums[right + 1] != target) {
+				break;
+			}
+			right++;
 		}
 
 	}
+//035
+public:
+	int searchInsert(vector<int>& nums, int target) {
+		int l = 0, r = nums.size() - 1;
+		while (l < r) {
+
+			int mid = (l + r) / 2;
+			if (nums[mid] == target) {
+				return mid;
+			}
+			else if (nums[mid] > target) {
+				r = mid - 1;
+			}
+			else {
+				l = mid + 1;
+			}
+		}
+		return l;
+	}
+//036
+public:
+	bool isValidSudoku(vector<vector<char>>& board) {
+		bool rows[9][9] = { false };
+		bool cols[9][9] = { false };
+		bool boxes[9][9] = { false };
+		for (int i = 0;i < 9;i++) {
+			for (int j = 0;j < 9;j++) {
+				int v = board[i][j] - '1';
+				if (rows[i][v]) {
+					return false;
+				}
+				if (cols[j][v]) {
+					return false;
+				}
+				int boxindex = (i / 3) * 3 + j / 3;
+				if (boxes[boxindex][v]) {
+					return false;
+				}
+
+				rows[i][v] = true;
+				cols[j][v] = true;
+				boxes[boxindex][v] = true;
+			}
+		}
+		return true;
+	}
+//037
+public:
+	void solveSudoku(vector<vector<char>>& board) {
+		solveSudokuExtension(board);
+	}
+
+private:
+	bool solveSudokuExtension(vector<vector<char>>& board) {
+		for (int i = 0;i < 9;i++) {
+			for (int j = 0;j < 9;j++) {
+				if (board[i][j] == '.') {
+					for (char c = '1';c <= '9';c++) {
+						bool isvalid = true;
+						for (int n = 0;n < 9;n++) {
+							if (board[i][n] == c) {
+								isvalid = false;
+							}
+							if (board[n][j] == c) {
+								isvalid = false;
+							}
+							if (board[3 * (i / 3) + n / 3][3 * (j / 3) + n % 3] == c) {
+								isvalid = false;
+							}
+						}
+						if (isvalid) {
+							board[i][j] = c;
+							if (solveSudokuExtension(board)) {
+								return true;
+							}
+							board[i][j] = '.';
+						}
+					}
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+//038
+public:
+	string countAndSay(int n) {
+		string temp = "1";
+		int i = 2;
+		while (i <= n) {
+			string result = "";
+			int count = 1;
+			for (int x = 1;x < temp.length();x++) {
+				if (temp[x - 1] == temp[x]) {
+					count++;
+				}
+				else {
+					result = result + (char)(count + '0') + temp[x - 1];
+					count = 1;
+				}
+			}
+			if (count > 0) {
+				result = result + (char)(count + '0') + temp[temp.length() - 1];
+			}
+			temp = result;
+			i++;
+		}
+		return temp;
+	}
 
 public:
-	int search(vector<int>& nums, int target,int left,int right) {
-		if (left > right) return -1;
-		int mid = (left + right) / 2;
-		if (nums[mid] == target) {
-			return mid;
+	vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+		vector<vector<int>> results;
+		commbinationSumExtension(candidates, target, 0, results, {}, 0);
+		cout << results.size() << endl;
+		return results;
+	}
+
+private:
+	void commbinationSumExtension(vector<int>& candidates, int target, int start,  vector<vector<int>>& results, vector<int> result, int cur) {
+		for (int i = start;i < candidates.size();i++) {
+			if (cur + candidates[i] == target) {
+				result.push_back(candidates[i]);
+
+				for (int j = 0;j < result.size();j++) {
+					cout << result[j];
+				}
+				cout<<endl;
+				results.push_back(result);
+				return;
+			}
+			else if (cur + candidates[i] < target) {
+				result.push_back(candidates[i]);
+				commbinationSumExtension(candidates, target, i, results, result, cur + candidates[i]);
+				result.pop_back();
+			}
+			else {
+				return;
+			}
 		}
-		else if (nums[mid] > target) {
-			return search(nums, target, left, mid - 1);
-		}
-		else {
-			return search(nums, target, mid + 1, right);
-		}
-		
 	}
 
 };

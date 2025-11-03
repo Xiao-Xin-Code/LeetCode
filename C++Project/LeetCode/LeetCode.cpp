@@ -115,7 +115,7 @@ int main()
     for (int i = 0;i < nums.size();i++) {
         cout << nums[i];
     }*/
+    vector<int> nums = { 1,2,3 };
 
-   
-    cout << solution.strStr("(()") << endl;
+    solution.combinationSum(nums, 6);
 }
