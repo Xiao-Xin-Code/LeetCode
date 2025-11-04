@@ -1078,7 +1078,7 @@ private:
 			}
 		}
 	}
-
+//040
 public:
 	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 		vector<vector<int>> results;
@@ -1111,6 +1111,84 @@ private:
 				return;
 			}
 		}
+	}
+//041
+public:
+	int firstMissingPositive(vector<int>& nums) {
+		for (int i = 0;i < nums.size();i++) {
+			if (nums[i] < 0) {
+				nums[i] = 0;
+			}
+		}
+		for (int i = 0;i < nums.size();i++) {
+			if (nums[i] != 0 && abs(nums[i]) <= nums.size()) {
+				nums[abs(nums[i])-1] = -abs(nums[abs(nums[i]) - 1]);
+			}
+		}
+		for (int i = 0;i < nums.size();i++) {
+			if (nums[i] > 0) {
+				return i + 1;
+			}
+		}
+		return nums.size() + 1;
+	}
+//042
+public:
+	int trap(vector<int>& nums) {
+		int l = 0;
+		int all = 0;
+		while (l < nums.size() - 2) {
+			if (nums[l] == 0) {
+				l++;
+			}
+			else {
+				int r = l + 1;
+				int cur = 0;
+				bool farg = false;
+				for (int i = r;i < nums.size();i++) {
+					if (nums[i] >= nums[l]) {
+						all += cur;
+						l = i;
+						farg = true;
+						break;
+					}
+					else {
+						cur = cur + nums[l] - nums[i];
+					}
+				}
+				if (farg) {
+					continue;
+				}
+				l++;
+			}
+		}
+		return all;
+	}
+
+public:
+	string multiply(string num1,string num2) {
+		if (num1 == "0" || num2 == "0")return "0";
+		if (num1 == "1") return num2;
+		if (num2 == "1") return num1;
+
+		vector<int> nums(num1.size() + num2.size());
+		for (int i = num2.size() - 1;i >= 0;i--) {
+
+			for (int j = num1.size() - 1;j >= 0;j--) {
+				int temp = (num2[i] - '0') * (num1[j] - '0');
+				int sum = temp + nums[i + j + 1];
+				
+				nums[i+j+1] = sum % 10;
+				nums[i+j] += sum / 10;
+			}
+		}
+
+		string result = "";
+		for (int i = 0;i < nums.size();i++) {
+			result = result + (char)(nums[i] + '0');
+			cout<<nums[i] <<endl;
+		}
+		return result;
 	}
 
 };
