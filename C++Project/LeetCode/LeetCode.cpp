@@ -115,7 +115,7 @@ int main()
     for (int i = 0;i < nums.size();i++) {
         cout << nums[i];
     }*/
-    vector<int> nums = { -1,1,2,3 };
+    vector<int> nums = { 1,2,3 };
 
-    cout << solution.multiply("10","5") << endl;
+    solution.allArray(nums);
 }

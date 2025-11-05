@@ -881,7 +881,7 @@ public:
 			return -1;
 		}
 
-		int l = 0, r = nums.size() - 1;
+		int l = 0, r = static_cast<int>(nums.size()) - 1;
 		while (l < r) {
 
 			int mid = (l + r) / 2;
@@ -1164,7 +1164,7 @@ public:
 		}
 		return all;
 	}
-
+//043
 public:
 	string multiply(string num1,string num2) {
 		if (num1 == "0" || num2 == "0")return "0";
@@ -1189,6 +1189,98 @@ public:
 			cout<<nums[i] <<endl;
 		}
 		return result;
+	}
+//044
+
+
+	
+//045
+public:
+	int jump(vector<int>& nums) {
+		int count = 0;int currentEnd = 0; int farthest = 0;
+		for (int i = 0;i < nums.size() - 1;i++) {
+		    farthest = max(farthest, i + nums[i]);
+			if (i == currentEnd) {
+				count++;
+				currentEnd = farthest;
+			}
+		}
+		return count;
+	}
+//046
+public:
+	vector<vector<int>> permute(vector<int>& nums) {
+		vector<vector<int>> results;
+		vector<bool> frags(nums.size(),false);
+		permuteExtension(nums, frags, {}, results);
+		return results;
+	}
+
+private:
+	void permuteExtension(vector<int>& nums,vector<bool>& frags,vector<int> result,vector<vector<int>>& results) {
+		if (result.size() == nums.size()) {
+			results.push_back(result);
+			return;
+		}
+		for (int i = 0;i < nums.size();i++) {
+			if (!frags[i]) {
+				result.push_back(nums[i]);
+				frags[i] = true;
+				permuteExtension(nums, frags, result, results);
+				result.pop_back();
+				frags[i] = false;
+			}
+			else {
+				continue;
+			}
+		}
+	}
+//047
+public:
+	vector<vector<int>> permuteUnique(vector<int>& nums) {
+		sort(nums.begin(), nums.end());
+		vector<vector<int>> results;
+		vector<bool> frags(nums.size(), false);
+		permuteUniqueExtension(nums, frags, {}, results);
+		return results;
+	}
+
+private:
+	void permuteUniqueExtension(vector<int>& nums, vector<bool>& frags, vector<int> result, vector<vector<int>>& results) {
+		if (result.size() == nums.size()) {
+			results.push_back(result);
+			return;
+		}
+		for (int i = 0;i < nums.size();i++) {
+			if (frags[i] || (i > 0 && nums[i - 1] == nums[i] && !frags[i - 1])) {
+				continue;
+			}
+			else {
+				result.push_back(nums[i]);
+				frags[i] = true;
+				permuteUniqueExtension(nums, frags, result, results);
+				result.pop_back();
+				frags[i] = false;
+			}
+		}
+	}
+//048
+public:
+	void rotate(vector<vector<int>>& nums) {
+		size_t t = nums.size() - 1;
+		int left = 0;int right = nums.size() - 1;
+		while (left < right) {
+
+			for (int i = 0;i <= right - left;i++) {
+				int temp = nums[left][left + i];
+				nums[left][left + i] = nums[right - i][left];
+				nums[right - i][left] = nums[right][right - i];
+				nums[right][right - i] = nums[left + i][right];
+				nums[left + i][right] = temp;
+			}
+			left++;
+			right--;
+		}
 	}
 
 };
