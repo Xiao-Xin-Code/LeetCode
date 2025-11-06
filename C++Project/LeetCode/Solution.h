@@ -1283,4 +1283,136 @@ public:
 		}
 	}
 
+
+public:
+	vector<vector<string>> groupAnagrams(vector<string>& strs) {
+		vector<vector<string>> results;
+		vector<bool> useds(strs.size(), false);
+
+		for (int i = 0;i < strs.size();i++) {
+			if (!useds[i]) {
+				groupAnagramsExtension(strs, useds, results, { strs[i] }, i);
+				useds[i] = true;
+			}
+		}
+		return results;
+	}
+
+private:
+	void groupAnagramsExtension(vector<string>& strs, vector<bool>& useds,vector<vector<string>> results,vector<string> result,int cur) {
+		unordered_map<char, int> charCountMap;
+		for (int i = 0;i < strs[cur].length();i++) {
+			charCountMap[strs[cur][i]]++;
+		}
+
+		for (int i = 0;i < strs.size();i++) {
+			if (useds[i]||strs[cur].size()!=strs[i].size()) {
+				continue;
+			}
+
+			unordered_map<char, int> tempMap = charCountMap;
+			for (int j = 0;j < strs[i].length();j++) {
+				if (tempMap.count(strs[i][j])) {
+					tempMap[strs[i][j]]--;
+				}
+				else {
+					break;
+				}
+			}
+			if (tempMap.empty()) {
+				//Ìí¼Ó
+				result.push_back(strs[i]);
+				useds[i] = true;
+			}
+		}
+		results.push_back(result);
+	}
+
+public:
+	double myPow(double x, int n) {
+		bool iseven = n % 2 == 0;
+		bool isnegative = n < 0;
+		int result = 1;
+		int absN = abs(n);
+		while (absN > 0) {
+			if (absN % 2 == 1) {
+				result *= x;
+			}
+			absN = absN / 2;
+			x = x * x;
+		}
+		if (isnegative) return 1 / result;
+		return result;
+	}
+
+public:
+	vector<int> maxSubArray(vector<int>& nums) {
+		int currentSum = nums[0];
+		int maxSum = nums[0];
+		int start = 0, end = 0;
+		int tempstart = 0;
+
+		for (int i = i;i < nums.size();i++) {
+			if (currentSum < 0) {
+				currentSum = nums[i];
+				tempstart = i;
+			}
+			else {
+				currentSum += nums[i];
+			}
+
+			if (currentSum > maxSum) {
+				start = tempstart;
+				end = i;
+				maxSum = currentSum;
+			}
+		}
+		return vector<int>(nums.begin() + start, nums.begin() + end + 1);
+	}
+
+public:
+	vector<int> loopArray(vector<vector<int>>& nums) {
+		int rowleft = 0, rowright = nums.size() - 1;
+		int colleft = 0, colright = nums[0].size() - 1;
+		vector<int> result;
+		while (rowleft <= rowright && colleft <= colright) {
+			for (int i = colleft;i <= colright;i++) {
+				result.push_back(nums[rowleft][i]);
+			}
+
+			for (int i = rowleft + 1;i <= rowright;i++) {
+				result.push_back(nums[i][colright]);
+			}
+
+			for (int i = colright - 1;i >= colleft;i--) {
+				result.push_back(nums[rowright][i]);
+			}
+
+			for (int i = rowright - 1;i >= rowleft + 1;i--) {
+				result.push_back(nums[i][colleft]);
+			}
+
+			rowleft++;
+			rowright--;
+			colleft++;
+			colright--;
+		}
+		return result;
+	}
+
+public:
+	bool isPath(vector<int>& nums) {
+		int farthest = 0;
+		for (int i = 0;i < nums.size();i++) {
+			if (i > farthest) {
+				return false;
+			}
+			farthest = max(farthest, nums[i] + i);
+			if (farthest >= nums.size() - 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 };
