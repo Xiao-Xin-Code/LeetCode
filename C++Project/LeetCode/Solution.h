@@ -1415,4 +1415,115 @@ public:
 		return false;
 	}
 
+public:
+	vector<vector<int>> merge(vector<vector<int>>& intervals) {
+		sort(intervals.begin(), intervals.end(), [](vector<int> a, vector<int>b) {
+			return a[0] < b[0];
+		});
+		int operateIndex = 0;
+		for (int i = 1;i < intervals.size();i++) {
+			if (intervals[i][0] <= intervals[operateIndex][1]) {
+				intervals[operateIndex][1] = max(intervals[i][1], intervals[operateIndex][1]);
+			}
+			else {
+				operateIndex++;
+				intervals[operateIndex] = intervals[i];
+			}
+		}
+		return vector<vector<int>>(intervals.begin(), intervals.begin() + operateIndex + 1);
+	}
+
+public:
+	vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+		vector<vector<int>> result;
+		int i = 0, n = intervals.size();
+		while (i < n && intervals[i][1] < newInterval[0]) {
+			result.push_back(intervals[i]);
+			i++;
+		}
+		while (i < n && intervals[i][0] <= newInterval[1]) {
+			newInterval[0] = min(newInterval[0], intervals[i][0]);
+			newInterval[1] = max(newInterval[1], intervals[i][1]);
+			i++;
+		}
+		result.push_back(newInterval);
+		while (i < n) {
+			result.push_back(intervals[i]);
+			i++;
+		}
+		return result;
+	}
+
+public:
+	int wordSize(string s) {
+		int count = 0;
+		for (int i = s.length() - 1;i >= 0;i--) {
+			if (s[i] == ' ') {
+				return count;
+			}
+			else {
+				count++;
+			}
+		}
+		return count;
+	}
+
+public:
+	vector<vector<int>> nArray(int n) {
+		vector<vector<int>> result(n, vector<int>(n));
+		int l = 0, r = n - 1;
+		int index = 1;
+		while (l <= r) {
+			for (int i = l;i <= r;i++) {
+				result[l][i] = index;
+				index++;
+			}
+			for (int i = l + 1;i <= r;i++) {
+				result[i][r] = index;
+				index++;
+			}
+			for (int i = r - 1;i >= l;i--) {
+				result[r][i] = index;
+				index++;
+			}
+			for (int i = r - 1;i >= l + 1;i--) {
+				result[i][l] = index;
+				index++;
+			}
+			l++;
+			r--;
+		}
+		return result;
+	}
+
+public:
+	ListNode* rotateListNode(ListNode*& head,int n) {
+		ListNode* slow = head;
+		ListNode* frist = head;
+		
+		while (n > 0) {
+			if (frist->next == nullptr) {
+				frist = head;
+			}
+			else {
+				frist = frist->next;
+			}
+			n--;
+		}
+
+		if (slow == frist) {
+			return head;
+		}
+
+		while (frist->next != nullptr) {
+			frist = frist->next;
+			slow = slow->next;
+		}
+
+		ListNode* newHead = slow->next;
+		slow->next = nullptr;
+		frist->next = head;
+		return newHead;
+	}
+
 };
