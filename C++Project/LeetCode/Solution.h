@@ -1414,7 +1414,7 @@ public:
 		}
 		return false;
 	}
-
+//056
 public:
 	vector<vector<int>> merge(vector<vector<int>>& intervals) {
 		sort(intervals.begin(), intervals.end(), [](vector<int> a, vector<int>b) {
@@ -1432,7 +1432,7 @@ public:
 		}
 		return vector<vector<int>>(intervals.begin(), intervals.begin() + operateIndex + 1);
 	}
-
+//057
 public:
 	vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
 		vector<vector<int>> result;
@@ -1453,9 +1453,9 @@ public:
 		}
 		return result;
 	}
-
+//058
 public:
-	int wordSize(string s) {
+	int lengthOfLastWord(string s) {
 		int count = 0;
 		for (int i = s.length() - 1;i >= 0;i--) {
 			if (s[i] == ' ') {
@@ -1467,9 +1467,9 @@ public:
 		}
 		return count;
 	}
-
+//059
 public:
-	vector<vector<int>> nArray(int n) {
+	vector<vector<int>> generateMatrix(int n) {
 		vector<vector<int>> result(n, vector<int>(n));
 		int l = 0, r = n - 1;
 		int index = 1;
@@ -1496,34 +1496,190 @@ public:
 		return result;
 	}
 
+
+//061
 public:
-	ListNode* rotateListNode(ListNode*& head,int n) {
+	ListNode* rotateRight(ListNode* head,int k) {
 		ListNode* slow = head;
-		ListNode* frist = head;
+		ListNode* first = head;
 		
-		while (n > 0) {
-			if (frist->next == nullptr) {
-				frist = head;
+		while (k > 0) {
+			if (first->next == nullptr) {
+				first = head;
 			}
 			else {
-				frist = frist->next;
+				first = first->next;
 			}
-			n--;
+			k--;
 		}
-
-		if (slow == frist) {
+		if (slow == first) {
 			return head;
 		}
-
-		while (frist->next != nullptr) {
-			frist = frist->next;
+		while (first->next != nullptr) {
+			first = first->next;
 			slow = slow->next;
 		}
-
-		ListNode* newHead = slow->next;
+		first->next = head;
+		head = slow->next;
 		slow->next = nullptr;
-		frist->next = head;
-		return newHead;
+		return head;
 	}
+
+
+public:
+	int uniquePaths(int m, int n) {
+		vector<int> dp(n, 1);
+		for (int i = 1;i < m;i++) {
+			for (int j = 0;j < n;j++) {
+				if (j == 0) {
+					dp[j] = 1;
+				}
+				else {
+					dp[j] = dp[j - 1] + dp[j];
+				}
+			}
+		}
+		return dp[n];
+	}
+
+public:
+	int uniquePathWithObjstacles(vector<vector<int>>& obstacleGrid) {
+		vector<int> dp(obstacleGrid[0].size());
+		for (int i = 0;i < obstacleGrid[0].size();i++) {
+			if (obstacleGrid[0][i] == 1) {
+				dp[i] = 0;
+			}
+			else {
+				dp[i] = 1;
+			}
+		}
+
+		for (int i = 1;i < obstacleGrid.size();i++) {
+			for (int j = 0;j < obstacleGrid[0].size();j++) {
+				if (obstacleGrid[i][j] == 1) {
+					dp[j] = 0;
+				}
+				else {
+					if (j == 0) {
+						dp[j] = 1;
+					}
+					else {
+						dp[j] = dp[j - 1] + dp[j];
+					}
+				}
+			}
+		}
+		return dp[obstacleGrid[0].size()];
+	}
+
+public:
+	int minPathSum(vector<vector<int>>& grid) {
+		for (int i = 1;i < grid.size();i++) {
+			for (int j = 0;j < grid[i].size();j++) {
+				if (j == 0) {
+					grid[i][j] = grid[i - 1][j] + grid[i][j];
+				}
+				else {
+					grid[i][j] = min(grid[i][j - 1], grid[i - 1][j]) + grid[i][j];
+				}
+			}
+		}
+		return grid[grid.size() - 1][grid[grid.size() - 1].size()];
+	}
+
+
+public:
+	vector<int> plusOne(vector<int>& digits) {
+		int carry = 0;
+		int cur = digits.size() - 1;
+		while (cur >= 0) {
+			int sum = digits[cur] + carry;
+			digits[cur] = sum % 10;
+			carry = sum / 10;;
+			if (carry == 0) {
+				return;
+			}
+			else {
+				if (cur == 0) {
+					digits.insert(digits.begin(), carry);
+				}
+			}
+			cur--;
+		}
+		return digits;
+	}
+
+public:
+	string addBinary(string a, string b) {
+		int ar = a.size() - 1;
+		int br = a.size() - 1;
+		string result;
+		bool carry = false;
+		while (ar >= 0 && br >= 0) {
+			if (carry) {
+				if (a[ar] == b[br] == '1') {
+					carry = true;
+					result = '1' + result;
+				}
+				else if (a[ar] == '1' || b[br] == '1') {
+					carry = true;
+					result = '0' + result;
+				}
+				else {
+					carry = false;
+					result = '1' + result;
+				}
+			}
+			else {
+				if (a[ar] == '1' && b[br] == '1') {
+					carry = true;
+					result = '0' + result;
+				}
+				else if (a[ar] == '1' || b[br] == '1') {
+					carry = false;
+					result = '1' + result;
+				}
+				else {
+					carry = false;
+					result = '0' + result;
+				}
+			}
+			ar--;
+			br--;
+		}
+		while (ar >= 0) {
+			if (carry) {
+				if (a[ar] == '1') {
+					result = "0" + result;
+				}
+				else {
+					result = a[ar] + result;
+				}
+			}
+			else {
+				result = a[ar] + result;
+			}
+			ar--;
+		}
+		while (br >= 0) {
+			if (carry) {
+				if (b[br] == '1') {
+					result = "0" + result;
+				}
+				else {
+					result = b[br] + result;
+				}
+			}
+			else {
+				result = b[br] + result;
+			}
+			br--;
+		}
+		if (carry)result = '1' + result;
+		return result;
+	}
+
+
+
 
 };
