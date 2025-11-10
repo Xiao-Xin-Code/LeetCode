@@ -1680,6 +1680,46 @@ public:
 	}
 
 
+public:
+	int Func(int n) {
+		vector<int> dp = { 1, 1, 2 };
+		dp.resize(n + 1);
+
+		for (int i = 3;i < n;i++) {
+			dp[i] = dp[i - 1] + dp[i - 2];
+		}
+		return dp[n];
+	}
+
+public:
+	string path(string path) {
+		string result;
+		
+		for (int i = 0;i < path.length();i++) {
+			if (i == 0) {
+				if (path[i] == '/') {
+					result = result + '/';
+				}
+				else {
+					result = result + '/' + path[i];
+				}
+			}
+			else {
+				if (path[i] == '/') {
+					if (i == path.length() - 1 || path[i - 1] == '/') {
+						continue;
+					}
+					else {
+						result = result + path[i];
+					}
+				}
+				else {
+					result = result + path[i];
+				}
+			}
+		}
+		return result;
+	}
 
 
 };
