@@ -1495,8 +1495,6 @@ public:
 		}
 		return result;
 	}
-
-
 //061
 public:
 	ListNode* rotateRight(ListNode* head,int k) {
@@ -1524,8 +1522,7 @@ public:
 		slow->next = nullptr;
 		return head;
 	}
-
-
+//062
 public:
 	int uniquePaths(int m, int n) {
 		vector<int> dp(n, 1);
@@ -1541,7 +1538,7 @@ public:
 		}
 		return dp[n];
 	}
-
+//063
 public:
 	int uniquePathWithObjstacles(vector<vector<int>>& obstacleGrid) {
 		vector<int> dp(obstacleGrid[0].size());
@@ -1571,7 +1568,7 @@ public:
 		}
 		return dp[obstacleGrid[0].size()];
 	}
-
+//064
 public:
 	int minPathSum(vector<vector<int>>& grid) {
 		for (int i = 1;i < grid.size();i++) {
@@ -1587,7 +1584,7 @@ public:
 		return grid[grid.size() - 1][grid[grid.size() - 1].size()];
 	}
 
-
+//066
 public:
 	vector<int> plusOne(vector<int>& digits) {
 		int carry = 0;
@@ -1608,7 +1605,7 @@ public:
 		}
 		return digits;
 	}
-
+//067
 public:
 	string addBinary(string a, string b) {
 		int ar = a.size() - 1;
@@ -1679,9 +1676,9 @@ public:
 		return result;
 	}
 
-
+//070
 public:
-	int Func(int n) {
+	int climbStairs(int n) {
 		vector<int> dp = { 1, 1, 2 };
 		dp.resize(n + 1);
 
@@ -1721,23 +1718,31 @@ public:
 		return result;
 	}
 
-
+//120
 public:
-	int wightpath(vector<int>& nums) {
-		vector<int> dp(nums.size());
-		dp[0] = 0;
-		dp[1] = 0;
-		dp[2] = min(dp[0] + nums[0], dp[1] + nums[1]);
+	int minimumTotal(vector<vector<int>>& triangle) {
+		int curMin = 0;
+		for (int i = 0;i < triangle.size();i++) {
+			curMin = triangle[i][0] + triangle[i - 1][0];
+			for (int j = 1;j < triangle[i].size();j++) {
+				if (j == 0) {
+					triangle[i][j] += triangle[i - 1][j];
+				}
+				else if (j == triangle[i].size() - 1) {
+					triangle[i][j] += triangle[i - 1][j - 1];
+				}
+				else {
+					triangle[i][j] += min(triangle[i - 1][j], triangle[i - 1][j - 1]);
+				}
 
-		for (int i = 3;i < nums.size();i++) {
-			dp[i] = min(dp[i - 1] + nums[i - 1], dp[i - 2] + nums[i - 2]);
+				curMin = min(curMin, triangle[i][j]);
+			}
 		}
-
-		return dp[nums.size() - 1];
+		return curMin;
 	}
-
+//198
 public:
-	int path(vector<int>& nums) {
+	int rob(vector<int>& nums) {
 		vector<int> dp(nums.size());
 		dp[0] = nums[0];
 		dp[1] = max(dp[0], nums[1]);
@@ -1747,71 +1752,37 @@ public:
 		}
 		return dp[nums.size() - 1];
 	}
-
+//221
 public:
-	int deleteNum(vector<int>& nums) {
-		vector<bool> frags(nums.size());
-		int maxCount = 0;
-		for (int i = 0;i < nums.size();i++) {
-			maxCount = max(maxCount, deleteNumExtension(nums, frags, i, 0));
+	int maximalSquare(vector<vector<char>>& matrix) {
+		int maxLength = 0;
+		for (int i = 0;i < matrix[0].size();i++) {
+			if (matrix[0][i] == '1') {
+				maxLength = 1;
+				break;
+			}
 		}
-		return maxCount;
+		for (int i = 1;i < matrix.size();i++) {
+			
+			for (int j = 0;j < matrix[i].size();j++) {
+				if (j == 0) {
+					maxLength = max(maxLength, matrix[i][j] - '0');
+				}
+				else {
+					if (matrix[i][j] == '1') {
+						if (matrix[i][j - 1] != '0' && matrix[i - 1][j - 1] != '0' && matrix[i - 1][j] != '0') {
+							matrix[i][j] = (char)(min(matrix[i][j - 1] - '0', matrix[i - 1][j - 1] - '0', matrix[i - 1][j] - '0') + 1);
+						}
+					}
+					maxLength = max(maxLength, matrix[i][j] - '0');
+				}
+			}
+		}
+		return maxLength * maxLength;
 	}
-
+//740
 public:
-	int deleteNumExtension(vector<int>& nums,vector<bool>& frags,int start,int count) {
-		frags[start] = true;
-		count += nums[start];
-		int l = start - 1, r = start + 1;
-		while (l >= 0) {
-			if (!frags[l] && nums[l] == nums[start] - 1) {
-				frags[l] = true;
-			}
-			l--;
-		}
-		while (r < nums.size()) {
-			if (!frags[r] && nums[r] == nums[start] + 1) {
-				frags[r] = true;
-			}
-			r++;
-		}
-
-		int maxCount = count;
-
-		bool hasNoFrag = false;
-		for (int i = 0;i < frags.size();i++) {
-			if (!frags[i]) {
-				maxCount = max(maxCount, deleteNumExtension(nums, frags, i, count));
-				hasNoFrag = true;
-			}
-		}
-
-		if (hasNoFrag) {
-			maxCount = max(maxCount, count);
-		}
-
-		frags[start] = false;
-		count -= nums[start];
-		l = start - 1, r = start + 1;
-		while (l >= 0) {
-			if (frags[l] && nums[l] == nums[start] - 1) {
-				frags[l] = false;
-			}
-			l--;
-		}
-		while (r < nums.size()) {
-			if (frags[r] && nums[r] == nums[start] + 1) {
-				frags[r] = false;
-			}
-			r++;
-		}
-
-		return maxCount;
-	}
-
-
-public:
-	int deleteNumDp(vector<int>& nums) {
+	int deleteAndEarn(vector<int>& nums) {
 		unordered_map<int, int> numSum;
 		for (int num : nums) {
 			numSum[num] += num;
@@ -1825,7 +1796,6 @@ public:
 		vector<int> dp(nums.size() + 1);
 		dp[0] = 0;
 		dp[1] = numSum[uniqueNum[0]];
-
 		for (int i = 2;i <= uniqueNum.size();i++) {
 			int curNum = uniqueNum[i - 1];
 			int prevNum = uniqueNum[i - 2];
@@ -1837,55 +1807,21 @@ public:
 				dp[i] = dp[i - 1] + numSum[curNum];
 			}
 		}
-
 		return dp[uniqueNum.size()];
 	}
-
+//746
 public:
-	int tanpath(vector<vector<int>>& nums) {
-		
-		for (int i = 0;i < nums.size();i++) {
+	int minCostClimbingStairs(vector<int>& cost) {
+		vector<int> dp(cost.size() + 1);
+		dp[0] = 0;
+		dp[1] = 0;
+		dp[2] = min(dp[0] + cost[0], dp[1] + cost[1]);
 
-			for (int j = 0;j < nums[i].size();j++) {
-				if (j == 0) {
-					nums[i][j] = nums[i - 1][j];
-				}
-				else if (j == nums[i].size() - 1) {
-					nums[i][j] = nums[i - 1][j - 1];
-				}
-				else {
-					nums[i][j] = max(nums[i - 1][j], nums[i - 1][j - 1]);
-				}
-			}
+		for (int i = 3;i < cost.size();i++) {
+			dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
 		}
+		return dp[cost.size()];
 	}
 
-public:
-	int area(vector<vector<int>>& nums) {
-		int maxLength = 0;
-		for (int i = 0;i < nums[0].size();i++) {
-			if (nums[0][i] == 1) {
-				maxLength = 1;
-				break;
-			}
-		}
-		for (int i = 1;i < nums.size();i++) {
-			
-			for (int j = 0;j < nums[i].size();j++) {
-				if (j == 0) {
-					maxLength = max(maxLength, nums[i][j]);
-				}
-				else {
-					if (nums[i][j] == 1) {
-						if (nums[i][j - 1] > 0 && nums[i - 1][j - 1] > 0 && nums[i - 1][j] > 0) {
-							nums[i][j] = min(nums[i][j - 1], nums[i - 1][j - 1], nums[i - 1][j]) + 1;
-						}
-					}
-					maxLength = max(maxLength, nums[i][j]);
-				}
-			}
-		}
-		return maxLength * maxLength;
-	}
 
 };
