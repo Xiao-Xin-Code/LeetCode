@@ -1722,4 +1722,170 @@ public:
 	}
 
 
+public:
+	int wightpath(vector<int>& nums) {
+		vector<int> dp(nums.size());
+		dp[0] = 0;
+		dp[1] = 0;
+		dp[2] = min(dp[0] + nums[0], dp[1] + nums[1]);
+
+		for (int i = 3;i < nums.size();i++) {
+			dp[i] = min(dp[i - 1] + nums[i - 1], dp[i - 2] + nums[i - 2]);
+		}
+
+		return dp[nums.size() - 1];
+	}
+
+public:
+	int path(vector<int>& nums) {
+		vector<int> dp(nums.size());
+		dp[0] = nums[0];
+		dp[1] = max(dp[0], nums[1]);
+		dp[2] = max(dp[0] + nums[2], dp[1]);
+		for (int i = 3;i < nums.size();i++) {
+			dp[i] = max(dp[i - 1], dp[i - 2] + nums[i - 2]);
+		}
+		return dp[nums.size() - 1];
+	}
+
+public:
+	int deleteNum(vector<int>& nums) {
+		vector<bool> frags(nums.size());
+		int maxCount = 0;
+		for (int i = 0;i < nums.size();i++) {
+			maxCount = max(maxCount, deleteNumExtension(nums, frags, i, 0));
+		}
+		return maxCount;
+	}
+
+public:
+	int deleteNumExtension(vector<int>& nums,vector<bool>& frags,int start,int count) {
+		frags[start] = true;
+		count += nums[start];
+		int l = start - 1, r = start + 1;
+		while (l >= 0) {
+			if (!frags[l] && nums[l] == nums[start] - 1) {
+				frags[l] = true;
+			}
+			l--;
+		}
+		while (r < nums.size()) {
+			if (!frags[r] && nums[r] == nums[start] + 1) {
+				frags[r] = true;
+			}
+			r++;
+		}
+
+		int maxCount = count;
+
+		bool hasNoFrag = false;
+		for (int i = 0;i < frags.size();i++) {
+			if (!frags[i]) {
+				maxCount = max(maxCount, deleteNumExtension(nums, frags, i, count));
+				hasNoFrag = true;
+			}
+		}
+
+		if (hasNoFrag) {
+			maxCount = max(maxCount, count);
+		}
+
+		frags[start] = false;
+		count -= nums[start];
+		l = start - 1, r = start + 1;
+		while (l >= 0) {
+			if (frags[l] && nums[l] == nums[start] - 1) {
+				frags[l] = false;
+			}
+			l--;
+		}
+		while (r < nums.size()) {
+			if (frags[r] && nums[r] == nums[start] + 1) {
+				frags[r] = false;
+			}
+			r++;
+		}
+
+		return maxCount;
+	}
+
+
+public:
+	int deleteNumDp(vector<int>& nums) {
+		unordered_map<int, int> numSum;
+		for (int num : nums) {
+			numSum[num] += num;
+		}
+		vector<int> uniqueNum;
+		for (auto p : numSum) {
+			uniqueNum.push_back(p.first);
+		}
+		sort(uniqueNum.begin(), uniqueNum.end());
+
+		vector<int> dp(nums.size() + 1);
+		dp[0] = 0;
+		dp[1] = numSum[uniqueNum[0]];
+
+		for (int i = 2;i <= uniqueNum.size();i++) {
+			int curNum = uniqueNum[i - 1];
+			int prevNum = uniqueNum[i - 2];
+
+			if (curNum == prevNum + 1) {
+				dp[i] = max(dp[i - 1], dp[i - 2] + numSum[curNum]);
+			}
+			else {
+				dp[i] = dp[i - 1] + numSum[curNum];
+			}
+		}
+
+		return dp[uniqueNum.size()];
+	}
+
+public:
+	int tanpath(vector<vector<int>>& nums) {
+		
+		for (int i = 0;i < nums.size();i++) {
+
+			for (int j = 0;j < nums[i].size();j++) {
+				if (j == 0) {
+					nums[i][j] = nums[i - 1][j];
+				}
+				else if (j == nums[i].size() - 1) {
+					nums[i][j] = nums[i - 1][j - 1];
+				}
+				else {
+					nums[i][j] = max(nums[i - 1][j], nums[i - 1][j - 1]);
+				}
+			}
+		}
+	}
+
+public:
+	int area(vector<vector<int>>& nums) {
+		int maxLength = 0;
+		for (int i = 0;i < nums[0].size();i++) {
+			if (nums[0][i] == 1) {
+				maxLength = 1;
+				break;
+			}
+		}
+		for (int i = 1;i < nums.size();i++) {
+			
+			for (int j = 0;j < nums[i].size();j++) {
+				if (j == 0) {
+					maxLength = max(maxLength, nums[i][j]);
+				}
+				else {
+					if (nums[i][j] == 1) {
+						if (nums[i][j - 1] > 0 && nums[i - 1][j - 1] > 0 && nums[i - 1][j] > 0) {
+							nums[i][j] = min(nums[i][j - 1], nums[i - 1][j - 1], nums[i - 1][j]) + 1;
+						}
+					}
+					maxLength = max(maxLength, nums[i][j]);
+				}
+			}
+		}
+		return maxLength * maxLength;
+	}
+
 };
