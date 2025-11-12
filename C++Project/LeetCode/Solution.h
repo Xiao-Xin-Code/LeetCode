@@ -1691,32 +1691,162 @@ public:
 public:
 	string path(string path) {
 		string result;
-		
+		vector<string> results;
+		string cur = "/";
+
 		for (int i = 0;i < path.length();i++) {
-			if (i == 0) {
-				if (path[i] == '/') {
-					result = result + '/';
+			if (path[i] == '/' && cur == "/") {
+				continue;
+			}
+
+			if (path[i] == '/') {
+				if (cur == "/") {
+					continue;
 				}
 				else {
-					result = result + '/' + path[i];
+					results.push_back(cur);
+					cur = "/";
 				}
 			}
 			else {
-				if (path[i] == '/') {
-					if (i == path.length() - 1 || path[i - 1] == '/') {
-						continue;
-					}
-					else {
-						result = result + path[i];
-					}
+				if (cur == "/") {
+					results.push_back(cur);
+					cur = path[i];
 				}
 				else {
-					result = result + path[i];
+					cur = cur + path[i];
+				}
+
+			}
+		}
+		if (cur != "/") {
+			results.push_back(cur);
+		}
+
+		vector<int> removeIndexs;
+		for (int i = 0;i < results.size();i++) {
+			if (results[i] == "..") {
+				removeIndexs.push_back(i - 2);
+				removeIndexs.push_back(i - 1);
+				removeIndexs.push_back(i);
+			}
+		}
+
+		for (int i = 0;i < removeIndexs.size();i++) {
+			if (i >= 0) {
+				results.erase(results.begin() + removeIndexs[i]);
+			}
+		}
+
+		
+		return result;
+	}
+
+public:
+	void resetZero(vector<vector<int>>& matrix) {
+		bool colHasZero, rowHasZero;
+		for (int i = 0;i < matrix[0].size();i++) {
+			if (matrix[0][i] == 0) colHasZero = true;
+		}
+		for (int i = 0;i < matrix.size();i++) {
+			if (matrix[i][0] == 0) rowHasZero = true;
+		}
+
+		for (int i = 1;i < matrix.size();i++) {
+			for (int j = 1;j < matrix[i].size();j++) {
+				if (matrix[i][j] == 0) {
+					matrix[0][j] = 0;
+					matrix[i][0] = 0;
 				}
 			}
 		}
-		return result;
+
+		for (int i = 1;i < matrix.size();i++) {
+			for (int j = 1;j < matrix[i].size();j++) {
+				if (matrix[0][j] == 0 || matrix[i][0] == 0) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+
+		if (colHasZero) {
+			for (int i = 0;i < matrix[0].size();i++) {
+				matrix[0][i] = 0;
+			}
+		}
+		if (rowHasZero) {
+			for (int i = 0;i < matrix.size();i++) {
+				matrix[i][0] = 0;
+			}
+		}
 	}
+
+
+//074
+public:
+	bool searchMatrix(vector<vector<int>>& matrix, int target) {
+		for (int i = 0;i < matrix.size();i++) {
+			if (matrix[i][0] > target) {
+				return false;
+			}
+			else if (matrix[i][matrix[i].size() - 1] < target) {
+				continue;
+			}
+			else {
+				for (int j = 0;j < matrix[i].size();j++) {
+					if (matrix[i][j] == target) {
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+public:
+	void color(vector<int>& nums) {
+		int l = 0, r = nums.size() - 1;
+		int i = 0;
+
+		if (nums[i] == 0) {
+			swap(nums[i], nums[l]);
+			l++;
+			i++;
+		}
+		else if (nums[i] == 2) {
+			swap(nums[i], nums[r]);
+			r++;
+		}
+		else {
+			i++;
+		}
+	}
+
+public:
+	vector<vector<int>> combine(int n, int k) {
+		vector<vector<int>> results;
+		for (int i = 0;i < n;i++) {
+			combineExtension(results, {}, n, k, i);
+		}
+		return results;
+	}
+
+private:
+	void combineExtension(vector<vector<int>>& results, vector<int> result, int n, int k,int cur) {
+		result.push_back(cur);
+		if (result.size() == k) {
+			results.push_back(result);
+		}
+		else {
+			for (int i = cur + 1;i < n;i++) {
+				combineExtension(results, result, n, k, i);
+			}
+		}
+		result.pop_back();
+	}
+
+
 
 //120
 public:
