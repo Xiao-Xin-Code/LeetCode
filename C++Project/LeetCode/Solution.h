@@ -9,6 +9,7 @@
 
 
 #include "Extension.h"
+#include "Sort.h"
 
 using namespace std;
 
@@ -1099,7 +1100,7 @@ public:
 				return i + 1;
 			}
 		}
-		return static_cast<int>(nums.size()) + 1;
+		return nums.size() + 1;
 	}
 //042
 public:
@@ -1790,7 +1791,7 @@ public:
 			i++;
 		}
 	}
-
+//077
 public:
 	vector<vector<int>> combine(int n, int k) {
 		vector<vector<int>> results;
@@ -1814,6 +1815,124 @@ private:
 		result.pop_back();
 	}
 
+public:
+	vector<vector<int>> subsets(vector<int>& nums) {
+		vector<vector<int>> results;
+		results.push_back({});
+		for (int i = 0;i < nums.size();i++) {
+			vector<int> result;
+			result.push_back(nums[i]);
+			results.push_back(result);
+			for (int j = i + 1;j < nums.size();j++) {
+				result.push_back(nums[j]);
+				results.push_back(result);
+			}
+		}
+		return results;
+	}
+
+public:
+	bool searchWord(vector<vector<char>>& nums,string word) {
+		for (int i = 0;i < nums.size();i++) {
+
+			for (int j = 0;j < nums[i].size();j++) {
+				if (searchWordExtension(nums, word, 0, i, j)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+private:
+	bool searchWordExtension(vector<vector<char>>& nums, string word, int curIndex, int i, int j) {
+		if (nums[i][j] == word[curIndex]) {
+			char temp = nums[i][j];
+			nums[i][j] = '\0';
+
+			if (i >= 1) {
+				if (searchWordExtension(nums, word, curIndex + 1, i - 1, j)) {
+					return true;
+				}
+			}
+			if (j >= 1) {
+				if (searchWordExtension(nums, word, curIndex + 1, i, j - 1)) {
+					return true;
+				}
+			}
+			if (i + 1 < nums.size()) {
+				if (searchWordExtension(nums, word, curIndex + 1, i + 1, j)) {
+					return true;
+				}
+			}
+			if (j + 1 < nums[i].size()) {
+				if (searchWordExtension(nums, word, curIndex + 1, i, j + 1)) {
+					return true;
+				}
+			}
+
+			nums[i][j] = temp;
+			return false;
+		}
+		else {
+			return false;
+		}
+	}
+
+public:
+	int removeSame(vector<int>& nums) {
+		if (nums.empty()) return 0;
+		if (nums.size() == 1||nums.size() == 2) return nums.size();
+
+		quickSort(nums.begin(), nums.end());
+		int index = 1;
+		int curIndex = 1;
+		while (index + 1 < nums.size()) {
+			if (nums[index] == nums[index - 1]) {
+				if (nums[index] != nums[index + 1]) {
+					nums[curIndex] = nums[index];
+					curIndex++;
+				}
+			}
+			else {
+				nums[curIndex] = nums[index];
+				curIndex++;
+			}
+			index++;
+		}
+		nums[curIndex] = nums[index];
+		return curIndex + 1;
+	}
+
+//private:
+//	void quickSort(vector<int>& nums,int low,int high) {
+//		int left = low, right = high;
+//		int pivot = nums[low];
+//		while (left < right) {
+//			while (left < right && nums[right] >= pivot) {
+//				right--;
+//			}
+//			nums[left] = nums[right];
+//			while (left < right && nums[left] <= pivot) {
+//				left++;
+//			}
+//			nums[right] = nums[left];
+//		}
+//		nums[left] = pivot;
+//		if (left - 1 > low) {
+//			quickSort(nums, low, left - 1);
+//		}
+//		if (left + 1 < high) {
+//			quickSort(nums, left + 1, high);
+//		}
+//	}
+
+
+public:
+	template<typename T, typename Compare>
+	void camper(Compare) {
+		sort()
+	}
 
 
 //120
