@@ -71,9 +71,10 @@ void _InsertSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 		_Ranlt temp = it - 1;
 		while (temp >= _First && _Pred(key, *temp)) {
 			*(temp + 1) = *temp;
-			if (temp != _First) {
-				--temp;
+			if (temp == _First) {
+				break;
 			}
+			--temp;
 		}
 		if (temp == _First) {
 			*temp = key;
