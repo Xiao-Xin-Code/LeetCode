@@ -116,6 +116,6 @@ int main()
         cout << nums[i];
     }*/
     vector<int> nums = { 1,2,3 };
-
-    solution.allArray(nums);
+    int count = solution.combine(10, 10).size();
+    cout << count << endl;
 }

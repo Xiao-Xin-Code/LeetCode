@@ -113,11 +113,11 @@ public:
 		int length = static_cast<int>(nums1.size() + nums2.size());
 		int target = length / 2;
 
-		int curIndex;
-		int n1Index;
-		int n2Index;
-		double prev;
-		double cur;
+		int curIndex{};
+		int n1Index{};
+		int n2Index{};
+		double prev{};
+		double cur{};
 
 		while (curIndex <= target) {
 			prev = cur;
@@ -271,44 +271,13 @@ public:
 		int sIndex = 0;
 		int pIndex = 0;
 
-		/*if (pIndex + 1 < p.length()) {
-			if (p[pIndex + 1] == '*') {
-				if (s[sIndex - 1] == s[sIndex] && (s[sIndex] == p[pIndex] || p[pIndex] == '.')) {
-					sIndex++;
-				}
-				else {
-					pIndex++;
-				}
-			}
-			else {
-				if (s[sIndex] == p[pIndex] || p[pIndex] == '.') {
-					sIndex++;
-					pIndex++;
-				}
-				else {
-					return false;
-				}
-			}
-		}
-		else {
-			if (s[sIndex] == p[pIndex] || p[pIndex] == '.') {
-				sIndex++;
-				pIndex++;
-			}
-			else {
-				return false;
-			}
-		}*/
-		
-
-
 		while (sIndex < s.length() && pIndex < p.length()) {
 			if (p[pIndex] == '.') {
 				sIndex++;
 				pIndex++;
 			}
 			else if (p[pIndex] == '*') {
-				if (sIndex - 1 >= 0) {
+				if (sIndex >= 1) {
 					if (s[sIndex - 1] == s[sIndex]) {
 						sIndex++;
 					}
@@ -1130,7 +1099,7 @@ public:
 				return i + 1;
 			}
 		}
-		return nums.size() + 1;
+		return static_cast<int>(nums.size()) + 1;
 	}
 //042
 public:
@@ -1330,13 +1299,12 @@ private:
 
 public:
 	double myPow(double x, int n) {
-		bool iseven = n % 2 == 0;
 		bool isnegative = n < 0;
-		int result = 1;
+		double result = 1.0;
 		int absN = abs(n);
 		while (absN > 0) {
-			if (absN % 2 == 1) {
-				result *= x;
+			if (absN % 2) {
+				result = result * x;
 			}
 			absN = absN / 2;
 			x = x * x;
@@ -1594,7 +1562,7 @@ public:
 			digits[cur] = sum % 10;
 			carry = sum / 10;;
 			if (carry == 0) {
-				return;
+				return digits;
 			}
 			else {
 				if (cur == 0) {
@@ -1901,7 +1869,7 @@ public:
 				else {
 					if (matrix[i][j] == '1') {
 						if (matrix[i][j - 1] != '0' && matrix[i - 1][j - 1] != '0' && matrix[i - 1][j] != '0') {
-							matrix[i][j] = (char)(min(matrix[i][j - 1] - '0', matrix[i - 1][j - 1] - '0', matrix[i - 1][j] - '0') + 1);
+							matrix[i][j] = (char)(min({ matrix[i][j - 1] - '0', matrix[i - 1][j - 1] - '0', matrix[i - 1][j] - '0' }) + 1);
 						}
 					}
 					maxLength = max(maxLength, matrix[i][j] - '0');
@@ -1918,7 +1886,7 @@ public:
 			numSum[num] += num;
 		}
 		vector<int> uniqueNum;
-		for (auto p : numSum) {
+		for (auto& p : numSum) {
 			uniqueNum.push_back(p.first);
 		}
 		sort(uniqueNum.begin(), uniqueNum.end());
