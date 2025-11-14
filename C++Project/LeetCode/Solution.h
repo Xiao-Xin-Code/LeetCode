@@ -1884,7 +1884,7 @@ public:
 		if (nums.empty()) return 0;
 		if (nums.size() == 1||nums.size() == 2) return nums.size();
 
-		quickSort(nums.begin(), nums.end());
+		//quickSort(nums.begin(), nums.end());
 		int index = 1;
 		int curIndex = 1;
 		while (index + 1 < nums.size()) {
@@ -1904,35 +1904,12 @@ public:
 		return curIndex + 1;
 	}
 
-//private:
-//	void quickSort(vector<int>& nums,int low,int high) {
-//		int left = low, right = high;
-//		int pivot = nums[low];
-//		while (left < right) {
-//			while (left < right && nums[right] >= pivot) {
-//				right--;
-//			}
-//			nums[left] = nums[right];
-//			while (left < right && nums[left] <= pivot) {
-//				left++;
-//			}
-//			nums[right] = nums[left];
-//		}
-//		nums[left] = pivot;
-//		if (left - 1 > low) {
-//			quickSort(nums, low, left - 1);
-//		}
-//		if (left + 1 < high) {
-//			quickSort(nums, left + 1, high);
-//		}
-//	}
 
 
-public:
-	template<typename T, typename Compare>
-	void camper(Compare) {
-		sort()
-	}
+
+
+
+
 
 
 //120
