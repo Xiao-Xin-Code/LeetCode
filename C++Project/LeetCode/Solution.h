@@ -1583,7 +1583,7 @@ public:
 		bool carry = false;
 		while (ar >= 0 && br >= 0) {
 			if (carry) {
-				if (a[ar] == b[br] == '1') {
+				if (a[ar] == '1'&& b[br] == '1') {
 					carry = true;
 					result = '1' + result;
 				}
@@ -1904,11 +1904,88 @@ public:
 		return curIndex + 1;
 	}
 
+public:
+	bool hasRotateArray(vector<int>& nums, int target) {
+		if (nums.empty()) false;
 
+		if (nums[0] > target&&nums[nums.size()-1]<target) {
+			return false;
+		}
+		else if (target <= nums[nums.size() - 1]) {
+			for (auto it = nums.end() - 1;it >= nums.begin();--it) {
+				if (it == nums.begin()) {
+					return *it == target;
+				}
+				else {
+					if (*(it - 1) > *it) {
+						return *it == target;
+					}
+					else {
+						if (*it == target) {
+							return true;
+						}
+						else if (*it > target) {
+							continue;
+						}
+						else {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		else {
+			for (auto it = nums.begin();it < nums.end();++it) {
+				if (it == nums.end() - 1) {
+					return *it == target;
+				}
+				else {
+					if (*(it + 1) < *it) {
+						return *it == target;
+					}
+					else {
+						if (*it == target) {
+							return true;
+						}
+						else if (*it < target) {
+							continue;
+						}
+						else {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 
+public:
+	ListNode* removeSameListNode(ListNode* head) {
+		if (head == nullptr || head->next == nullptr) return head;
+		ListNode* first = head;
+		ListNode* last = head->next;
+		while (last != nullptr) {
+			if (last->val == first->val) {
+				first->next = last->next;
+			}
+			else {
+				first = last;
+			}
+			last = last->next;
+		}
+		return head;
+	}
 
+public:
+	ListNode* doListNode(ListNode* head,int x) {
+		ListNode* cur = head;
 
+		while (cur != nullptr) {
 
+		}
+
+	}
 
 
 

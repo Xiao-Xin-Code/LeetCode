@@ -319,7 +319,7 @@ template<typename _Ranlt, typename _Pr>
 void _MergerSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred)
 {
 	using _ValueType = typename std::iterator_traits<_Ranlt>::value_type;
-	vector<_ValueType> temp(_First, _Last);
+	std::vector<_ValueType> temp(_First, _Last);
 	_CombineSort_unchecked_withTemp(temp.begin(), temp.end(), _First, _Pred);
 }
 
