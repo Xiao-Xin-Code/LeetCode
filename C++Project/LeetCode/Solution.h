@@ -876,7 +876,7 @@ public:
 //034
 public:
 	int searchRange(vector<int>& nums, int target) {
-		int left = 0, right = nums.size() - 1;
+		int left = 0, right = static_cast<int>(nums.size()) - 1;
 		int index = -1;
 		while (left <= right) {
 			int mid = (left + right) / 2;
@@ -910,7 +910,7 @@ public:
 //035
 public:
 	int searchInsert(vector<int>& nums, int target) {
-		int l = 0, r = nums.size() - 1;
+		int l = 0, r = static_cast<int>(nums.size()) - 1;
 		while (l < r) {
 
 			int mid = (l + r) / 2;
@@ -1100,7 +1100,7 @@ public:
 				return i + 1;
 			}
 		}
-		return nums.size() + 1;
+		return static_cast<int>(nums.size()) + 1;
 	}
 //042
 public:
@@ -1142,9 +1142,9 @@ public:
 		if (num2 == "1") return num1;
 
 		vector<int> nums(num1.size() + num2.size());
-		for (int i = num2.size() - 1;i >= 0;i--) {
+		for (int i = static_cast<int>(num2.size()) - 1;i >= 0;i--) {
 
-			for (int j = num1.size() - 1;j >= 0;j--) {
+			for (int j = static_cast<int>(num1.size()) - 1;j >= 0;j--) {
 				int temp = (num2[i] - '0') * (num1[j] - '0');
 				int sum = temp + nums[i + j + 1];
 				
@@ -1152,7 +1152,7 @@ public:
 				nums[i+j] += sum / 10;
 			}
 		}
-
+		
 		string result = "";
 		for (int i = 0;i < nums.size();i++) {
 			result = result + (char)(nums[i] + '0');
@@ -1238,7 +1238,7 @@ private:
 public:
 	void rotate(vector<vector<int>>& nums) {
 		size_t t = nums.size() - 1;
-		int left = 0;int right = nums.size() - 1;
+		int left = 0;int right = static_cast<int>(nums.size()) - 1;
 		while (left < right) {
 
 			for (int i = 0;i <= right - left;i++) {
@@ -1341,8 +1341,8 @@ public:
 
 public:
 	vector<int> loopArray(vector<vector<int>>& nums) {
-		int rowleft = 0, rowright = nums.size() - 1;
-		int colleft = 0, colright = nums[0].size() - 1;
+		int rowleft = 0, rowright = static_cast<int>(nums.size()) - 1;
+		int colleft = 0, colright = static_cast<int>(nums[0].size()) - 1;
 		vector<int> result;
 		while (rowleft <= rowright && colleft <= colright) {
 			for (int i = colleft;i <= colright;i++) {
@@ -1405,7 +1405,7 @@ public:
 public:
 	vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
 		vector<vector<int>> result;
-		int i = 0, n = intervals.size();
+		int i = 0, n = static_cast<int>(intervals.size());
 		while (i < n && intervals[i][1] < newInterval[0]) {
 			result.push_back(intervals[i]);
 			i++;
@@ -1426,7 +1426,7 @@ public:
 public:
 	int lengthOfLastWord(string s) {
 		int count = 0;
-		for (int i = s.length() - 1;i >= 0;i--) {
+		for (int i = static_cast<int>(s.length()) - 1;i >= 0;i--) {
 			if (s[i] == ' ') {
 				return count;
 			}
@@ -1557,7 +1557,7 @@ public:
 public:
 	vector<int> plusOne(vector<int>& digits) {
 		int carry = 0;
-		int cur = digits.size() - 1;
+		int cur = static_cast<int>(digits.size()) - 1;
 		while (cur >= 0) {
 			int sum = digits[cur] + carry;
 			digits[cur] = sum % 10;
@@ -1577,8 +1577,8 @@ public:
 //067
 public:
 	string addBinary(string a, string b) {
-		int ar = a.size() - 1;
-		int br = a.size() - 1;
+		int ar = static_cast<int>(a.size()) - 1;
+		int br = static_cast<int>(a.size()) - 1;
 		string result;
 		bool carry = false;
 		while (ar >= 0 && br >= 0) {
@@ -1775,7 +1775,7 @@ public:
 
 public:
 	void color(vector<int>& nums) {
-		int l = 0, r = nums.size() - 1;
+		int l = 0, r = static_cast<int>(nums.size()) - 1;
 		int i = 0;
 
 		if (nums[i] == 0) {
@@ -1884,7 +1884,7 @@ private:
 public:
 	int removeSame(vector<int>& nums) {
 		if (nums.empty()) return 0;
-		if (nums.size() == 1||nums.size() == 2) return nums.size();
+		if (nums.size() == 1 || nums.size() == 2) return static_cast<int>(nums.size());
 
 		//quickSort(nums.begin(), nums.end());
 		int index = 1;
@@ -2215,21 +2215,34 @@ public:
 
 public:
 	bool sameTreeNode(TreeNode* root1,TreeNode* root2) {
-		if (root1 != nullptr && root2 != nullptr) {
-			if (root1->val != root2->val) {
-				return false;
-			}
-			else {
-				bool sameLeft = sameTreeNode(root1->left, root2->left);
-				if (sameLeft == false) return false;
-				bool sameRight = sameTreeNode(root1->right, root2->right);
-				if (sameRight == false) return false;
-				return true;
-			}
-		}
-		else {
-			return false;
-		}
+		if (root1 == nullptr && root2 == nullptr) return true;
+		if (root1 == nullptr || root2 == nullptr) return false;
+		if (root1->val != root2->val) return false;
+		bool sameLeft = sameTreeNode(root1->left, root2->left);
+		if (sameLeft == false) return false;
+		bool sameRight = sameTreeNode(root1->right, root2->right);
+		if (sameRight == false) return false;
+		return true;
+	}
+
+public:
+	bool hlafTreeNode(TreeNode* root) {
+		if (root == nullptr) return false;
+		return hlafTreeNodeExtension(root->left, root->right);
+	}
+
+private:
+	bool hlafTreeNodeExtension(TreeNode* root1,TreeNode* root2) {
+		if (root1 == nullptr && root2 == nullptr) return true;
+		if (root1 == nullptr || root2 == nullptr)return false;
+		if (root1->val != root2->val) return false;
+
+		bool sameW = hlafTreeNodeExtension(root1->left, root2->right);
+		if (sameW == false) return false;
+	    bool sameN = hlafTreeNodeExtension(root1->right, root2->left);
+		if (sameN == false) return false;
+		return true;
+
 	}
 
 
