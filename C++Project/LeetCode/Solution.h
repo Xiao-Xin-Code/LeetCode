@@ -1819,16 +1819,18 @@ public:
 	vector<vector<int>> subsets(vector<int>& nums) {
 		vector<vector<int>> results;
 		results.push_back({});
-		for (int i = 0;i < nums.size();i++) {
-			vector<int> result;
+		subsetsExtension(nums, results, {}, 0);
+		return results;
+	}
+
+public:
+	void subsetsExtension(vector<int>& nums, vector<vector<int>>& results, vector<int> result,int start) {
+		for (int i = start;i < nums.size();i++) {
 			result.push_back(nums[i]);
 			results.push_back(result);
-			for (int j = i + 1;j < nums.size();j++) {
-				result.push_back(nums[j]);
-				results.push_back(result);
-			}
+			subsetsExtension(nums, results, result, start + 1);
+			result.pop_back();
 		}
-		return results;
 	}
 
 public:
@@ -1976,16 +1978,263 @@ public:
 		}
 		return head;
 	}
+//086
+public:
+	ListNode* partition(ListNode* head,int x) {
+		ListNode* cur = head;
+		ListNode* minFirst = nullptr;
+		ListNode* curMin = nullptr;
+		ListNode* maxFirst = nullptr;
+		ListNode* curMax = nullptr;
+		while (cur != nullptr) {
+			if (cur->val < x) {
+				if (minFirst == nullptr) {
+					minFirst = cur;
+					curMin = minFirst;
+				}
+				else {
+					curMin->next = cur;
+					curMin = curMin->next;
+				}
+				curMin->next = nullptr;
+			}
+			else {
+				if (maxFirst == nullptr) {
+					maxFirst = cur;
+					curMax = maxFirst;
+				}
+				else {
+					curMax->next = cur;
+					curMax = curMax->next;
+				}
+			}
+			cur = cur->next;
+		}
+
+		curMin->next = maxFirst;
+		return minFirst;
+	}
 
 public:
-	ListNode* doListNode(ListNode* head,int x) {
-		ListNode* cur = head;
+	void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+		int cur = m + n - 1;
+		while (m >= 0 && n >= 0) {
+			if (nums1[m] > nums2[n]) {
+				nums1[cur] = nums1[m];
+				--m;
+			}
+			else {
+				nums1[cur] = nums2[n];
+				--n;
+			}
+			++cur;
+		}
+	}
 
-		while (cur != nullptr) {
+public:
+	vector<vector<int>> subArray(vector<int>& nums) {
+		vector<vector<int>> results;
+		subArrayExtension(nums, results, {}, 0);
+		return results;
+	}
 
+public:
+	void subArrayExtension(vector<int>& nums, vector<vector<int>>& results, vector<int> result, int start) {
+		for (int i = start;i < nums.size();i++) {
+			if (i > start && nums[i - 1] == nums[i]) {
+				continue;
+			}
+			result.push_back(nums[i]);
+			results.push_back(result);
+			subArrayExtension(nums, results, result, i + 1);
+			result.pop_back();
+		}
+	}
+
+public:
+	ListNode* rotateListNode(ListNode* head, int left, int right) {
+		ListNode* prevNode = nullptr;
+		ListNode* curPrevNode = nullptr;
+		ListNode* curNode = head;
+		ListNode* resultHead = head;
+		int index = 0;
+		while (curNode != nullptr) {
+			if (index <= left) {
+				if (index + 1 == left) {
+					prevNode = curNode;
+				}
+				else if (index == right) {
+					return head;
+				}
+				curPrevNode = curNode;
+				curNode = curNode->next;
+				++index;
+			}
+			else {
+				if (prevNode == nullptr) {
+					head->next = curNode->next;
+					curNode->next = resultHead;
+					resultHead = curNode;
+				}
+				else {
+					curPrevNode->next = curNode->next;
+					curNode->next = prevNode->next;
+					prevNode->next = curNode;
+				}
+				curNode = curNode->next->next;
+				if (index == right) {
+					return head;
+				}
+				++index;
+			}
+		}
+		return resultHead;
+	}
+
+public:
+	vector<vector<string>> checkIp(string s) {
+		vector<vector<string>> results;
+		if (s.length() > 12) return results;
+		checkIpExtension(s, results, {}, 0);
+		return results;
+	}
+
+private:
+	void checkIpExtension(string s,vector<vector<string>>& results,vector<string> result,int startIndex) {
+
+		if (startIndex >= s.length()) {
+			if (!result.empty() && result.size() == 4) {
+				results.push_back(result);
+			}
+		}
+
+		if (s[startIndex] == '0') {
+			result.push_back(s.substr(startIndex, 1));
+			checkIpExtension(s, results, result, startIndex + 1);
+		}
+		else {
+			for (int i = 1;i <= 3;i++) {
+				result.push_back(s.substr(startIndex, i));
+				checkIpExtension(s, results, result, startIndex + i);
+				result.pop_back();
+			}
+		}
+	}
+
+public:
+	vector<int> midRead(TreeNode* root) {
+		vector<int> result;
+		midReadExtension(root, result);
+		return result;
+	}
+
+private:
+	void midReadExtension(TreeNode* root, vector<int>& result) {
+		if (root == nullptr) {
+			return;
+		}
+		if (root->left != nullptr) {
+			midReadExtension(root->left, result);
+		}
+		result.push_back(root->val);
+		if (root->right != nullptr) {
+			midReadExtension(root->right, result);
+		}
+	}
+
+public:
+	vector<TreeNode*> search(int n) {
+		vector<TreeNode*> nodes;
+		for (int i = 1;i <= n;i++) {
+			TreeNode* root = new TreeNode(i);
+			nodes.push_back(root);
 		}
 
 	}
+
+private:
+	void searchExtension(int start,int end,TreeNode* root) {
+
+
+		for (int i = start;i <= end;i++) {
+
+			/*TreeNode* root = new TreeNode(i);
+			searchExtension(0, i - 1, root);
+			TreeNode* root = new TreeNode(i);
+			searchExtension(i + 1, end, root);*/
+
+		}
+
+
+
+		
+
+	}
+
+
+public:
+	bool mergeString(string s1, string s2, string s3) {
+		if (s1.length() + s2.length() != s3.length()) return false;
+
+		int s1Index = 0, s2Index = 0, s3Index = 0;
+		while (s1Index < s1.length() && s2Index < s2.length() && s3Index < s3.length()) {
+			if (s1[s1Index] == s3[s3Index]) {
+				++s1Index;
+				++s3Index;
+			}
+			else if (s2[s2Index] == s3[s3Index]) {
+				++s2Index;
+				++s3Index;
+			}
+			else {
+				return false;
+			}
+		}
+
+		while (s1Index < s1.length()) {
+			if (s1[s1Index] == s3[s3Index]) {
+				++s1Index;
+				++s3Index;
+			}
+			else {
+				return false;
+			}
+		}
+		
+		while (s2Index < s2.length()) {
+			if (s2[s2Index] == s3[s3Index]) {
+				++s2Index;
+				++s3Index;
+			}
+			else {
+				return false;
+			}
+		}
+		return true;
+	}
+
+public:
+	bool sameTreeNode(TreeNode* root1,TreeNode* root2) {
+		if (root1 != nullptr && root2 != nullptr) {
+			if (root1->val != root2->val) {
+				return false;
+			}
+			else {
+				bool sameLeft = sameTreeNode(root1->left, root2->left);
+				if (sameLeft == false) return false;
+				bool sameRight = sameTreeNode(root1->right, root2->right);
+				if (sameRight == false) return false;
+				return true;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+
+
+
+
 
 
 
