@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <stack>
+#include <queue>
 #include <set>
 
 
@@ -2245,12 +2246,136 @@ private:
 
 	}
 
+public:
+	void cengNode(TreeNode* node) {
+		queue<TreeNode*> q;
+		q.size();
+	}
+
+private:
+	void cengNodeExtension(queue<TreeNode*> nodeQueue,vector<int>& result) {
+		if (!nodeQueue.empty()) {
+			queue<TreeNode*> tempQueue;
+			for (int i = 0;i < nodeQueue.size();++i) {
+				TreeNode* node = nodeQueue.front();
+				nodeQueue.pop();
+				result.push_back(node->val);
+			}
+			if (!tempQueue.empty()) {
+				cengNodeExtension(tempQueue, result);
+			}
+		}
+	}
+
+private:
+	void cengNodeEx(vector<TreeNode*> nodes, vector<int>& results,bool state) {
+		if (!nodes.empty()) {
+			vector<TreeNode*> tempNodes;
+			if (state) {
+				for (int i = 0;i < nodes.size();i++) {
+					if (nodes[i]->left != nullptr) {
+						tempNodes.push_back(nodes[i]->left);
+					}
+					if (nodes[i]->right != nullptr) {
+						tempNodes.push_back(nodes[i]->right);
+					}
+					results.push_back(nodes[i]->val);
+				}
+			}
+			else {
+				for (int i = nodes.size() - 1;i >= 0;--i) {
+					if (nodes[i]->right != nullptr) {
+						tempNodes.push_back(nodes[i]->right);
+					}
+					if (nodes[i]->left != nullptr) {
+						tempNodes.push_back(nodes[i]->left);
+					}
+					results.push_back(nodes[i]->val);
+				}
+
+			}
+			state = !state;
+		}
+	}
+
+public:
+	void resetNode(vector<int>& nums1, vector<int>& nums2) {
+		
+		int rootIndex = -1;
+		for (int i = 0;i < nums2.size();i++) {
+			if (nums2[i] == nums1[0]) {
+				rootIndex = i;
+			}
+		}
+		//[0,rootindex-1][rootindex+1,nums2.size()-1]
+
+		
+	}
+
+private:
+	void nodeExtension(vector<int>& nums1, vector<int>& nums2, TreeNode* root, int start, int end, int cur) {
+		
+		for (int i = start;i <= end;i++) {
+			if (nums2[i] == root->val) {
+
+			}
+		}
+	}
+
+private:
+	void resetNodeExtension(vector<int>& nums1, vector<int>& nums2, TreeNode* root, int rootIndex, int start, int end, int cur) {
+		
+		for (int i = start;i < rootIndex - 1;++i) {
+			if (nums2[i] == nums1[cur]) {
+				rootIndex = i;
+			}
+		}
+
+		for (int i = rootIndex + 1;i < end;++i) {
+			if (nums2[i] == nums1[cur]) {
+				rootIndex = i;
+			}
+		}
 
 
 
 
-
-
+	}
+//118
+public:
+	vector<vector<int>> generate(int numRows) {
+		vector<vector<int>> results;
+		results.push_back({ 1 });
+		int n = 2;
+		while (n <= numRows) {
+			vector<int> result(n);
+			result[0] = 1;
+			result[n - 1] = 1;
+			for (int i = 1;i < n - 1;i++) {
+				result[i] = results[n - 1][i - 1] + results[n - 1][i];
+			}
+			results.push_back(result);
+			n++;
+		}
+		return results;
+	}
+//119
+public:
+	vector<int> getRow(int rowIndex) {
+		vector<int> result = { 1 };
+		int n = 2;
+		while (n <= rowIndex) {
+			vector<int> temp(n);
+			temp[0] = 1;
+			temp[n - 1] = 1;
+			for (int i = 1;i < n - 1;i++) {
+				temp[i] = result[i - 1] + result[i];
+			}
+			result = temp;
+			n++;
+		}
+		return result;
+	}
 //120
 public:
 	int minimumTotal(vector<vector<int>>& triangle) {
@@ -2273,6 +2398,41 @@ public:
 		}
 		return curMin;
 	}
+
+public:
+	int maxprices(vector<int>& prices) {
+		int result = 0;
+		int minprice = prices[0];
+		for (int i = 1;i < prices.size();i++) {
+			minprice = min(minprice, prices[i]);
+			result = max(result, prices[i] - minprice);
+		}
+		return result;
+	}
+
+public:
+	bool checkStr(string str) {
+		int l = 0, r = str.length() - 1;
+		while (1 < r) {
+			while (l < r && str[l] < 'a' && str[l] > 'z') {
+				l++;
+			}
+			while (l < r && str[r] < 'a' && str[r]>'z') {
+				r--;
+			}
+
+			if (str[l] != str[r]) {
+				return false;
+			}
+			l++;r--;
+		}
+		return true;
+	}
+
+
+
+
+
 //198
 public:
 	int rob(vector<int>& nums) {

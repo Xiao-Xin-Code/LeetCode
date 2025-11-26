@@ -120,7 +120,6 @@ void _InsertSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 
 #pragma endregion
 
-
 #pragma region _Hill Sort_
 
 template<typename _Ranlt, typename _Pr>
@@ -250,8 +249,6 @@ void _SelectSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 }
 
 #pragma endregion
-
-
 
 #pragma region _Merger Sort_
 
