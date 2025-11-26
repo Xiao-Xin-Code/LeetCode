@@ -53,7 +53,7 @@ void _QuickSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 	--_High;
 	auto _Pivot = *_First;
 	while (_Low < _High) {
-		while (_Low < _High && _Pred(_Pivot, *_High)) {
+		while (_Low < _High && !_Pred(*_High, _Pivot)) {
 			--_High;
 		}
 		*_Low = *_High;
@@ -65,7 +65,7 @@ void _QuickSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 	}
 	*_Low = _Pivot;
 
-	if (_Low - 1 > _First) {
+	if (_Low > _First + 1) {
 		_QuickSort_unchecked(_First, _Low, _Pred);
 	}
 	if (_Low + 1 < _Last - 1) {

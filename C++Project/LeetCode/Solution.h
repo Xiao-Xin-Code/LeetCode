@@ -1322,7 +1322,7 @@ public:
 		int start = 0, end = 0;
 		int tempstart = 0;
 
-		for (int i = i;i < nums.size();i++) {
+		for (int i = 1;i < nums.size();i++) {
 			if (currentSum < 0) {
 				currentSum = nums[i];
 				tempstart = i;
@@ -2249,7 +2249,7 @@ private:
 public:
 	void cengNode(TreeNode* node) {
 		queue<TreeNode*> q;
-		q.size();
+		//q.size();
 	}
 
 private:
@@ -2283,7 +2283,7 @@ private:
 				}
 			}
 			else {
-				for (int i = nodes.size() - 1;i >= 0;--i) {
+				for (int i = static_cast<int>(nodes.size()) - 1;i >= 0;--i) {
 					if (nodes[i]->right != nullptr) {
 						tempNodes.push_back(nodes[i]->right);
 					}
@@ -2412,7 +2412,7 @@ public:
 
 public:
 	bool checkStr(string str) {
-		int l = 0, r = str.length() - 1;
+		int l = 0, r = static_cast<int>(str.length()) - 1;
 		while (1 < r) {
 			while (l < r && str[l] < 'a' && str[l] > 'z') {
 				l++;
@@ -2430,6 +2430,26 @@ public:
 	}
 
 
+public:
+	int longestConsecutive(vector<int>& nums) {
+		quickSort(nums.begin(), nums.end());
+		int maxcount = 1;
+		int count = 1;
+		int i = 1;
+		while (i < nums.size()) {
+			if (nums[i - 1] + 1 == nums[i]) {
+				count++;
+			}
+			else {
+				maxcount = max(maxcount, count);
+				count = 1;
+				i++;
+			}
+			i++;
+		}
+		maxcount = max(maxcount, count);
+		return maxcount;
+	}
 
 
 
