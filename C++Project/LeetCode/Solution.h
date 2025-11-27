@@ -2451,6 +2451,44 @@ public:
 		return maxcount;
 	}
 
+public:
+	int valueNode(TreeNode* root) {
+		vector<int> result;
+		valueNodeExtenion(root, 0, result);
+
+		int sum = 0;
+		for (int it : result) {
+			sum += it;
+		}
+		return sum;
+	}
+
+private:
+	void valueNodeExtenion(TreeNode* node, int value,vector<int>& result) {
+		if (node == nullptr) {
+			result.push_back(value);
+			return;
+		}
+		value = node->val + value * 10;
+		valueNodeExtenion(node->left, value, result);
+		valueNodeExtenion(node->right, value, result);
+	}
+
+public:
+	void loopStr(string str, vector<vector<string>>& results, vector<string> result, int start) {
+		if (start >= str.length()) {
+			results.push_back(result);
+			return;
+		}
+		for (int i = start;i < str.length();i++) {
+			string curstr = str.substr(start, i - start + 1);
+			result.push_back(curstr);
+			cout << curstr << endl;
+			loopStr(str, results, result, i + 1);
+			result.pop_back();
+		}
+	}
+
 
 
 //198

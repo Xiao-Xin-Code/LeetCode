@@ -118,6 +118,15 @@ int main()
     //vector<int> nums = { 1,2,3 };
     //int count = solution.combine(10, 10).size();
     //cout << solution.mergeString("abc","abc","aaebcc") << endl;
-    vector<int> nums = { 1,2,3,4 };
-    cout << solution.longestConsecutive(nums) << endl;
+    //vector<int> nums = { 1,2,3,4 };
+    //cout << solution.longestConsecutive(nums) << endl;
+
+    vector<vector<string>> results;
+    solution.loopStr("abc", results, {}, 0);
+    for (vector<string> result : results) {
+        for (string it : result) {
+            cout << it << ",";
+        }
+        cout << endl;
+    }
 }
