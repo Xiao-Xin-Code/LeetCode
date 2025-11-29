@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <vector>
 
-#include "Solution.h"
+#include "Solution_001-100.h"
 
 
 using namespace std;
@@ -121,12 +121,15 @@ int main()
     //vector<int> nums = { 1,2,3,4 };
     //cout << solution.longestConsecutive(nums) << endl;
 
-    vector<vector<string>> results;
-    solution.loopStr("abc", results, {}, 0);
+   /* vector<vector<string>> results;
+    solution.loopStr("abcc", results, {}, 0);
     for (vector<string> result : results) {
         for (string it : result) {
             cout << it << ",";
         }
         cout << endl;
-    }
+    }*/
+
+
+    cout << solution.onlyOne({ 3,4,3,4,3,3,5,4,5,1,2,2,3,5 ,1,5,6,5 }) << endl;
 }

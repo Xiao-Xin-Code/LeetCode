@@ -329,7 +329,6 @@ public:
 		}
 		return true;
 	}
-
 private:
 	void isMatchExtension(string s, string p, int sIndex, int pIndex) {
 
@@ -489,7 +488,6 @@ public:
 
 		return results;
 	}
-
 private:
 	void letterCombinationsExtension(unordered_map<char,string>& maps, vector<string>& results, string digits, string result, int curIndex) {
 		if (curIndex == digits.length()) {
@@ -627,7 +625,6 @@ public:
 		generateParenthesisExtension(results, "", n, 0, 0, 0);
 		return results;
 	}
-
 private:
 	void generateParenthesisExtension(vector<string> results, string result,int n, int curCount,int leftCount,int rightCount) {
 		
@@ -668,7 +665,6 @@ public:
 		//cout << "ÊýÁ¿" << listNode.size() << endl;
 		return head;
 	}
-
 private:
 	void mergeKListsExtension(vector<ListNode*>& lists, int curIndex, ListNode*& minNode, ListNode*& curNode) {
 		//cout << lists.size() << endl;
@@ -700,7 +696,6 @@ private:
 			}
 		}
 	}
-
 //024
 public:
 	ListNode* swapPairs(ListNode* head) {
@@ -717,8 +712,10 @@ public:
 		return l2;
 	}
 //025
+public:
+	ListNode* reverseKGroup(ListNode* head, int k) {
 
-	
+	}
 //026
 public:
 	int removeDuplicates(vector<int>& nums) {
@@ -959,7 +956,6 @@ public:
 	void solveSudoku(vector<vector<char>>& board) {
 		solveSudokuExtension(board);
 	}
-
 private:
 	bool solveSudokuExtension(vector<vector<char>>& board) {
 		for (int i = 0;i < 9;i++) {
@@ -1025,7 +1021,6 @@ public:
 		cout << results.size() << endl;
 		return results;
 	}
-
 private:
 	void commbinationSumExtension(vector<int>& candidates, int target, int start,  vector<vector<int>>& results, vector<int> result, int cur) {
 		for (int i = start;i < candidates.size();i++) {
@@ -1058,7 +1053,6 @@ public:
 		cout << results.size() << endl;
 		return results;
 	}
-
 private:
 	void combinationSum2Extension(vector<int>& candidates, int target, int start, vector<vector<int>>& results, vector<int> result, int cur) {
 		for (int i = start;i < candidates.size();i++) {
@@ -1162,9 +1156,10 @@ public:
 		return result;
 	}
 //044
+public:
+	bool isMatch(string s, string p) {
 
-
-	
+	}
 //045
 public:
 	int jump(vector<int>& nums) {
@@ -1186,7 +1181,6 @@ public:
 		permuteExtension(nums, frags, {}, results);
 		return results;
 	}
-
 private:
 	void permuteExtension(vector<int>& nums,vector<bool>& frags,vector<int> result,vector<vector<int>>& results) {
 		if (result.size() == nums.size()) {
@@ -1215,7 +1209,6 @@ public:
 		permuteUniqueExtension(nums, frags, {}, results);
 		return results;
 	}
-
 private:
 	void permuteUniqueExtension(vector<int>& nums, vector<bool>& frags, vector<int> result, vector<vector<int>>& results) {
 		if (result.size() == nums.size()) {
@@ -1253,8 +1246,7 @@ public:
 			right--;
 		}
 	}
-
-
+//049
 public:
 	vector<vector<string>> groupAnagrams(vector<string>& strs) {
 		vector<vector<string>> results;
@@ -1268,7 +1260,6 @@ public:
 		}
 		return results;
 	}
-
 private:
 	void groupAnagramsExtension(vector<string>& strs, vector<bool>& useds,vector<vector<string>> results,vector<string> result,int cur) {
 		unordered_map<char, int> charCountMap;
@@ -1298,7 +1289,7 @@ private:
 		}
 		results.push_back(result);
 	}
-
+//050
 public:
 	double myPow(double x, int n) {
 		bool isnegative = n < 0;
@@ -1314,7 +1305,17 @@ public:
 		if (isnegative) return 1 / result;
 		return result;
 	}
+//051
+public:
+	vector<vector<string>> solveNQueens(int n) {
 
+	}
+//052
+public:
+	int totalNQueens(int n) {
+
+	}
+//053
 public:
 	vector<int> maxSubArray(vector<int>& nums) {
 		int currentSum = nums[0];
@@ -1339,7 +1340,7 @@ public:
 		}
 		return vector<int>(nums.begin() + start, nums.begin() + end + 1);
 	}
-
+//054
 public:
 	vector<int> loopArray(vector<vector<int>>& nums) {
 		int rowleft = 0, rowright = static_cast<int>(nums.size()) - 1;
@@ -1369,7 +1370,7 @@ public:
 		}
 		return result;
 	}
-
+//055
 public:
 	bool isPath(vector<int>& nums) {
 		int farthest = 0;
@@ -1465,6 +1466,11 @@ public:
 		}
 		return result;
 	}
+//060
+public:
+	string getPermutation(int n, int k) {
+
+	}
 //061
 public:
 	ListNode* rotateRight(ListNode* head,int k) {
@@ -1553,7 +1559,11 @@ public:
 		}
 		return grid[grid.size() - 1][grid[grid.size() - 1].size()];
 	}
+//065
+public:
+	bool isNumber(string s) {
 
+	}
 //066
 public:
 	vector<int> plusOne(vector<int>& digits) {
@@ -1645,7 +1655,16 @@ public:
 		if (carry)result = '1' + result;
 		return result;
 	}
+//068
+public:
+	vector<string> fullJustify(vector<string>& words, int maxWidth) {
 
+	}
+//069
+public:
+	int mySqrt(int x) {
+
+	}
 //070
 public:
 	int climbStairs(int n) {
@@ -1657,9 +1676,9 @@ public:
 		}
 		return dp[n];
 	}
-
+//071
 public:
-	string path(string path) {
+	string simplifyPath(string path) {
 		string result;
 		vector<string> results;
 		string cur = "/";
@@ -1711,9 +1730,14 @@ public:
 		
 		return result;
 	}
-
+//072
 public:
-	void resetZero(vector<vector<int>>& matrix) {
+	int minDistance(string word1, string word2) {
+
+	}
+//073
+public:
+	void setZeroes(vector<vector<int>>& matrix) {
 		bool colHasZero, rowHasZero;
 		for (int i = 0;i < matrix[0].size();i++) {
 			if (matrix[0][i] == 0) colHasZero = true;
@@ -1750,8 +1774,6 @@ public:
 			}
 		}
 	}
-
-
 //074
 public:
 	bool searchMatrix(vector<vector<int>>& matrix, int target) {
@@ -1773,9 +1795,9 @@ public:
 		}
 		return false;
 	}
-
+//075
 public:
-	void color(vector<int>& nums) {
+	void sortColors(vector<int>& nums) {
 		int l = 0, r = static_cast<int>(nums.size()) - 1;
 		int i = 0;
 
@@ -1792,6 +1814,11 @@ public:
 			i++;
 		}
 	}
+//076
+public:
+	string minWindow(string s, string t) {
+
+	}
 //077
 public:
 	vector<vector<int>> combine(int n, int k) {
@@ -1801,7 +1828,6 @@ public:
 		}
 		return results;
 	}
-
 private:
 	void combineExtension(vector<vector<int>>& results, vector<int> result, int n, int k,int cur) {
 		result.push_back(cur);
@@ -1815,7 +1841,7 @@ private:
 		}
 		result.pop_back();
 	}
-
+//078
 public:
 	vector<vector<int>> subsets(vector<int>& nums) {
 		vector<vector<int>> results;
@@ -1823,8 +1849,7 @@ public:
 		subsetsExtension(nums, results, {}, 0);
 		return results;
 	}
-
-public:
+private:
 	void subsetsExtension(vector<int>& nums, vector<vector<int>>& results, vector<int> result,int start) {
 		for (int i = start;i < nums.size();i++) {
 			result.push_back(nums[i]);
@@ -1833,43 +1858,42 @@ public:
 			result.pop_back();
 		}
 	}
-
+//079
 public:
-	bool searchWord(vector<vector<char>>& nums,string word) {
-		for (int i = 0;i < nums.size();i++) {
+	bool exist(vector<vector<char>>& board,string word) {
+		for (int i = 0;i < board.size();i++) {
 
-			for (int j = 0;j < nums[i].size();j++) {
-				if (searchWordExtension(nums, word, 0, i, j)) {
+			for (int j = 0;j < board[i].size();j++) {
+				if (existExtension(board, word, 0, i, j)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-
 private:
-	bool searchWordExtension(vector<vector<char>>& nums, string word, int curIndex, int i, int j) {
+	bool existExtension(vector<vector<char>>& nums, string word, int curIndex, int i, int j) {
 		if (nums[i][j] == word[curIndex]) {
 			char temp = nums[i][j];
 			nums[i][j] = '\0';
 
 			if (i >= 1) {
-				if (searchWordExtension(nums, word, curIndex + 1, i - 1, j)) {
+				if (existExtension(nums, word, curIndex + 1, i - 1, j)) {
 					return true;
 				}
 			}
 			if (j >= 1) {
-				if (searchWordExtension(nums, word, curIndex + 1, i, j - 1)) {
+				if (existExtension(nums, word, curIndex + 1, i, j - 1)) {
 					return true;
 				}
 			}
 			if (i + 1 < nums.size()) {
-				if (searchWordExtension(nums, word, curIndex + 1, i + 1, j)) {
+				if (existExtension(nums, word, curIndex + 1, i + 1, j)) {
 					return true;
 				}
 			}
 			if (j + 1 < nums[i].size()) {
-				if (searchWordExtension(nums, word, curIndex + 1, i, j + 1)) {
+				if (existExtension(nums, word, curIndex + 1, i, j + 1)) {
 					return true;
 				}
 			}
@@ -1881,9 +1905,9 @@ private:
 			return false;
 		}
 	}
-
+//080
 public:
-	int removeSame(vector<int>& nums) {
+	int removeDuplicates(vector<int>& nums) {
 		if (nums.empty()) return 0;
 		if (nums.size() == 1 || nums.size() == 2) return static_cast<int>(nums.size());
 
@@ -1906,9 +1930,9 @@ public:
 		nums[curIndex] = nums[index];
 		return curIndex + 1;
 	}
-
+//081
 public:
-	bool hasRotateArray(vector<int>& nums, int target) {
+	bool searchII(vector<int>& nums, int target) {
 		if (nums.empty()) false;
 
 		if (nums[0] > target&&nums[nums.size()-1]<target) {
@@ -1962,9 +1986,9 @@ public:
 		}
 		return false;
 	}
-
+//082
 public:
-	ListNode* removeSameListNode(ListNode* head) {
+	ListNode* deleteDuplicatesII(ListNode* head) {
 		if (head == nullptr || head->next == nullptr) return head;
 		ListNode* first = head;
 		ListNode* last = head->next;
@@ -1979,6 +2003,30 @@ public:
 		}
 		return head;
 	}
+//083
+public:
+	ListNode* deleteDuplicates(ListNode* head) {
+		if (head == nullptr || head->next == nullptr) return head;
+		ListNode* first = head;
+		ListNode* last = head->next;
+		while (last != nullptr) {
+			if (last->val == first->val) {
+				first->next = last->next;
+			}
+			else {
+				first = last;
+			}
+			last = last->next;
+		}
+		return head;
+	}
+//084
+public:
+	int largestRectangleArea(vector<int>& heights) {
+
+	}
+//085
+
 //086
 public:
 	ListNode* partition(ListNode* head,int x) {
@@ -2038,8 +2086,7 @@ public:
 		subArrayExtension(nums, results, {}, 0);
 		return results;
 	}
-
-public:
+private:
 	void subArrayExtension(vector<int>& nums, vector<vector<int>>& results, vector<int> result, int start) {
 		for (int i = start;i < nums.size();i++) {
 			if (i > start && nums[i - 1] == nums[i]) {
@@ -2128,7 +2175,6 @@ public:
 		midReadExtension(root, result);
 		return result;
 	}
-
 private:
 	void midReadExtension(TreeNode* root, vector<int>& result) {
 		if (root == nullptr) {
@@ -2152,7 +2198,6 @@ public:
 		}
 
 	}
-
 private:
 	void searchExtension(int start,int end,TreeNode* root) {
 
@@ -2171,7 +2216,6 @@ private:
 		
 
 	}
-
 
 public:
 	bool mergeString(string s1, string s2, string s3) {
@@ -2429,7 +2473,6 @@ public:
 		return true;
 	}
 
-
 public:
 	int longestConsecutive(vector<int>& nums) {
 		quickSort(nums.begin(), nums.end());
@@ -2462,7 +2505,6 @@ public:
 		}
 		return sum;
 	}
-
 private:
 	void valueNodeExtenion(TreeNode* node, int value,vector<int>& result) {
 		if (node == nullptr) {
@@ -2477,18 +2519,57 @@ private:
 public:
 	void loopStr(string str, vector<vector<string>>& results, vector<string> result, int start) {
 		if (start >= str.length()) {
+			cout << "Ìí¼Ó" << endl;
 			results.push_back(result);
 			return;
 		}
 		for (int i = start;i < str.length();i++) {
 			string curstr = str.substr(start, i - start + 1);
-			result.push_back(curstr);
-			cout << curstr << endl;
-			loopStr(str, results, result, i + 1);
-			result.pop_back();
+			if (loopStrExtension(curstr)) {
+				result.push_back(curstr);
+				//cout << curstr << endl;
+				loopStr(str, results, result, i + 1);
+				result.pop_back();
+			}
+			else {
+				continue;
+			}
 		}
 	}
+private:
+	bool loopStrExtension(string str) {
+		int l = 0, r = str.length() - 1;
+		while (l < r) {
+			if (str[l] != str[r]) {
+				return false;
+			}
+			l++;
+			r--;
+		}
+		return true;
+	}
 
+public:
+	int onlyOne(vector<int> nums) {
+		quickSort(nums.begin(), nums.end());
+		int cur = nums[0];
+		bool hascount = false;
+		for (int i = 1;i < nums.size();i++) {
+			if (nums[i] == nums[i - 1]) {
+				hascount = true;
+			}
+			else {
+				if (hascount) {
+					hascount = false;
+				}
+				else {
+					return cur;
+				}
+				cur = nums[i];
+			}
+		}
+		return cur;
+	}
 
 
 //198

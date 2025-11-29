@@ -128,7 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Extension.h" />
-    <ClInclude Include="Solution.h" />
+    <ClInclude Include="Solution_001-100.h" />
     <ClInclude Include="Sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
