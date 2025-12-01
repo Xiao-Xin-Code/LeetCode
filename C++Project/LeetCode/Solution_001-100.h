@@ -1,8 +1,10 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
+#include <string>
 #include <stack>
 #include <queue>
 #include <set>
@@ -2063,7 +2065,9 @@ public:
 		curMin->next = maxFirst;
 		return minFirst;
 	}
+//087
 
+//088
 public:
 	void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 		int cur = m + n - 1;
@@ -2079,28 +2083,32 @@ public:
 			++cur;
 		}
 	}
+//089
 
+//090
 public:
-	vector<vector<int>> subArray(vector<int>& nums) {
+	vector<vector<int>> subsetWithDup(vector<int>& nums) {
 		vector<vector<int>> results;
-		subArrayExtension(nums, results, {}, 0);
+		subsetWithDupExtension(nums, results, {}, 0);
 		return results;
 	}
 private:
-	void subArrayExtension(vector<int>& nums, vector<vector<int>>& results, vector<int> result, int start) {
+	void subsetWithDupExtension(vector<int>& nums, vector<vector<int>>& results, vector<int> result, int start) {
 		for (int i = start;i < nums.size();i++) {
 			if (i > start && nums[i - 1] == nums[i]) {
 				continue;
 			}
 			result.push_back(nums[i]);
 			results.push_back(result);
-			subArrayExtension(nums, results, result, i + 1);
+			subsetWithDupExtension(nums, results, result, i + 1);
 			result.pop_back();
 		}
 	}
+//091
 
+//092
 public:
-	ListNode* rotateListNode(ListNode* head, int left, int right) {
+	ListNode* reverseBetewwn(ListNode* head, int left, int right) {
 		ListNode* prevNode = nullptr;
 		ListNode* curPrevNode = nullptr;
 		ListNode* curNode = head;
@@ -2138,17 +2146,16 @@ public:
 		}
 		return resultHead;
 	}
-
+//093
 public:
-	vector<vector<string>> checkIp(string s) {
+	vector<vector<string>> restoreIpAddresses(string s) {
 		vector<vector<string>> results;
 		if (s.length() > 12) return results;
-		checkIpExtension(s, results, {}, 0);
+		restoreIpAddressesExtension(s, results, {}, 0);
 		return results;
 	}
-
 private:
-	void checkIpExtension(string s,vector<vector<string>>& results,vector<string> result,int startIndex) {
+	void restoreIpAddressesExtension(string s,vector<vector<string>>& results,vector<string> result,int startIndex) {
 
 		if (startIndex >= s.length()) {
 			if (!result.empty() && result.size() == 4) {
@@ -2158,39 +2165,39 @@ private:
 
 		if (s[startIndex] == '0') {
 			result.push_back(s.substr(startIndex, 1));
-			checkIpExtension(s, results, result, startIndex + 1);
+			restoreIpAddressesExtension(s, results, result, startIndex + 1);
 		}
 		else {
 			for (int i = 1;i <= 3;i++) {
 				result.push_back(s.substr(startIndex, i));
-				checkIpExtension(s, results, result, startIndex + i);
+				restoreIpAddressesExtension(s, results, result, startIndex + i);
 				result.pop_back();
 			}
 		}
 	}
-
+//094
 public:
-	vector<int> midRead(TreeNode* root) {
+	vector<int> inorderTraversal(TreeNode* root) {
 		vector<int> result;
-		midReadExtension(root, result);
+		inorderTraversalExtension(root, result);
 		return result;
 	}
 private:
-	void midReadExtension(TreeNode* root, vector<int>& result) {
+	void inorderTraversalExtension(TreeNode* root, vector<int>& result) {
 		if (root == nullptr) {
 			return;
 		}
 		if (root->left != nullptr) {
-			midReadExtension(root->left, result);
+			inorderTraversalExtension(root->left, result);
 		}
 		result.push_back(root->val);
 		if (root->right != nullptr) {
-			midReadExtension(root->right, result);
+			inorderTraversalExtension(root->right, result);
 		}
 	}
-
+//095
 public:
-	vector<TreeNode*> search(int n) {
+	vector<TreeNode*> generateTrees(int n) {
 		vector<TreeNode*> nodes;
 		for (int i = 1;i <= n;i++) {
 			TreeNode* root = new TreeNode(i);
@@ -2216,9 +2223,14 @@ private:
 		
 
 	}
-
+//096
 public:
-	bool mergeString(string s1, string s2, string s3) {
+	int numTrees(int n) {
+
+	}
+//097
+public:
+	bool isInterleave(string s1, string s2, string s3) {
 		if (s1.length() + s2.length() != s3.length()) return false;
 
 		int s1Index = 0, s2Index = 0, s3Index = 0;
@@ -2257,402 +2269,21 @@ public:
 		}
 		return true;
 	}
+//098
 
+//099
+
+//100
 public:
-	bool sameTreeNode(TreeNode* root1,TreeNode* root2) {
-		if (root1 == nullptr && root2 == nullptr) return true;
-		if (root1 == nullptr || root2 == nullptr) return false;
-		if (root1->val != root2->val) return false;
-		bool sameLeft = sameTreeNode(root1->left, root2->left);
+	bool isSameTree(TreeNode* p,TreeNode* q) {
+		if (p == nullptr && q == nullptr) return true;
+		if (p == nullptr || q == nullptr) return false;
+		if (p->val != q->val) return false;
+		bool sameLeft = isSameTree(p->left, q->left);
 		if (sameLeft == false) return false;
-		bool sameRight = sameTreeNode(root1->right, root2->right);
+		bool sameRight = isSameTree(p->right, q->right);
 		if (sameRight == false) return false;
 		return true;
-	}
-
-public:
-	bool hlafTreeNode(TreeNode* root) {
-		if (root == nullptr) return false;
-		return hlafTreeNodeExtension(root->left, root->right);
-	}
-
-private:
-	bool hlafTreeNodeExtension(TreeNode* root1,TreeNode* root2) {
-		if (root1 == nullptr && root2 == nullptr) return true;
-		if (root1 == nullptr || root2 == nullptr)return false;
-		if (root1->val != root2->val) return false;
-
-		bool sameW = hlafTreeNodeExtension(root1->left, root2->right);
-		if (sameW == false) return false;
-	    bool sameN = hlafTreeNodeExtension(root1->right, root2->left);
-		if (sameN == false) return false;
-		return true;
-
-	}
-
-public:
-	void cengNode(TreeNode* node) {
-		queue<TreeNode*> q;
-		//q.size();
-	}
-
-private:
-	void cengNodeExtension(queue<TreeNode*> nodeQueue,vector<int>& result) {
-		if (!nodeQueue.empty()) {
-			queue<TreeNode*> tempQueue;
-			for (int i = 0;i < nodeQueue.size();++i) {
-				TreeNode* node = nodeQueue.front();
-				nodeQueue.pop();
-				result.push_back(node->val);
-			}
-			if (!tempQueue.empty()) {
-				cengNodeExtension(tempQueue, result);
-			}
-		}
-	}
-
-private:
-	void cengNodeEx(vector<TreeNode*> nodes, vector<int>& results,bool state) {
-		if (!nodes.empty()) {
-			vector<TreeNode*> tempNodes;
-			if (state) {
-				for (int i = 0;i < nodes.size();i++) {
-					if (nodes[i]->left != nullptr) {
-						tempNodes.push_back(nodes[i]->left);
-					}
-					if (nodes[i]->right != nullptr) {
-						tempNodes.push_back(nodes[i]->right);
-					}
-					results.push_back(nodes[i]->val);
-				}
-			}
-			else {
-				for (int i = static_cast<int>(nodes.size()) - 1;i >= 0;--i) {
-					if (nodes[i]->right != nullptr) {
-						tempNodes.push_back(nodes[i]->right);
-					}
-					if (nodes[i]->left != nullptr) {
-						tempNodes.push_back(nodes[i]->left);
-					}
-					results.push_back(nodes[i]->val);
-				}
-
-			}
-			state = !state;
-		}
-	}
-
-public:
-	void resetNode(vector<int>& nums1, vector<int>& nums2) {
-		
-		int rootIndex = -1;
-		for (int i = 0;i < nums2.size();i++) {
-			if (nums2[i] == nums1[0]) {
-				rootIndex = i;
-			}
-		}
-		//[0,rootindex-1][rootindex+1,nums2.size()-1]
-
-		
-	}
-
-private:
-	void nodeExtension(vector<int>& nums1, vector<int>& nums2, TreeNode* root, int start, int end, int cur) {
-		
-		for (int i = start;i <= end;i++) {
-			if (nums2[i] == root->val) {
-
-			}
-		}
-	}
-
-private:
-	void resetNodeExtension(vector<int>& nums1, vector<int>& nums2, TreeNode* root, int rootIndex, int start, int end, int cur) {
-		
-		for (int i = start;i < rootIndex - 1;++i) {
-			if (nums2[i] == nums1[cur]) {
-				rootIndex = i;
-			}
-		}
-
-		for (int i = rootIndex + 1;i < end;++i) {
-			if (nums2[i] == nums1[cur]) {
-				rootIndex = i;
-			}
-		}
-
-
-
-
-	}
-//118
-public:
-	vector<vector<int>> generate(int numRows) {
-		vector<vector<int>> results;
-		results.push_back({ 1 });
-		int n = 2;
-		while (n <= numRows) {
-			vector<int> result(n);
-			result[0] = 1;
-			result[n - 1] = 1;
-			for (int i = 1;i < n - 1;i++) {
-				result[i] = results[n - 1][i - 1] + results[n - 1][i];
-			}
-			results.push_back(result);
-			n++;
-		}
-		return results;
-	}
-//119
-public:
-	vector<int> getRow(int rowIndex) {
-		vector<int> result = { 1 };
-		int n = 2;
-		while (n <= rowIndex) {
-			vector<int> temp(n);
-			temp[0] = 1;
-			temp[n - 1] = 1;
-			for (int i = 1;i < n - 1;i++) {
-				temp[i] = result[i - 1] + result[i];
-			}
-			result = temp;
-			n++;
-		}
-		return result;
-	}
-//120
-public:
-	int minimumTotal(vector<vector<int>>& triangle) {
-		int curMin = 0;
-		for (int i = 0;i < triangle.size();i++) {
-			curMin = triangle[i][0] + triangle[i - 1][0];
-			for (int j = 1;j < triangle[i].size();j++) {
-				if (j == 0) {
-					triangle[i][j] += triangle[i - 1][j];
-				}
-				else if (j == triangle[i].size() - 1) {
-					triangle[i][j] += triangle[i - 1][j - 1];
-				}
-				else {
-					triangle[i][j] += min(triangle[i - 1][j], triangle[i - 1][j - 1]);
-				}
-
-				curMin = min(curMin, triangle[i][j]);
-			}
-		}
-		return curMin;
-	}
-
-public:
-	int maxprices(vector<int>& prices) {
-		int result = 0;
-		int minprice = prices[0];
-		for (int i = 1;i < prices.size();i++) {
-			minprice = min(minprice, prices[i]);
-			result = max(result, prices[i] - minprice);
-		}
-		return result;
-	}
-
-public:
-	bool checkStr(string str) {
-		int l = 0, r = static_cast<int>(str.length()) - 1;
-		while (1 < r) {
-			while (l < r && str[l] < 'a' && str[l] > 'z') {
-				l++;
-			}
-			while (l < r && str[r] < 'a' && str[r]>'z') {
-				r--;
-			}
-
-			if (str[l] != str[r]) {
-				return false;
-			}
-			l++;r--;
-		}
-		return true;
-	}
-
-public:
-	int longestConsecutive(vector<int>& nums) {
-		quickSort(nums.begin(), nums.end());
-		int maxcount = 1;
-		int count = 1;
-		int i = 1;
-		while (i < nums.size()) {
-			if (nums[i - 1] + 1 == nums[i]) {
-				count++;
-			}
-			else {
-				maxcount = max(maxcount, count);
-				count = 1;
-				i++;
-			}
-			i++;
-		}
-		maxcount = max(maxcount, count);
-		return maxcount;
-	}
-
-public:
-	int valueNode(TreeNode* root) {
-		vector<int> result;
-		valueNodeExtenion(root, 0, result);
-
-		int sum = 0;
-		for (int it : result) {
-			sum += it;
-		}
-		return sum;
-	}
-private:
-	void valueNodeExtenion(TreeNode* node, int value,vector<int>& result) {
-		if (node == nullptr) {
-			result.push_back(value);
-			return;
-		}
-		value = node->val + value * 10;
-		valueNodeExtenion(node->left, value, result);
-		valueNodeExtenion(node->right, value, result);
-	}
-
-public:
-	void loopStr(string str, vector<vector<string>>& results, vector<string> result, int start) {
-		if (start >= str.length()) {
-			cout << "Ìí¼Ó" << endl;
-			results.push_back(result);
-			return;
-		}
-		for (int i = start;i < str.length();i++) {
-			string curstr = str.substr(start, i - start + 1);
-			if (loopStrExtension(curstr)) {
-				result.push_back(curstr);
-				//cout << curstr << endl;
-				loopStr(str, results, result, i + 1);
-				result.pop_back();
-			}
-			else {
-				continue;
-			}
-		}
-	}
-private:
-	bool loopStrExtension(string str) {
-		int l = 0, r = str.length() - 1;
-		while (l < r) {
-			if (str[l] != str[r]) {
-				return false;
-			}
-			l++;
-			r--;
-		}
-		return true;
-	}
-
-public:
-	int onlyOne(vector<int> nums) {
-		quickSort(nums.begin(), nums.end());
-		int cur = nums[0];
-		bool hascount = false;
-		for (int i = 1;i < nums.size();i++) {
-			if (nums[i] == nums[i - 1]) {
-				hascount = true;
-			}
-			else {
-				if (hascount) {
-					hascount = false;
-				}
-				else {
-					return cur;
-				}
-				cur = nums[i];
-			}
-		}
-		return cur;
-	}
-
-
-//198
-public:
-	int rob(vector<int>& nums) {
-		vector<int> dp(nums.size());
-		dp[0] = nums[0];
-		dp[1] = max(dp[0], nums[1]);
-		dp[2] = max(dp[0] + nums[2], dp[1]);
-		for (int i = 3;i < nums.size();i++) {
-			dp[i] = max(dp[i - 1], dp[i - 2] + nums[i - 2]);
-		}
-		return dp[nums.size() - 1];
-	}
-//221
-public:
-	int maximalSquare(vector<vector<char>>& matrix) {
-		int maxLength = 0;
-		for (int i = 0;i < matrix[0].size();i++) {
-			if (matrix[0][i] == '1') {
-				maxLength = 1;
-				break;
-			}
-		}
-		for (int i = 1;i < matrix.size();i++) {
-			
-			for (int j = 0;j < matrix[i].size();j++) {
-				if (j == 0) {
-					maxLength = max(maxLength, matrix[i][j] - '0');
-				}
-				else {
-					if (matrix[i][j] == '1') {
-						if (matrix[i][j - 1] != '0' && matrix[i - 1][j - 1] != '0' && matrix[i - 1][j] != '0') {
-							matrix[i][j] = (char)(min({ matrix[i][j - 1] - '0', matrix[i - 1][j - 1] - '0', matrix[i - 1][j] - '0' }) + 1);
-						}
-					}
-					maxLength = max(maxLength, matrix[i][j] - '0');
-				}
-			}
-		}
-		return maxLength * maxLength;
-	}
-//740
-public:
-	int deleteAndEarn(vector<int>& nums) {
-		unordered_map<int, int> numSum;
-		for (int num : nums) {
-			numSum[num] += num;
-		}
-		vector<int> uniqueNum;
-		for (auto& p : numSum) {
-			uniqueNum.push_back(p.first);
-		}
-		sort(uniqueNum.begin(), uniqueNum.end());
-
-		vector<int> dp(nums.size() + 1);
-		dp[0] = 0;
-		dp[1] = numSum[uniqueNum[0]];
-		for (int i = 2;i <= uniqueNum.size();i++) {
-			int curNum = uniqueNum[i - 1];
-			int prevNum = uniqueNum[i - 2];
-
-			if (curNum == prevNum + 1) {
-				dp[i] = max(dp[i - 1], dp[i - 2] + numSum[curNum]);
-			}
-			else {
-				dp[i] = dp[i - 1] + numSum[curNum];
-			}
-		}
-		return dp[uniqueNum.size()];
-	}
-//746
-public:
-	int minCostClimbingStairs(vector<int>& cost) {
-		vector<int> dp(cost.size() + 1);
-		dp[0] = 0;
-		dp[1] = 0;
-		dp[2] = min(dp[0] + cost[0], dp[1] + cost[1]);
-
-		for (int i = 3;i < cost.size();i++) {
-			dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
-		}
-		return dp[cost.size()];
 	}
 
 

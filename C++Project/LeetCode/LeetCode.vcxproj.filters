@@ -29,5 +29,11 @@
     <ClInclude Include="Sort.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Solution_101-200.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Solution_201-300.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
