@@ -2028,7 +2028,10 @@ public:
 
 	}
 //085
+public:
+	int maximalRectangle(vector<vector<char>>& matrix) {
 
+	}
 //086
 public:
 	ListNode* partition(ListNode* head,int x) {
@@ -2066,7 +2069,10 @@ public:
 		return minFirst;
 	}
 //087
+public:
+	bool isScramble(string s1, string s2) {
 
+	}
 //088
 public:
 	void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
@@ -2084,7 +2090,10 @@ public:
 		}
 	}
 //089
+public:
+	vector<int> grayCode(int n) {
 
+	}
 //090
 public:
 	vector<vector<int>> subsetWithDup(vector<int>& nums) {
@@ -2105,7 +2114,10 @@ private:
 		}
 	}
 //091
+public:
+	int numDecodings(string s) {
 
+	}
 //092
 public:
 	ListNode* reverseBetewwn(ListNode* head, int left, int right) {
@@ -2270,9 +2282,15 @@ public:
 		return true;
 	}
 //098
+public:
+	bool isValidBST(TreeNode* root) {
 
+	}
 //099
+public:
+	void recoverTree(TreeNode* root) {
 
+	}
 //100
 public:
 	bool isSameTree(TreeNode* p,TreeNode* q) {
