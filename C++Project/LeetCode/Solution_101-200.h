@@ -10,7 +10,6 @@
 #include <set>
 
 
-
 #include "Extension.h"
 #include "Sort.h"
 
@@ -116,6 +115,65 @@ namespace Solution_101_200 {
 		TreeNode* buildTree_106(vector<int>& inorder, vector<int>& postorder) {
 
 		}
+		//107
+		vector<vector<int>> levelOrderBottom(TreeNode* root) {
+			vector<vector<int>> results;
+			queue<TreeNode*> nodeQueue;
+			nodeQueue.push(root);
+			levelOrderBottomExtension(nodeQueue, results);
+			return results;
+		}
+	private:
+		void levelOrderBottomExtension(queue<TreeNode*> nodeQueue,vector<vector<int>>& results) {
+				if (!nodeQueue.empty()) {
+					queue<TreeNode*> tempQueue;
+					vector<int> result;
+					while (!nodeQueue.empty()) {
+						TreeNode* node = nodeQueue.front();
+						nodeQueue.pop();
+						result.push_back(node->val);
+						if (node->left != nullptr) {
+							tempQueue.push(node->left);
+						}
+						if (node->right != nullptr) {
+							tempQueue.push(node->right);
+						}
+					}
+
+					if (!tempQueue.empty()) {
+						levelOrderBottomExtension(tempQueue, results);
+					}
+
+					if (!result.empty()) {
+						results.insert(results.begin(), result);
+					}
+				}
+			}
+
+		//108
+
+	private:
+		TreeNode* nodeExtension(vector<int>& nums, int left, int right) {
+			if (left < right) {
+				int mid = (left + right) / 2;
+				TreeNode* node = new TreeNode(nums[mid]);
+
+				node->left = nodeExtension(nums, left, mid - 1);
+				node->right = nodeExtension(nums, mid + 1, right);
+				return node;
+			}
+			return nullptr;
+		}
+
+		//109
+
+		//110
+
+		//111
+
+		//112
+
+
 		//118
 		vector<vector<int>> generate(int numRows) {
 			vector<vector<int>> results;
