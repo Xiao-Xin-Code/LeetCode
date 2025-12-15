@@ -100,21 +100,43 @@ namespace Solution_101_200 {
 		}
 		//105
 		TreeNode* buildTree_105(vector<int>& preorder, vector<int>& inorder) {
-
-			int rootIndex = -1;
-			for (int i = 0;i < inorder.size();i++) {
-				if (inorder[i] == preorder[0]) {
-					rootIndex = i;
+			return Extension(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
+		}
+	private:
+		TreeNode* Extension(vector<int>& preorder, vector<int>& inorder, int preLeft, int preRight, int inLeft, int inRight) {
+			if (preLeft > preRight) return nullptr;
+			TreeNode* node = new TreeNode(preorder[preLeft]);
+			for (int i = inLeft;i <= inRight;i++) {
+				if (inorder[i] == preorder[preLeft]) {
+					node->left = Extension(preorder, inorder, preLeft + 1, preLeft + i - inLeft, inLeft, i - 1);
+					node->right = Extension(preorder, inorder, preLeft + i - inLeft + 1, preRight, i + 1, inRight);
+					break;
 				}
 			}
-			//[0,rootindex-1][rootindex+1,nums2.size()-1]
-
-
+			return node;
 		}
+	
+	public:
 		//106
 		TreeNode* buildTree_106(vector<int>& inorder, vector<int>& postorder) {
-
+			return Extension(inorder, postorder, 0, inorder.size() - 1, 0, postorder.size() - 1);
 		}
+	private:
+		TreeNode* Extension(vector<int>& inorder, vector<int>& postorder, int inLeft, int inRight, int postLeft, int postRight) {
+			if (postLeft > postRight) return nullptr;
+			TreeNode* node = new TreeNode(postorder[postRight]);
+			for (int i = inLeft;i <= inRight;i++) {
+				if (inorder[i] == postorder[postRight]) {
+					node->left = Extension(inorder, postorder, inLeft, i - 1, postLeft, postLeft + i - inLeft);
+					node->right = Extension(inorder, postorder, i + 1, inRight, postLeft + i - inLeft + 1, postRight - 1);
+					break;
+				}
+			}
+			return node;
+		}
+	
+	
+
 		//107
 		vector<vector<int>> levelOrderBottom(TreeNode* root) {
 			vector<vector<int>> results;
@@ -151,6 +173,9 @@ namespace Solution_101_200 {
 			}
 
 		//108
+		
+
+
 
 	private:
 		TreeNode* nodeExtension(vector<int>& nums, int left, int right) {
@@ -168,11 +193,109 @@ namespace Solution_101_200 {
 		//109
 
 		//110
+		bool isBalanced(TreeNode* root) {
+			return isBalancedExtension(root) >= 0;
+		}
+	private:
+		int isBalancedExtension(TreeNode* root) {
+			if (root == nullptr) return 0;
+			int leftDepth = isBalancedExtension(root->left);
+			if (leftDepth == -1) return -1;
+			int rightDepth = isBalancedExtension(root->right);
+			if (rightDepth == -1) return -1;
 
+			if (abs(leftDepth - rightDepth) > 1) {
+				return -1;
+			}
+
+			return 1 + max(leftDepth, rightDepth);
+		}
+
+	public:
 		//111
-
+		int minDepth(TreeNode* root) {
+			if (root == nullptr) return 0;
+			int leftDepth = minDepth(root->left);
+			int rightDepth = minDepth(root->right);
+			return 1 + min(leftDepth, rightDepth);
+		}
 		//112
+		bool hasPathSum(TreeNode* root, int targetSum) {
+			if (root == nullptr) {
+				return targetSum == 0;
+			}
+			return  hasPathSum(root->left, targetSum - root->val) || hasPathSum(root->right, targetSum - root->val);
+		}
+		//113
+		vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+			vector<vector<int>> results;
+			pathSumExtension(root, targetSum, results, {});
+			return results;
+		}
+	private: 
+		void pathSumExtension(TreeNode* root, int targetSum, vector<vector<int>>& results, vector<int> result) {
+			if (root == nullptr) {
+				if (targetSum == 0) {
+					results.push_back(result);
+				}
+				return;
+			}
+			result.push_back(root->val);
+			pathSumExtension(root->left, targetSum - root->val, results, result);
+			pathSumExtension(root->right, targetSum - root->val, results, result);
+			result.pop_back();
+		}
+	
+		//114
+	public:
+		TreeNode* ConvertTreeNode(TreeNode* root) {
+			if (root == nullptr) return nullptr;
+			TreeNode* node = new TreeNode(root->val);
+			node->right = ConvertTreeNode(root->left);
+			if (node->right != nullptr) {
+				node->right = ConvertTreeNode(root->right);
+			}
+			else {
+				node->right->right = ConvertTreeNode(root->right);
+			}
+			return node;
+		}
+		//115
 
+
+
+	public:
+		//116
+		Node* TreeNodeNext(Node* root) {
+			queue<Node*> nodeQueue;
+			nodeQueue.push(root);
+			nodeNextExtension(nodeQueue);
+			return root;
+		}
+	private:
+		void nodeNextExtension(queue<Node*> nodeQueue) {
+			queue<Node*> tempQueue;
+			Node* pre = nullptr;
+			while (!nodeQueue.empty()) {
+				Node* temp = nodeQueue.front();
+				nodeQueue.pop();
+				if (pre != nullptr) {
+					pre->next = temp;
+					pre = temp;
+				}
+				else {
+					pre = temp;
+				}
+				if (temp->left != nullptr) {
+					tempQueue.push(temp->left);
+				}
+				if (temp->right != nullptr) {
+					tempQueue.push(temp->right);
+				}
+			}
+		}
+		
+		//117
 
 		//118
 		vector<vector<int>> generate(int numRows) {
@@ -238,7 +361,7 @@ namespace Solution_101_200 {
 			}
 			return result;
 		}
-
+		//125
 		bool checkStr(string str) {
 			int l = 0, r = static_cast<int>(str.length()) - 1;
 			while (1 < r) {
