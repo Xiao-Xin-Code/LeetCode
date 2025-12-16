@@ -100,16 +100,16 @@ namespace Solution_101_200 {
 		}
 		//105
 		TreeNode* buildTree_105(vector<int>& preorder, vector<int>& inorder) {
-			return Extension(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
+			return buildTree_105_Extension(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
 		}
 	private:
-		TreeNode* Extension(vector<int>& preorder, vector<int>& inorder, int preLeft, int preRight, int inLeft, int inRight) {
+		TreeNode* buildTree_105_Extension(vector<int>& preorder, vector<int>& inorder, int preLeft, int preRight, int inLeft, int inRight) {
 			if (preLeft > preRight) return nullptr;
 			TreeNode* node = new TreeNode(preorder[preLeft]);
 			for (int i = inLeft;i <= inRight;i++) {
 				if (inorder[i] == preorder[preLeft]) {
-					node->left = Extension(preorder, inorder, preLeft + 1, preLeft + i - inLeft, inLeft, i - 1);
-					node->right = Extension(preorder, inorder, preLeft + i - inLeft + 1, preRight, i + 1, inRight);
+					node->left = buildTree_105_Extension(preorder, inorder, preLeft + 1, preLeft + i - inLeft, inLeft, i - 1);
+					node->right = buildTree_105_Extension(preorder, inorder, preLeft + i - inLeft + 1, preRight, i + 1, inRight);
 					break;
 				}
 			}
@@ -119,24 +119,23 @@ namespace Solution_101_200 {
 	public:
 		//106
 		TreeNode* buildTree_106(vector<int>& inorder, vector<int>& postorder) {
-			return Extension(inorder, postorder, 0, inorder.size() - 1, 0, postorder.size() - 1);
+			return buildTree_106_Extension(inorder, postorder, 0, inorder.size() - 1, 0, postorder.size() - 1);
 		}
 	private:
-		TreeNode* Extension(vector<int>& inorder, vector<int>& postorder, int inLeft, int inRight, int postLeft, int postRight) {
+		TreeNode* buildTree_106_Extension(vector<int>& inorder, vector<int>& postorder, int inLeft, int inRight, int postLeft, int postRight) {
 			if (postLeft > postRight) return nullptr;
 			TreeNode* node = new TreeNode(postorder[postRight]);
 			for (int i = inLeft;i <= inRight;i++) {
 				if (inorder[i] == postorder[postRight]) {
-					node->left = Extension(inorder, postorder, inLeft, i - 1, postLeft, postLeft + i - inLeft);
-					node->right = Extension(inorder, postorder, i + 1, inRight, postLeft + i - inLeft + 1, postRight - 1);
+					node->left = buildTree_106_Extension(inorder, postorder, inLeft, i - 1, postLeft, postLeft + i - inLeft);
+					node->right = buildTree_106_Extension(inorder, postorder, i + 1, inRight, postLeft + i - inLeft + 1, postRight - 1);
 					break;
 				}
 			}
 			return node;
 		}
-	
-	
 
+	public:
 		//107
 		vector<vector<int>> levelOrderBottom(TreeNode* root) {
 			vector<vector<int>> results;
@@ -172,26 +171,29 @@ namespace Solution_101_200 {
 				}
 			}
 
+	public:
 		//108
-		
-
-
-
+		TreeNode* sortedArrayToBST(vector<int>& nums) {
+			return sortedArrayToBSTeExtension(nums, 0, nums.size() - 1);
+		}
 	private:
-		TreeNode* nodeExtension(vector<int>& nums, int left, int right) {
+		TreeNode* sortedArrayToBSTeExtension(vector<int>& nums, int left, int right) {
 			if (left < right) {
 				int mid = (left + right) / 2;
 				TreeNode* node = new TreeNode(nums[mid]);
 
-				node->left = nodeExtension(nums, left, mid - 1);
-				node->right = nodeExtension(nums, mid + 1, right);
+				node->left = sortedArrayToBSTeExtension(nums, left, mid - 1);
+				node->right = sortedArrayToBSTeExtension(nums, mid + 1, right);
 				return node;
 			}
 			return nullptr;
 		}
 
+	public:
 		//109
+		TreeNode* sortedListToBST(ListNode* head) {
 
+		}
 		//110
 		bool isBalanced(TreeNode* root) {
 			return isBalancedExtension(root) >= 0;
@@ -248,55 +250,61 @@ namespace Solution_101_200 {
 	
 		//114
 	public:
-		TreeNode* ConvertTreeNode(TreeNode* root) {
+		TreeNode* flatten(TreeNode* root) {
 			if (root == nullptr) return nullptr;
 			TreeNode* node = new TreeNode(root->val);
-			node->right = ConvertTreeNode(root->left);
+			node->right = flatten(root->left);
 			if (node->right != nullptr) {
-				node->right = ConvertTreeNode(root->right);
+				node->right = flatten(root->right);
 			}
 			else {
-				node->right->right = ConvertTreeNode(root->right);
+				node->right->right = flatten(root->right);
 			}
 			return node;
 		}
 		//115
+		int numDistinct(string s, string t) {
 
-
+		}
 
 	public:
 		//116
-		Node* TreeNodeNext(Node* root) {
+		Node* connect_116(Node* root) {
 			queue<Node*> nodeQueue;
 			nodeQueue.push(root);
-			nodeNextExtension(nodeQueue);
+			connect_116_Extension(nodeQueue);
 			return root;
 		}
 	private:
-		void nodeNextExtension(queue<Node*> nodeQueue) {
+		void connect_116_Extension(queue<Node*> nodeQueue) {
 			queue<Node*> tempQueue;
-			Node* pre = nullptr;
+			Node dummy;
+			Node* pre = &dummy;
 			while (!nodeQueue.empty()) {
 				Node* temp = nodeQueue.front();
 				nodeQueue.pop();
-				if (pre != nullptr) {
-					pre->next = temp;
-					pre = temp;
-				}
-				else {
-					pre = temp;
-				}
-				if (temp->left != nullptr) {
+
+				if (temp->left) {
 					tempQueue.push(temp->left);
 				}
-				if (temp->right != nullptr) {
+				if (temp->right) {
 					tempQueue.push(temp->right);
+				}
+
+				if (pre == &dummy) {
+					pre == temp;
+				}
+				else {
+					pre->next = temp;
 				}
 			}
 		}
 		
+	public:
 		//117
+		Node* connect_117(Node* root) {
 
+		}
 		//118
 		vector<vector<int>> generate(int numRows) {
 			vector<vector<int>> results;
@@ -351,8 +359,8 @@ namespace Solution_101_200 {
 			}
 			return curMin;
 		}
-
-		int maxprices(vector<int>& prices) {
+		//121
+		int maxProfit_121(vector<int>& prices) {
 			int result = 0;
 			int minprice = prices[0];
 			for (int i = 1;i < prices.size();i++) {
@@ -361,25 +369,41 @@ namespace Solution_101_200 {
 			}
 			return result;
 		}
+		//122
+		int maxProfit_122(vector<int>& prices) {
+
+		}
+		//123
+		int maxProfit_123(vector<int>& prices) {
+
+		}
+		//124
+		int maxPathSum(TreeNode* root) {
+
+		}
 		//125
-		bool checkStr(string str) {
-			int l = 0, r = static_cast<int>(str.length()) - 1;
+		bool isPalindrome(string s) {
+			int l = 0, r = static_cast<int>(s.length()) - 1;
 			while (1 < r) {
-				while (l < r && str[l] < 'a' && str[l] > 'z') {
+				while (l < r && s[l] < 'a' && s[l] > 'z') {
 					l++;
 				}
-				while (l < r && str[r] < 'a' && str[r]>'z') {
+				while (l < r && s[r] < 'a' && s[r]>'z') {
 					r--;
 				}
 
-				if (str[l] != str[r]) {
+				if (s[l] != s[r]) {
 					return false;
 				}
 				l++;r--;
 			}
 			return true;
 		}
+		//126
 
+		//127
+		
+		//128
 		int longestConsecutive(vector<int>& nums) {
 			quickSort(nums.begin(), nums.end());
 			int maxcount = 1;
@@ -399,7 +423,7 @@ namespace Solution_101_200 {
 			maxcount = max(maxcount, count);
 			return maxcount;
 		}
-
+		//129
 		int valueNode(TreeNode* root) {
 			vector<int> result;
 			valueNodeExtenion(root, 0, result);
@@ -420,6 +444,10 @@ namespace Solution_101_200 {
 			valueNodeExtenion(node->left, value, result);
 			valueNodeExtenion(node->right, value, result);
 		}
+	
+	public:
+		//130
+
 
 	public:
 		void loopStr(string str, vector<vector<string>>& results, vector<string> result, int start) {

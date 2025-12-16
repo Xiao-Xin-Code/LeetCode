@@ -1685,7 +1685,7 @@ namespace Solution_001_100 {
 		}
 		//073
 		void setZeroes(vector<vector<int>>& matrix) {
-			bool colHasZero, rowHasZero;
+			bool colHasZero = false, rowHasZero = false;
 			for (int i = 0;i < matrix[0].size();i++) {
 				if (matrix[0][i] == 0) colHasZero = true;
 			}
