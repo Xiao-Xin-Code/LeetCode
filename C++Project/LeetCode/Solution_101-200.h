@@ -269,19 +269,21 @@ namespace Solution_101_200 {
 
 	public:
 		//116
-		Node* connect_116(Node* root) {
+		BinaryTree::Node* connect_116(BinaryTree::Node* root) {
+			using BinaryTree::Node;
 			queue<Node*> nodeQueue;
 			nodeQueue.push(root);
 			connect_116_Extension(nodeQueue);
 			return root;
 		}
 	private:
-		void connect_116_Extension(queue<Node*> nodeQueue) {
+		void connect_116_Extension(queue<BinaryTree::Node*> nodeQueue) {
+			using BinaryTree::Node;
 			queue<Node*> tempQueue;
 			Node dummy;
 			Node* pre = &dummy;
 			while (!nodeQueue.empty()) {
-				Node* temp = nodeQueue.front();
+				BinaryTree::Node* temp = nodeQueue.front();
 				nodeQueue.pop();
 
 				if (temp->left) {
@@ -302,7 +304,7 @@ namespace Solution_101_200 {
 		
 	public:
 		//117
-		Node* connect_117(Node* root) {
+		BinaryTree::Node* connect_117(BinaryTree::Node* root) {
 
 		}
 		//118
@@ -400,9 +402,13 @@ namespace Solution_101_200 {
 			return true;
 		}
 		//126
+		vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
 
+		}
 		//127
-		
+		int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+
+		}
 		//128
 		int longestConsecutive(vector<int>& nums) {
 			quickSort(nums.begin(), nums.end());
@@ -424,9 +430,9 @@ namespace Solution_101_200 {
 			return maxcount;
 		}
 		//129
-		int valueNode(TreeNode* root) {
+		int sumNumbers(TreeNode* root) {
 			vector<int> result;
-			valueNodeExtenion(root, 0, result);
+			sumNumbersExtenion(root, 0, result);
 
 			int sum = 0;
 			for (int it : result) {
@@ -435,22 +441,29 @@ namespace Solution_101_200 {
 			return sum;
 		}
 	private:
-		void valueNodeExtenion(TreeNode* node, int value, vector<int>& result) {
+		void sumNumbersExtenion(TreeNode* node, int value, vector<int>& result) {
 			if (node == nullptr) {
 				result.push_back(value);
 				return;
 			}
 			value = node->val + value * 10;
-			valueNodeExtenion(node->left, value, result);
-			valueNodeExtenion(node->right, value, result);
+			sumNumbersExtenion(node->left, value, result);
+			sumNumbersExtenion(node->right, value, result);
 		}
 	
 	public:
 		//130
+		void solve(vector<vector<char>>& board) {
 
-
-	public:
-		void loopStr(string str, vector<vector<string>>& results, vector<string> result, int start) {
+		}
+		//131
+		vector<vector<string>> partition(string s) {
+			vector<vector<string>> results;
+			partitionExtension(s, results, {}, 0);
+			return results;
+		}
+	private:
+		void partitionExtension(string str, vector<vector<string>>& results, vector<string> result, int start) {
 			if (start >= str.length()) {
 				cout << "添加" << endl;
 				results.push_back(result);
@@ -458,10 +471,10 @@ namespace Solution_101_200 {
 			}
 			for (int i = start;i < str.length();i++) {
 				string curstr = str.substr(start, i - start + 1);
-				if (loopStrExtension(curstr)) {
+				if (isPartition(curstr)) {
 					result.push_back(curstr);
 					//cout << curstr << endl;
-					loopStr(str, results, result, i + 1);
+					partitionExtension(str, results, result, i + 1);
 					result.pop_back();
 				}
 				else {
@@ -469,8 +482,7 @@ namespace Solution_101_200 {
 				}
 			}
 		}
-	private:
-		bool loopStrExtension(string str) {
+		bool isPartition(string str) {
 			int l = 0, r = str.length() - 1;
 			while (l < r) {
 				if (str[l] != str[r]) {
@@ -481,6 +493,125 @@ namespace Solution_101_200 {
 			}
 			return true;
 		}
+
+	public:
+		//132
+		int minCut(string s) {
+
+		}
+		//133
+		Graph::Node* cloneGraph(Graph::Node* node) {
+			using Graph::Node;
+			queue<Node*> nodeQueue;
+			nodeQueue.push(node);
+
+			Node* belogNode;
+			Node* head;
+
+			while (!nodeQueue.empty()) {
+
+				Node* sourceNode = nodeQueue.front();
+				nodeQueue.pop();
+
+				Node* targetNode = new Node(sourceNode->val);
+				if (!head) {
+					head = targetNode;
+				}
+				if (belogNode) {
+					belogNode->neighbors.push_back(targetNode);
+				}
+				else {
+					belogNode = targetNode;
+				}
+
+				if (!sourceNode->neighbors.empty()) {
+					for (Node* it : sourceNode->neighbors) {
+						nodeQueue.push(it);
+					}
+				}
+			}
+
+			return head;
+		}
+		//134
+		int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+			int totalGas = 0;
+			for (int i = 0;i < gas.size();i++) {
+				if (gas[i] >= cost[i]) {
+					//可以开始
+					totalGas = gas[i] - cost[i];
+					int next = i + 1;
+					if (next == gas.size()) {
+						next = 0;
+					}
+					if (canCompleteCircuitExtension(gas, cost, totalGas, i, next)) {
+						return i;
+					}
+				}
+			}
+			return -1;
+		}
+	private:
+		bool canCompleteCircuitExtension(vector<int>& gas, vector<int>& cost, int totalGas, int start, int cur) {
+			if (cur == start) {
+				return true;
+			}
+			totalGas = totalGas + gas[cur] - cost[cur];
+			if (totalGas >= 0) {
+				//切换到下一个
+
+				cur = cur + 1;
+				if (cur == gas.size()) {
+					cur = 0;
+				}
+				return canCompleteCircuitExtension(gas, cost, totalGas, start, cur);
+			}
+			else {
+				return false;
+			}
+		}
+	
+	public:
+		//135
+		int candy(vector<int>& ratings) {
+			if (ratings.empty())return 0;
+			if (ratings.size() == 1) return 1;
+			if (ratings.size() == 2) return 3;
+			int pre = 1;
+			int mid = 1;
+			int next = 1;
+			int result = 0;
+			vector<int> cost(ratings.size(), 1);
+			for (int i = 1;i + 1 < ratings.size();i++) {
+				if (ratings[i] >= ratings[i + 1]) {
+					if (mid <= next) {
+						mid = next + 1;
+					}
+				}
+				else {
+					if (mid >= next)
+					{
+						next = mid + 1;
+					}
+				}
+				if (ratings[i] >= ratings[i - 1]) {
+					if (mid <= pre) {
+						mid = pre + 1;
+					}
+				}
+				else {
+					if (mid >= pre) {
+						pre = mid + 1;
+					}
+				}
+				result = result + pre;
+			}
+			result = result + mid + next;
+			return result;
+		}
+
+
+
 
 	public:
 		int onlyOne(vector<int> nums) {
