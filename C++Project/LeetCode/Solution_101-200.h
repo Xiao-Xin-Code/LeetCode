@@ -505,8 +505,8 @@ namespace Solution_101_200 {
 			queue<Node*> nodeQueue;
 			nodeQueue.push(node);
 
-			Node* belogNode;
-			Node* head;
+			Node* belogNode = nullptr;
+			Node* head = nullptr;
 
 			while (!nodeQueue.empty()) {
 
@@ -514,14 +514,15 @@ namespace Solution_101_200 {
 				nodeQueue.pop();
 
 				Node* targetNode = new Node(sourceNode->val);
-				if (!head) {
+				if (head == nullptr) {
 					head = targetNode;
 				}
-				if (belogNode) {
-					belogNode->neighbors.push_back(targetNode);
+
+				if (belogNode == nullptr) {
+					belogNode = targetNode;
 				}
 				else {
-					belogNode = targetNode;
+					belogNode->neighbors.push_back(targetNode);
 				}
 
 				if (!sourceNode->neighbors.empty()) {
@@ -609,12 +610,8 @@ namespace Solution_101_200 {
 			result = result + mid + next;
 			return result;
 		}
-
-
-
-
-	public:
-		int onlyOne(vector<int> nums) {
+		//136
+		int singleNumber_136(vector<int> nums) {
 			quickSort(nums.begin(), nums.end());
 			int cur = nums[0];
 			bool hascount = false;
@@ -634,7 +631,51 @@ namespace Solution_101_200 {
 			}
 			return cur;
 		}
+		//137
+		int singleNumber_137(vector<int> nums) {
 
+		}
+		//138
+		RandomList::Node* copyRandomList(RandomList::Node* head) {
+			using RandomList::Node;
+			if (!head) return nullptr;
+			Node* targetNode = new Node(head->val);
+			if (head->next) {
+				targetNode->next = copyRandomList(head->next);
+			}
+			if (head->random) {
+				targetNode->random = copyRandomList(head->random);
+			}
+			return targetNode;
+		}
+		//139
+		bool wordBreak_139(string s, vector<string>& wordDict) {
+			return wordBreak_139_Extension(s, wordDict, 0);
+		}
+	private:
+		bool wordBreak_139_Extension(string s, vector<string>& wordDict,int cur) {
+			if (cur == s.size()) return true;
+			for (string it : wordDict) {
+				if (it == s.substr(cur, it.size())) {
+					//当前可以使用
+					cur = cur + it.size();
+					bool result = wordBreak_139_Extension(s, wordDict, cur);
+					if (result) {
+						return true;
+					}
+					else {
+						cur = cur - it.size();
+					}
+				}
+			}
+			return false;
+		}
+
+	public:
+		//140
+		vector<string> wordBreak_140(string s, vector<string>& wordDict) {
+
+		}
 
 		//198
 	public:
