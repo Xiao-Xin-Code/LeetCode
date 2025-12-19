@@ -674,8 +674,106 @@ namespace Solution_101_200 {
 	public:
 		//140
 		vector<string> wordBreak_140(string s, vector<string>& wordDict) {
+			vector<string> results;
+			if (!s.empty()) {
+				wordBreak_140_Extension(s, wordDict, "", 0, results);
+			}
+			return results;
+		}
+	private:
+		void wordBreak_140_Extension(string s, vector<string>& wordDict, string curstr, int cur,vector<string>& results) {
+			if (cur == s.size()) {
+				results.push_back(curstr);
+				return;
+			}
+			for (string it : wordDict) {
+				if (it == s.substr(cur, it.size())) {
+					//当前可以使用
+					string targetStr = curstr + " " + it;
+					if (curstr.empty()) {
+						targetStr = it;
+					}
+					wordBreak_140_Extension(s, wordDict, targetStr, cur + it.size(), results);
+				}
+			}
+		}
+
+	public:
+		//141
+		bool hasCycle(ListNode* head) {
+			ListNode* slow = head;
+			ListNode* frist = head->next;
+			if (frist == nullptr) return false;
+			frist = frist->next;
+
+			while (slow != nullptr && frist != nullptr) {
+				if (slow == frist) {
+					return true;
+				}
+				slow = slow->next;
+				frist = frist->next;
+				if (frist == nullptr) return false;
+				frist = frist->next;
+			}
+			return false;
+		}
+		//142
+		ListNode* detectCycle(ListNode* head) {
+
 
 		}
+		//143
+		void reorderList(ListNode* head) {
+			if (head == nullptr || head->next == nullptr || head->next->next == nullptr) return;
+			ListNode* one = head;
+			ListNode* two = head->next;
+			ListNode* pre = two;
+			ListNode* three = head->next->next;
+			ListNode* four = head->next->next->next;
+
+			while (three != nullptr) {
+				while (three != nullptr) {
+					pre->next = four;
+					three->next = two;
+					one->next = three;
+					two = three;
+					three = four;
+					if (four != nullptr) {
+						four = four->next;
+					}
+					
+				}
+				one = one->next;
+				two = one->next;
+				pre = two;
+				three = two->next;
+				if (three != nullptr) {
+					four = three->next;
+				}
+				
+			}
+		}
+		//144
+		vector<int> preorderTraversal(TreeNode* root) {
+			vector<int> result;
+			preorderTraversalExtension(root, result);
+			return result;
+
+		}
+	private:
+		void preorderTraversalExtension(TreeNode* root, vector<int>& result) {
+			if (root == nullptr) {
+				return;
+			}
+			result.push_back(root->val);
+			if (root->left != nullptr) {
+				preorderTraversalExtension(root->left, result);
+			}
+			if (root->right != nullptr) {
+				preorderTraversalExtension(root->right, result);
+			}
+		}
+
 
 		//198
 	public:
