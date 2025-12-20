@@ -773,6 +773,70 @@ namespace Solution_101_200 {
 				preorderTraversalExtension(root->right, result);
 			}
 		}
+	public:
+		//145
+		vector<int> postorderTraversal(TreeNode* root) {
+			vector<int> result;
+			postorderTraversalExtension(root, result);
+			return result;
+		}
+	private:
+		void postorderTraversalExtension(TreeNode* root, vector<int>& result) {
+			if (root == nullptr) {
+				return;
+			}
+			
+			if (root->left != nullptr) {
+				postorderTraversalExtension(root->left, result);
+			}
+			if (root->right != nullptr) {
+				postorderTraversalExtension(root->right, result);
+			}
+			result.push_back(root->val);
+		}
+		//146
+
+	public:
+		//147
+		ListNode* insertionSortList(ListNode* head) {
+			if (head == nullptr || head->next == nullptr) return head;
+			ListNode* sortBegin = head;
+			ListNode* sortEndPre = head;
+			ListNode* cur = head->next;
+
+			while (cur != nullptr) {
+				ListNode* tempNext = cur->next;
+				ListNode* pre = nullptr;
+				bool preToNext = true;
+				while (sortBegin != cur) {
+					if (sortBegin->val <= cur->val) {
+						pre = sortBegin;
+						sortBegin = sortBegin->next;
+					}
+					else {
+						if (pre == nullptr) {
+							sortEndPre->next = cur->next;
+							cur->next = sortBegin;
+							head = cur;
+						}
+						else {
+							sortEndPre->next = cur->next;
+							cur->next = pre->next;
+							pre->next = cur;
+						}
+						preToNext = false;
+						break;
+					}
+				}
+				sortBegin = head;
+				if (preToNext)sortEndPre = sortEndPre->next;
+				cur = tempNext;
+			}
+			return head;
+		}
+
+
+
 
 
 		//198
