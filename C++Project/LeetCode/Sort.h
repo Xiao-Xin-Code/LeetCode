@@ -264,12 +264,12 @@ void mergerSort(const _Ranlt _First, const _Ranlt _Last, _Pr _Pred) {
 
 	if (_First >= _Last)return;
 
-	_CombineSort_unchecked(_First, _Last, _Pred);
+	_MergerSort_unchecked(_First, _Last, _Pred);
 }
 
 template<typename _Ranlt>
 void mergerSort(const _Ranlt _First, const _Ranlt _Last) {
-	combineSort(_First, _Last, std::less<>());
+	mergerSort(_First, _Last, std::less<>());
 }
 
 template<typename _Ranlt, typename _Pr>

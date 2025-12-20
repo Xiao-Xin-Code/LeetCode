@@ -834,9 +834,49 @@ namespace Solution_101_200 {
 			}
 			return head;
 		}
+		//148
+		ListNode* sortList(ListNode* head) {
+
+		}
+
+		string reverseWords(string s) {
+			int readIndex = 0;
+			int writeIndex = 0;
+
+			while (readIndex < s.length() && s[readIndex] == ' ') {
+				readIndex++;
+			}
+
+			while (readIndex < s.length()) {
+				s[writeIndex] = s[readIndex];
+				writeIndex++;
+				readIndex++;
+			}
 
 
+			//·´Ïò
+			int l = 0, r = s.length() - 1;
 
+			while (l < r) {
+				swap(s[l], s[r]);
+				l++;
+				r--;
+			}
+
+			int sl = 0;
+			for (int i = 0;i < s.length();++i) {
+				if (s[i] == ' ') {
+					int sr = i;
+					while (sl<sr) {
+						swap(s[sl], s[sr]);
+						sl++;
+						sr--;
+					}
+					sl = i + 1;
+				}
+			}
+
+		}
 
 
 		//198
