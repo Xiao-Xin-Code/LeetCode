@@ -838,7 +838,11 @@ namespace Solution_101_200 {
 		ListNode* sortList(ListNode* head) {
 
 		}
+		//149
 
+		//150
+
+		//151
 		string reverseWords(string s) {
 			int readIndex = 0;
 			int writeIndex = 0;
@@ -848,11 +852,26 @@ namespace Solution_101_200 {
 			}
 
 			while (readIndex < s.length()) {
-				s[writeIndex] = s[readIndex];
+				swap(s[writeIndex], s[readIndex]);
 				writeIndex++;
 				readIndex++;
 			}
+			cout << writeIndex << endl;
+			while (writeIndex < s.length()) {
+				s[writeIndex] = ' ';
+				writeIndex++;
+			}
 
+			int nullIndex = s.length() - 1;
+			while (nullIndex >= 0) {
+				if (s[nullIndex] == ' ') {
+					s.pop_back();
+					nullIndex--;
+				}
+				else {
+					break;
+				}
+			}
 
 			//·´Ïò
 			int l = 0, r = s.length() - 1;
@@ -863,19 +882,155 @@ namespace Solution_101_200 {
 				r--;
 			}
 
+			cout << s << endl;
+
 			int sl = 0;
 			for (int i = 0;i < s.length();++i) {
 				if (s[i] == ' ') {
-					int sr = i;
-					while (sl<sr) {
+					int sr = i - 1;
+					while (sl < sr) {
 						swap(s[sl], s[sr]);
 						sl++;
 						sr--;
 					}
 					sl = i + 1;
 				}
-			}
+				else if (i == s.length() - 1) {
+					int sr = i;
+					while (sl < sr) {
+						swap(s[sl], s[sr]);
+						sl++;
+						sr--;
+					}
+					sl = i + 1;
+				}
 
+			}
+			return s;
+		}
+		//152
+		int maxProduct(vector<int>& nums) {
+			int maxMul = nums[0];
+			int cur = nums[0];
+
+			for (int i = 1;i < nums.size();++i) {
+				int temp = nums[i] * cur;
+				if (cur == 0) {
+					temp = nums[i];
+				}
+				maxMul = max(maxMul, temp);
+				cur = temp;
+			}
+			return maxMul;
+		}
+		//153
+		int findMin_153(vector<int>& nums) {
+			if (nums.size() == 1)return nums[0];
+			if (nums.size() == 2)return min(nums[0], nums[1]);
+			if (nums[0] < nums[nums.size() - 1]) {
+				return nums[0];
+			}
+			int l = 0, r = nums.size() - 1;
+			while (l < r) {
+				int mid = (l + r) / 2;
+
+				if (nums[mid] > nums[r]) {
+					l = mid + 1;
+				}
+				else {
+					r = mid;
+				}
+			}
+			return nums[l];
+		}
+		//154
+		int findMin_154(vector<int>& nums) {
+			if (nums.size() == 1)return nums[0];
+			if (nums.size() == 2)return min(nums[0], nums[1]);
+			if (nums[0] < nums[nums.size() - 1]) {
+				return nums[0];
+			}
+			int l = 0, r = nums.size() - 1;
+			while (l < r) {
+				int mid = (l + r) / 2;
+
+				if (nums[mid] > nums[r]) {
+					l = mid + 1;
+				}
+				else if (nums[mid] < nums[r]) {
+					r = mid;
+				}
+				else {
+					r--;
+				}
+			}
+			return nums[l];
+		}
+		//155
+
+		//156
+
+		//157
+
+		//158
+
+		//159
+
+		//160
+		ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+			if (headA == nullptr || headB == nullptr)return nullptr;
+			ListNode* h1 = headA;
+			ListNode* h2 = headB;
+			while (h1 != nullptr && h2 != nullptr) {
+				if (h1 == h2)
+				{
+					return h1;
+				}
+				else {
+					h1 = h1->next;
+					h2 = h2->next;
+				}
+			}
+			if (h1 == nullptr) {
+				h1 = headA;
+				while (h2 != nullptr) {
+					h1 = h1->next;
+					h2 = h2->next;
+					if (h1 == nullptr) {
+						h1 = headA;
+					}
+				}
+				return h2;
+			}
+			if (h2 == nullptr) {
+				h2 = headB;
+				while (h1 != nullptr) {
+					h1 = h1->next;
+					h2 = h2->next;
+					if (h2 == nullptr) {
+						h2 = headB;
+					}
+				}
+				return h1;
+			}
+			return nullptr;
+		}
+		//161
+
+		//162
+		int findPeakElement(vector<int>& nums) {
+			return findPeakElementExtension(nums, 0, nums.size() - 1);
+		}
+	private:
+		int findPeakElementExtension(vector<int>& nums, int l, int r) {
+			if (l == r) return l;
+			int mid = (l + r) / 2;
+			if (nums[mid] < nums[mid + 1]) {
+				return findPeakElementExtension(nums, mid + 1, r);
+			}
+			else {
+				return findPeakElementExtension(nums, l, mid);
+			}
 		}
 
 
