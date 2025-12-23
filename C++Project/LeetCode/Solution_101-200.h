@@ -1033,6 +1033,110 @@ namespace Solution_101_200 {
 			}
 		}
 
+		//163
+
+	public:
+		//164
+		int maximumGap(vector<int>& nums) {
+			if (nums.empty() || nums.size() == 1) return 0;
+			bucketSort(nums.begin(), nums.end());
+			int maxRange = nums[1] - nums[0];
+			for (int i = 2;i < nums.size();++i) {
+				maxRange = max(maxRange, nums[i] - nums[i - 1]);
+			}
+			return maxRange;
+		}
+		//165
+		int compareVersion(string version1, string version2) {
+			if (version1 == version2) return 0;
+			int r1 = 0;
+			int r2 = 0;
+			
+			while (r1 < version1.length() && r2 < version2.length()) {
+				int v1 = 0;
+				int v2 = 0;
+
+				while (r1 < version1.length() && version1[r1] != '.') {
+					v1 = v1 * 10 + (version1[r1] - '0');
+					r1++;
+				}
+				while (r2 < version2.length() && version2[r2] != '.') {
+					v2 = v2 * 10 + (version2[r2] - '0');
+					r2++;
+				}
+
+				if (v1 < v2) return -1;
+				else if (v1 > v2)return 1;
+				else {
+					r1++;
+					r2++;
+				}
+			}
+
+			while (r1 < version1.length()) {
+				if (version1[r1] != '0' && version1[r1] != '.') {
+					return 1;
+				}
+				r1++;
+			}
+
+			while (r2 < version2.length()) {
+				if (version2[r2] != '0' && version2[r2] != '.') {
+					return -1;
+				}
+				r2++;
+			}
+
+			return 0;
+		}
+		//166
+
+		//167
+		vector<int> twoSum(vector<int>& numbers, int target) {
+			int l = 0, r = numbers.size() - 1;
+			while (l < r) {
+				int temp = numbers[l] + numbers[r];
+				if (temp > target) {
+					r--;
+				}
+				else if (temp < target) {
+					l++;
+				}
+				else {
+					return { l + 1,r + 1 };
+				}
+
+			}
+			return{};
+		}
+		//168
+		string convertToTitle(int columnNumber) {
+			string result;
+			while (columnNumber > 0) {
+				columnNumber--;
+				result = string(1, ('A' + columnNumber % 26)) + result;
+				columnNumber = columnNumber / 26;
+			}
+			return result;
+
+		}
+		//169
+		int majorityElement(vector<int>& nums) {
+			stack<int> numStack;
+			for (int it : nums) {
+				if (numStack.empty()) {
+					numStack.push(it);
+				}
+				else {
+					if (numStack.top() != it) {
+						numStack.pop();
+						numStack.push(it);
+					}
+				}
+			}
+			return numStack.top();
+		}
+
 
 		//198
 	public:

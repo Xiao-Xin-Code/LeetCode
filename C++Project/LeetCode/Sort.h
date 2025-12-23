@@ -1,6 +1,9 @@
 #pragma once
 #include <iterator>
 #include <type_traits>
+#include <vector>
+#include <algorithm>
+
 
 #pragma region _Forward Declaration_
 
@@ -21,6 +24,9 @@ void _SelectSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred);
 
 template<typename _Ranlt, typename _Pr>
 void _MergerSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred);
+
+template<typename _Ranlt, typename _Pr>
+void _BucketSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred);
 
 #pragma endregion
 
@@ -318,6 +324,59 @@ void _MergerSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred)
 	using _ValueType = typename std::iterator_traits<_Ranlt>::value_type;
 	std::vector<_ValueType> temp(_First, _Last);
 	_CombineSort_unchecked_withTemp(temp.begin(), temp.end(), _First, _Pred);
+}
+
+#pragma endregion
+
+#pragma region _Bucket Sort_
+
+template<typename _Ranlt, typename _Pr>
+void bucketSort(const _Ranlt _First, const _Ranlt _Last, _Pr _Pred) {
+	static_assert(
+		std::is_same_v<
+		typename std::iterator_traits<_Ranlt>::iterator_category,
+		std::random_access_iterator_tag
+		>,
+		"bucketSort requires random access iterators"
+		);
+
+	if (_First >= _Last)return;
+
+	_BucketSort_unchecked(_First, _Last, _Pred);
+}
+
+template<typename _Ranlt>
+void bucketSort(const _Ranlt _First, const _Ranlt _Last) {
+	bucketSort(_First, _Last, std::less<>());
+}
+
+template<typename _Ranlt,typename _Pr>
+void _BucketSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
+	using ValueType = typename std::iterator_traits<_Ranlt>::value_type;
+	size_t bucketCout = _Last - _First;
+	std::vector<std::vector<ValueType>> buckets(bucketCout);
+
+	auto minmax_it = std::minmax_element(_First, _Last);
+	ValueType minValue = *minmax_it.first;
+	ValueType maxValue = *minmax_it.second;
+	if (minValue == maxValue) return;
+
+	const ValueType range = maxValue - minValue;
+
+	for (_Ranlt it = _First;it < _Last;++it) {
+		double normalized = (static_cast<double>(*it - minValue) / range) * (bucketCout - 1);
+		size_t idx = static_cast<size_t>(normalized);
+		idx = std::max(static_cast<size_t>(0), std::min(idx, bucketCout - 1));
+		buckets[idx].push_back(*it);
+	}
+
+	_Ranlt dest = _First;
+	for (auto it : buckets) {
+		if (!it.empty()) {
+			_InsertSort_unchecked(it.begin(), it.end(), _Pred);
+			dest = copy(it.begin(), it.end(), dest);
+		}
+	}
 }
 
 #pragma endregion
