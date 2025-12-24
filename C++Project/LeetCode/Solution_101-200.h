@@ -1136,7 +1136,115 @@ namespace Solution_101_200 {
 			}
 			return numStack.top();
 		}
+		//170
 
+		//171
+
+		//172
+
+		//173
+
+		//174
+
+		//175
+
+		//176
+
+		//178
+
+		//179
+		string largestNumber(vector<int>& nums) {
+			vector<string> strs;
+			for (int it : nums) {
+				strs.push_back(to_string(it));
+			}
+			quickSort(strs.begin(), strs.end(), [](string a, string b) {return a + b > b + a;});
+			string result;
+			for (string it : strs) {
+				result += it;
+			}
+			return result;
+		}
+		//180
+		
+		//181
+
+		//182
+
+		//183
+
+		//184
+
+		//185
+
+		//186
+
+		//187
+		vector<string> findRepeatedDnaSequences(string s) {
+			unordered_map<string, int> sequenceMap;
+
+			for (int i = 0;i < s.length() - 9;++i) {
+				string seq = s.substr(i, 10);
+				if (sequenceMap.count(seq)) {
+					sequenceMap[seq]++;
+				}
+				else {
+					sequenceMap[seq] = 1;
+				}
+			}
+			vector<string> result;
+			for (auto it = sequenceMap.begin();it != sequenceMap.end();++it) {
+				if (it->second > 1) {
+					result.push_back(it->first);
+				}
+			}
+			return result;
+		}
+		//188
+		
+		//189
+		void rotate(vector<int>& nums, int k) {
+			int mod = k % nums.size();
+			if (mod == 0) {
+				return;
+			}
+			for (int i = 0;i < k;i++) {
+				int temp = nums[nums.size() - 1];
+				for (int j = nums.size() - 1;j > 0;j--) {
+					nums[j] = nums[j - 1];
+				}
+				nums[0] = temp;
+			}
+		}
+		//190
+		int reverseBits(int n) {
+			int result = 0;
+			while (n > 0) {
+				result = (n >> 1) | (result << 1);
+				n = n >> 1;
+			}
+			return result;
+		}
+		//191
+		int hammingWeight(int n) {
+			int count = 0;
+			while (n > 0) {
+				n = n & (n - 1);
+				count++;
+			}
+			return count;
+		}
+		//192
+		
+		//193
+
+		//194
+
+		//195
+
+		//196
+
+		//197
 
 		//198
 	public:
@@ -1150,6 +1258,38 @@ namespace Solution_101_200 {
 			}
 			return dp[nums.size() - 1];
 		}
+		//199
+		vector<int> rightSideView(TreeNode* root) {
+			if (root == nullptr) return {};
+			stack<TreeNode*> nodeStack;
+			nodeStack.push(root);
+			vector<int> result;
+			rightSideViewExtension(nodeStack, result);
+			return result;
+		}
+	private:
+		void rightSideViewExtension(stack<TreeNode*> nodeStack, vector<int>& result) {
+			if (nodeStack.empty()) {
+				return;
+			}
+			stack<TreeNode*> tempStack;
+			result.push_back(nodeStack.top()->val);
+			while (!nodeStack.empty()) {
+				TreeNode* node = nodeStack.top();
+				nodeStack.pop();
+				if (node->left != nullptr) {
+					tempStack.push(node->left);
+				}
+				if (node->right != nullptr) {
+					tempStack.push(node->right);
+				}
+			}
+			if (!tempStack.empty()) {
+				rightSideViewExtension(tempStack, result);
+			}
+		}
+
+
 		//221
 	public:
 		int maximalSquare(vector<vector<char>>& matrix) {
