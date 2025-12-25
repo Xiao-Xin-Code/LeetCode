@@ -66,6 +66,80 @@ namespace Solution_201_300 {
 			}
 			return result;
 		}
+		//204
+		int countPrimes(int n) {
+
+		}
+		//205
+		bool isIsomorphic(string s, string t) {
+			if (s.length() != t.length()) return false;
+			unordered_map<char, char> dict;
+			int index = 0;
+			while (index < s.length()) {
+				if (dict.count(s[index])) {
+					if (t[index] != dict[s[index]])return false;
+				}
+				else {
+					dict[s[index]] = t[index];
+				}
+				index++;
+			}
+			return true;
+		}
+		//206
+		ListNode* reverseList(ListNode* head) {
+			ListNode* newHead = nullptr;
+			ListNode* next = head;
+			while (next != nullptr) {
+				ListNode* temp = next->next;
+				next->next = newHead;
+				newHead = next;
+				next = temp;
+			}
+			return newHead;
+		}
+		//207
+		bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+
+			
+
+		}
+		//208
+		vector<int> minArray(vector<int>& nums, int target) {
+			int result = 0;
+			for (int it : nums) {
+				result += it;
+			}
+
+			if (result < target)return {};
+
+			int l = 0, r = nums.size() - 1;
+
+			while (l < r) {
+				while (nums[l]<nums[r] && result>target) {
+					int temp = result - nums[l];
+					if (temp > target) {
+						l--;
+					}
+					else {
+						return;
+					}
+				}
+				while (nums[l] > nums[r]) {
+
+				}
+
+				if (nums[l] < nums[r]) {
+					int temp = result - nums[l];
+					
+				}
+				else {
+
+				}
+
+			}
+			
+		}
 
 
 		//221
