@@ -105,7 +105,9 @@ namespace Solution_201_300 {
 
 		}
 		//208
-		vector<int> minArray(vector<int>& nums, int target) {
+
+		//209
+		int minSubArrayLen(vector<int>& nums, int target) {
 			int result = 0;
 			for (int it : nums) {
 				result += it;
@@ -138,8 +140,15 @@ namespace Solution_201_300 {
 				}
 			}
 
-			return vector<int>(nums.begin() + l, nums.begin() + r + 1);
+			return r - l + 1;
 		}
+		//210
+
+		//211
+
+		//212
+
+		//213
 
 
 		//221
