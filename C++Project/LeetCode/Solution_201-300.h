@@ -116,29 +116,29 @@ namespace Solution_201_300 {
 			int l = 0, r = nums.size() - 1;
 
 			while (l < r) {
-				while (nums[l]<nums[r] && result>target) {
+				if (nums[l] < nums[r]) {
 					int temp = result - nums[l];
-					if (temp > target) {
-						l--;
+					if (temp >= target) {
+						result = temp;
+						l++;
 					}
 					else {
 						return;
 					}
 				}
-				while (nums[l] > nums[r]) {
-
-				}
-
-				if (nums[l] < nums[r]) {
-					int temp = result - nums[l];
-					
-				}
 				else {
-
+					int temp = result - nums[r];
+					if (temp >= target) {
+						result = temp;
+						r--;
+					}
+					else {
+						return;
+					}
 				}
-
 			}
-			
+
+			return vector<int>(nums.begin() + l, nums.begin() + r + 1);
 		}
 
 
