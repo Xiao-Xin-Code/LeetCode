@@ -7,7 +7,7 @@
 #include <string>
 #include <stack>
 #include <queue>
-#include <set>
+#include <unordered_set>
 
 
 
@@ -755,7 +755,7 @@ namespace Solution_001_100 {
 		vector<int> findSubstring(string s, vector<string>& words) {
 			int index = 0;
 			vector<int> result;
-			set<int> hashset;
+			unordered_set<int> hashset;
 
 			while (index < s.length()) {
 				for (int i = 0;i < words.size();i++) {

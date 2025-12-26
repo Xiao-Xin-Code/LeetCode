@@ -7,7 +7,7 @@
 #include <string>
 #include <stack>
 #include <queue>
-#include <set>
+#include <unordered_set>
 
 
 #include "Extension.h"
@@ -32,7 +32,7 @@ namespace Solution_201_300 {
 		}
 		//202
 		bool isHappy(int n) {
-			set<int> fargs;
+			unordered_set<int> fargs;
 			while (true) {
 				int result = 0;
 				int mod = n % 10;
@@ -125,7 +125,7 @@ namespace Solution_201_300 {
 						l++;
 					}
 					else {
-						return;
+						break;
 					}
 				}
 				else {
@@ -135,7 +135,7 @@ namespace Solution_201_300 {
 						r--;
 					}
 					else {
-						return;
+						break;
 					}
 				}
 			}
@@ -149,6 +149,48 @@ namespace Solution_201_300 {
 		//212
 
 		//213
+
+		//214
+
+		//215
+
+		//216
+		vector<vector<int>> combinationSum3(int k, int n) {
+			vector<vector<int>> results;
+			combinationSum3Extension(k, n, results, {}, 0, 1);
+			return results;
+		}
+	private:
+		void combinationSum3Extension(int k,int n,vector<vector<int>>& results,vector<int> result,int sum,int start) {
+			if (result.size() == k) {
+				if (sum == n) {
+					results.push_back(result);
+				}
+				return;
+			}
+
+			for (int i = start;i < 10;++i) {
+				int tempSum = sum + i;
+				if (tempSum <= n) {
+					result.push_back(i);
+					combinationSum3Extension(k, n, results, result, tempSum, i + 1);
+					result.pop_back();
+				}
+				else {
+					break;
+				}
+			}
+		}
+
+		bool containsDuplicate(vector<int>& nums) {
+			unordered_set<int> numUsed;
+			for (int it : nums) {
+				if (numUsed.count(it)) {
+					return false;
+				}
+				numUsed.insert(it);
+			}
+		}
 
 
 		//221
@@ -218,6 +260,7 @@ namespace Solution_201_300 {
 			}
 			return dp[cost.size()];
 		}
+
 	};
 
 	

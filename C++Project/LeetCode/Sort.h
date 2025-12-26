@@ -244,13 +244,12 @@ template<typename _Ranlt, typename _Pr>
 void _SelectSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 	for (_Ranlt it = _First;it < _Last;++it) {
 		_Ranlt minIt = it;
-
 		for (_Ranlt nt = it + 1;nt < _Last;++nt) {
-			if (_Pred(*nt < *minIt)) {
+			if (_Pred(*nt, *minIt)) {
 				minIt = nt;
 			}
 		}
-		swap(*it, *minIt);
+		std::swap(*it, *minIt);
 	}
 }
 
@@ -381,6 +380,52 @@ void _BucketSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 
 #pragma endregion
 
+
+#pragma region _Heap Sort_
+
+
+template<typename _Ranlt, typename _Pr>
+void _HeapSort_builder(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
+	size_t offset = 2 * std::distance(_First, _Last) + 1;
+	_Ranlt temp = _First;
+	for (_Ranlt it = _First + offset;it < _Last;it = it + 2 * std::distance(it, _Last) + 1) {
+		if (it + 1 < _Last) {
+			if (*(it + 2 * std::distance(it, _Last) + 1) > *(it + 2 * std::distance(it, _Last) + 2)) {
+				if (*temp < *(it + 2 * std::distance(it, _Last) + 1)) {
+					std::swap(*temp, *(it + 2 * std::distance(it, _Last) + 1));
+					temp = it + 2 * std::distance(it, _Last) + 1;
+				}
+			}
+			else {
+				if (*temp < *(it + 2 * std::distance(it, _Last) + 2)) {
+					std::swap(*temp, *(it + 2 * std::distance(it, _Last) + 2));
+					temp = it + 2 * std::distance(it, _Last) + 2;
+					it++;
+				}
+			}
+		}
+	}
+}
+
+
+template<typename _Ranlt,typename _Pr>
+void _HeapSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
+	size_t start = (std::distance(_First, _Last) - 2) / 2;	
+	for (_Ranlt it = _First + start;it >= _First;--it) {
+		_HeapSort_builder(_First, _Last, _Pred);
+	}
+	_Ranlt tempLast = _Last;
+	while (tempLast != _First) {
+		tempLast = tempLast - 1;
+		std::swap(*_First, *tempLast);
+		_HeapSort_builder(_First, tempLast, _Pred);
+	}
+}
+
+
+
+
+#pragma endregion
 
 
 
