@@ -192,6 +192,24 @@ namespace Solution_201_300 {
 			}
 		}
 
+		bool containsDuplicate2(vector<int>& nums, int k) {
+			unordered_map<int,vector<int>> numUsed;
+			for (int i = 0;i < nums.size();++i) {
+				if (numUsed.count(nums[i])) {
+					for (int it : numUsed[nums[i]]) {
+						if (i - it <= k) {
+							return true;
+						}
+					}
+					numUsed[nums[i]].push_back(i);
+				}
+				else {
+					numUsed[nums[i]] = { i };
+				}
+			}
+			return false;
+		}
+
 
 		//221
 		int maximalSquare(vector<vector<char>>& matrix) {
