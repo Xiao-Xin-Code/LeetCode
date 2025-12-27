@@ -115,7 +115,7 @@ namespace Solution_201_300 {
 
 			if (result < target)return {};
 
-			int l = 0, r = nums.size() - 1;
+			int l = 0, r = static_cast<int>(nums.size()) - 1;
 
 			while (l < r) {
 				if (nums[l] < nums[r]) {
@@ -181,7 +181,9 @@ namespace Solution_201_300 {
 				}
 			}
 		}
-
+		
+	public:
+		//217
 		bool containsDuplicate(vector<int>& nums) {
 			unordered_set<int> numUsed;
 			for (int it : nums) {
@@ -191,7 +193,9 @@ namespace Solution_201_300 {
 				numUsed.insert(it);
 			}
 		}
+		//218
 
+		//219
 		bool containsDuplicate2(vector<int>& nums, int k) {
 			unordered_map<int,vector<int>> numUsed;
 			for (int i = 0;i < nums.size();++i) {
@@ -209,35 +213,104 @@ namespace Solution_201_300 {
 			}
 			return false;
 		}
-
+		//220
 
 		//221
 		int maximalSquare(vector<vector<char>>& matrix) {
-			int maxLength = 0;
-			for (int i = 0;i < matrix[0].size();i++) {
-				if (matrix[0][i] == '1') {
-					maxLength = 1;
+			int maxSide = 0;
+			for (size_t i = 0;i < matrix.size();++i) {
+				if (matrix[i][0] == '1') {
+					maxSide = 1;
 					break;
 				}
 			}
-			for (int i = 1;i < matrix.size();i++) {
 
-				for (int j = 0;j < matrix[i].size();j++) {
+			for (size_t i = 1;i < matrix.size();++i) {
+				for (size_t j = 0;j < matrix[i].size();++j) {
 					if (j == 0) {
-						maxLength = max(maxLength, matrix[i][j] - '0');
+						maxSide = max(maxSide, matrix[i][j] - '0');
+						continue;
+					}
+					if (matrix[i][j] == '0') {
+						continue;
+					}
+					int left = matrix[i][j - 1] - '0';
+					int up = matrix[i - 1][j] - '0';
+					int bias = matrix[i - 1][j - 1] - '0';
+					int tempSide = min(left, min(up, bias)) + 1;
+					matrix[i][j] = tempSide;
+					maxSide = max(maxSide, tempSide);
+				}
+			}
+			return maxSide * maxSide;
+
+		}
+		//222
+		int countNodes(TreeNode* root) {
+			if (root->left == nullptr && root->right == nullptr) {
+			 	return 1;
+			}
+
+			int leftCount = 0;
+			int rightCount = 0;
+
+			if (root->left != nullptr) {
+				leftCount = countNodes(root->left);
+			}
+			if (root->right != nullptr) {
+				rightCount = countNodes(root->right);
+			}
+
+			return leftCount + rightCount;
+		}
+		//223
+		int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+			int minX1 = min(ax1, ax2), maxX1 = max(ax1, ax2), minX2 = min(bx1, bx2), maxX2 = max(bx1, bx2);
+			int minY1 = min(ay1, ay2), maxY1 = max(ay1, ay2), minY2 = min(by1, by2), maxY2 = max(by1, by2);
+			return max(0, min(maxX1, maxX2) - max(minX1, minX2)) * max(0, min(maxY1, maxY2) - max(minY1, minY2));
+		}
+		//224
+
+		//225
+
+		//226
+		TreeNode* invertTree(TreeNode* root) {
+			if (root == nullptr) return nullptr;
+			TreeNode* temp = root->left;
+			root->left = root->right;
+			root->right = temp;
+			if (root->left != nullptr) {
+				invertTree(root->left);
+			}
+			if (root->right != nullptr) {
+				invertTree(root->right);
+			}
+			return root;
+		}
+		//227
+
+		//228
+		vector<string> summaryRanges(vector<int>& nums) {
+			vector<string> result;
+			int start = nums[0];
+			int end = nums[0];
+			for (int i = 1;i < nums.size();++i) {
+				if (nums[i] == nums[i - 1] + 1) {
+					end = nums[i];
+				}
+				else {
+					if (start == end) {
+						result.push_back(to_string(start));
 					}
 					else {
-						if (matrix[i][j] == '1') {
-							if (matrix[i][j - 1] != '0' && matrix[i - 1][j - 1] != '0' && matrix[i - 1][j] != '0') {
-								matrix[i][j] = (char)(min({ matrix[i][j - 1] - '0', matrix[i - 1][j - 1] - '0', matrix[i - 1][j] - '0' }) + 1);
-							}
-						}
-						maxLength = max(maxLength, matrix[i][j] - '0');
+						result.push_back(start + "->" + end);
+						start = nums[i];
+						end = nums[i];
 					}
 				}
 			}
-			return maxLength * maxLength;
 		}
+
 		//740
 		int deleteAndEarn(vector<int>& nums) {
 			unordered_map<int, int> numSum;
@@ -283,4 +356,3 @@ namespace Solution_201_300 {
 
 	
 }
-

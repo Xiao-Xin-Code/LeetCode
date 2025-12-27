@@ -100,7 +100,7 @@ namespace Solution_101_200 {
 		}
 		//105
 		TreeNode* buildTree_105(vector<int>& preorder, vector<int>& inorder) {
-			return buildTree_105_Extension(preorder, inorder, 0, preorder.size() - 1, 0, inorder.size() - 1);
+			return buildTree_105_Extension(preorder, inorder, 0, static_cast<int>(preorder.size()) - 1, 0, static_cast<int>(inorder.size()) - 1);
 		}
 	private:
 		TreeNode* buildTree_105_Extension(vector<int>& preorder, vector<int>& inorder, int preLeft, int preRight, int inLeft, int inRight) {
@@ -119,7 +119,7 @@ namespace Solution_101_200 {
 	public:
 		//106
 		TreeNode* buildTree_106(vector<int>& inorder, vector<int>& postorder) {
-			return buildTree_106_Extension(inorder, postorder, 0, inorder.size() - 1, 0, postorder.size() - 1);
+			return buildTree_106_Extension(inorder, postorder, 0, static_cast<int>(inorder.size()) - 1, 0, static_cast<int>(postorder.size()) - 1);
 		}
 	private:
 		TreeNode* buildTree_106_Extension(vector<int>& inorder, vector<int>& postorder, int inLeft, int inRight, int postLeft, int postRight) {
@@ -174,7 +174,7 @@ namespace Solution_101_200 {
 	public:
 		//108
 		TreeNode* sortedArrayToBST(vector<int>& nums) {
-			return sortedArrayToBSTeExtension(nums, 0, nums.size() - 1);
+			return sortedArrayToBSTeExtension(nums, 0, static_cast<int>(nums.size()) - 1);
 		}
 	private:
 		TreeNode* sortedArrayToBSTeExtension(vector<int>& nums, int left, int right) {
@@ -294,7 +294,7 @@ namespace Solution_101_200 {
 				}
 
 				if (pre == &dummy) {
-					pre == temp;
+					pre = temp;
 				}
 				else {
 					pre->next = temp;
@@ -483,7 +483,7 @@ namespace Solution_101_200 {
 			}
 		}
 		bool isPartition(string str) {
-			int l = 0, r = str.length() - 1;
+			int l = 0, r = static_cast<int>(str.length()) - 1;
 			while (l < r) {
 				if (str[l] != str[r]) {
 					return false;
@@ -658,13 +658,13 @@ namespace Solution_101_200 {
 			for (string it : wordDict) {
 				if (it == s.substr(cur, it.size())) {
 					//当前可以使用
-					cur = cur + it.size();
+					cur = cur + static_cast<int>(it.size());
 					bool result = wordBreak_139_Extension(s, wordDict, cur);
 					if (result) {
 						return true;
 					}
 					else {
-						cur = cur - it.size();
+						cur = cur - static_cast<int>(it.size());
 					}
 				}
 			}
@@ -693,7 +693,7 @@ namespace Solution_101_200 {
 					if (curstr.empty()) {
 						targetStr = it;
 					}
-					wordBreak_140_Extension(s, wordDict, targetStr, cur + it.size(), results);
+					wordBreak_140_Extension(s, wordDict, targetStr, cur + static_cast<int>(it.size()), results);
 				}
 			}
 		}
@@ -862,7 +862,7 @@ namespace Solution_101_200 {
 				writeIndex++;
 			}
 
-			int nullIndex = s.length() - 1;
+			int nullIndex = static_cast<int>(s.length()) - 1;
 			while (nullIndex >= 0) {
 				if (s[nullIndex] == ' ') {
 					s.pop_back();
@@ -874,7 +874,7 @@ namespace Solution_101_200 {
 			}
 
 			//反向
-			int l = 0, r = s.length() - 1;
+			int l = 0, r = static_cast<int>(s.length()) - 1;
 
 			while (l < r) {
 				swap(s[l], s[r]);
@@ -930,7 +930,7 @@ namespace Solution_101_200 {
 			if (nums[0] < nums[nums.size() - 1]) {
 				return nums[0];
 			}
-			int l = 0, r = nums.size() - 1;
+			int l = 0, r = static_cast<int>(nums.size()) - 1;
 			while (l < r) {
 				int mid = (l + r) / 2;
 
@@ -950,7 +950,7 @@ namespace Solution_101_200 {
 			if (nums[0] < nums[nums.size() - 1]) {
 				return nums[0];
 			}
-			int l = 0, r = nums.size() - 1;
+			int l = 0, r = static_cast<int>(nums.size()) - 1;
 			while (l < r) {
 				int mid = (l + r) / 2;
 
@@ -1019,7 +1019,7 @@ namespace Solution_101_200 {
 
 		//162
 		int findPeakElement(vector<int>& nums) {
-			return findPeakElementExtension(nums, 0, nums.size() - 1);
+			return findPeakElementExtension(nums, 0, static_cast<int>(nums.size()) - 1);
 		}
 	private:
 		int findPeakElementExtension(vector<int>& nums, int l, int r) {
@@ -1093,7 +1093,7 @@ namespace Solution_101_200 {
 
 		//167
 		vector<int> twoSum(vector<int>& numbers, int target) {
-			int l = 0, r = numbers.size() - 1;
+			int l = 0, r = static_cast<int>(numbers.size()) - 1;
 			while (l < r) {
 				int temp = numbers[l] + numbers[r];
 				if (temp > target) {
@@ -1210,7 +1210,7 @@ namespace Solution_101_200 {
 			}
 			for (int i = 0;i < k;i++) {
 				int temp = nums[nums.size() - 1];
-				for (int j = nums.size() - 1;j > 0;j--) {
+				for (int j = static_cast<int>(nums.size()) - 1;j > 0;j--) {
 					nums[j] = nums[j - 1];
 				}
 				nums[0] = temp;

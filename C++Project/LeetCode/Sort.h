@@ -106,20 +106,13 @@ void insertSort(const _Ranlt _First, const _Ranlt _Last) {
 template<typename _Ranlt, typename _Pr>
 void _InsertSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 	for (_Ranlt it = _First + 1;it < _Last;++it) {
-		auto key = *it;
-		_Ranlt temp = it - 1;
-		while (temp >= _First && _Pred(key, *temp)) {
-			*(temp + 1) = *temp;
-			if (temp == _First) {
-				break;
-			}
-			--temp;
-		}
-		if (temp == _First) {
-			*temp = key;
-		}
-		else {
-			*(temp + 1) = key;
+		_Ranlt cur = it;
+		_Ranlt pre = it - 1;
+
+		while (pre >= _First && _Pred(*cur, *pre)) {
+			std::swap(*cur, *pre);
+			cur = pre;
+			--pre;
 		}
 	}
 }
@@ -155,20 +148,12 @@ void _HillSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 		//处理每一个分组
 		for (int i = 0;i < space;i++) {
 			for (_Ranlt it = _First + i + space;it < _Last;it = it + space) {
-				auto key = *it;
-				_Ranlt temp = it - space;
-				while (temp >= _First && _Pred(key, *temp)) {
-					*(temp + space) = *temp;
-					if (temp == _First) {
-						break;
-					}
-					temp = temp - space;
-				}
-				if (temp == _First) {
-					*temp = key;
-				}
-				else {
-					*(temp + space) = key;
+				_Ranlt cur = it;
+				_Ranlt pre = it - space;
+				while (pre >= _First && _Pred(*cur, *pre)) {
+					std::swap(*cur, *pre);
+					cur = pre;
+					pre = pre - space;
 				}
 			}
 		}
@@ -206,7 +191,7 @@ void _PopSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 		bool hasSwap = false;
 		for (_Ranlt it = _First;it < rt;++it) {
 			if (_Pred(*(it + 1), *it)) {
-				swap(*it, *(it + 1));
+				std::swap(*it, *(it + 1));
 				hasSwap = true;
 			}
 		}
@@ -285,8 +270,8 @@ void _MergerSort_unchecked_withTemp(_Ranlt _SourceFirst, _Ranlt _SourceLast, _Ra
 		_Ranlt _TargetMid = _TargetFirst + size / 2;
 		_Ranlt _SourceMid = _SourceFirst + size / 2;
 
-		_CombineSort_unchecked_withTemp(_TargetFirst, _TargetMid, _SourceFirst, _Pred);
-		_CombineSort_unchecked_withTemp(_TargetMid, _TargetFirst + size, _SourceMid, _Pred);
+		_MergerSort_unchecked_withTemp(_TargetFirst, _TargetMid, _SourceFirst, _Pred);
+		_MergerSort_unchecked_withTemp(_TargetMid, _TargetFirst + size, _SourceMid, _Pred);
 
 		_Ranlt _Left = _SourceFirst, _Right = _SourceMid;
 		_Ranlt _Target = _TargetFirst;
@@ -322,7 +307,7 @@ void _MergerSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred)
 {
 	using _ValueType = typename std::iterator_traits<_Ranlt>::value_type;
 	std::vector<_ValueType> temp(_First, _Last);
-	_CombineSort_unchecked_withTemp(temp.begin(), temp.end(), _First, _Pred);
+	_MergerSort_unchecked_withTemp(temp.begin(), temp.end(), _First, _Pred);
 }
 
 #pragma endregion
