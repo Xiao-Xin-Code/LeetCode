@@ -309,7 +309,124 @@ namespace Solution_201_300 {
 					}
 				}
 			}
+			return result;
 		}
+		//229
+		vector<int> majorityElement(vector<int>& nums) {
+			int candidateX = 0, candidateY = 0;
+			int countX = 0, countY = 0;
+			bool replaceX = false, replaceY = false;
+
+			for (int it : nums) {
+				if (countX > 0 && countY > 0) {
+					if (it == candidateX) {
+						countX++;
+					}
+					else if (it == candidateY) {
+						countY++;
+					}
+					else {
+						countX--;
+					}
+				}
+				else if (countX > 0) {
+					if (it == candidateX) {
+						countX++;
+					}
+					else {
+						candidateY = it;
+						countY = 1;
+					}
+				}
+				else if (countY > 0) {
+
+				}
+				else {
+
+				}
+
+
+				if (countX == 0) {
+					candidateX = it;
+					countX = 1;
+				}
+				else {
+					if (candidateX == it) {
+						countX++;
+					}
+					else {
+						if (countY == 0) {
+							candidateY = it;
+							countY = 1;
+						}
+					}
+
+				}
+
+
+				if (countY == 0) {
+					candidateY = it;
+				}
+
+
+
+			}
+
+
+
+
+		}
+		//230
+		int kthSmallest(TreeNode* root, int k) {
+			if (root == nullptr) return -1;
+			if (root->left == nullptr && root->right == nullptr) {
+				k--;
+				if (k == 0) {
+					return root->val;
+				}
+				
+			}
+			if (root->right != nullptr) {
+				kthSmallest(root->right, k);
+			}
+			k--;
+			if (k == 0) {
+				return root->val;
+			}
+			if (root->left != nullptr) {
+				kthSmallest(root->left, k);
+			}
+		}
+
+
+		//234
+		bool isPalindrome(ListNode* head) {
+			ListNode* slow = head;
+			ListNode* fast = head;
+			while (fast->next != nullptr && fast->next->next != nullptr) {
+				slow = slow->next;
+				fast = fast->next->next;
+			}
+			ListNode* pre = nullptr;
+			ListNode* cur = slow->next;
+			while (cur != nullptr) {
+				ListNode* tempNode = cur->next;
+				cur->next = pre;
+				pre = cur;
+				cur = tempNode;
+			}
+			ListNode* p1 = head;
+			ListNode* p2 = pre;
+			while (p2 != nullptr) {
+				if (p1->val != p2->val) {
+					return false;
+				}
+				p1 = p1->next;
+				p2 = p2->next;
+			}
+			return true;
+		}
+
 
 		//740
 		int deleteAndEarn(vector<int>& nums) {
