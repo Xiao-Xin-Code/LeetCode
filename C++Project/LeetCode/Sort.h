@@ -28,6 +28,9 @@ void _MergerSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred);
 template<typename _Ranlt, typename _Pr>
 void _BucketSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred);
 
+template<typename _Ranlt, typename _Pr>
+void _HeapSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred);
+
 #pragma endregion
 
 #pragma region _QuickSort_
@@ -367,18 +370,66 @@ void _BucketSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 
 #pragma region _Heap Sort_
 
+template<typename _Ranlt, typename _Pr>
+void heapSort(const _Ranlt _First, const _Ranlt _Last, _Pr _Pred) {
+	static_assert(
+		std::is_same_v<
+		typename std::iterator_traits<_Ranlt>::iterator_category,
+		std::random_access_iterator_tag
+		>,
+		"heapSort requires random access iterators"
+		);
 
-template<typename _Ranlt>
-void _HeapSort_builder(_Ranlt _First, _Ranlt _Last) {
-	if (_First == _Last) return;
-	_Ranlt child = _Last - 1;
+	if (_First >= _Last)return;
 
-	while (child > _First) {
-		_Ranlt parent = _First + (std::distance(_First, child) - 1) / 2;
-	}
-
+	_HeapSort_unchecked(_First, _Last);
 }
 
+template<typename _Ranlt>
+void heapSort(const _Ranlt _First, const _Ranlt _Last) {
+	heapSort(_First, _Last, std::less<>());
+}
+
+template<typename _Ranlt, typename _Pr>
+void _HeapSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
+	size_t count = _Last - _First;
+	if (count <= 1) return;
+	for (size_t i = count / 2 - 1;i >= 0;--i) {
+		size_t root = i;
+		while (true) {
+			size_t largest = root;
+			size_t left = 2 * root + 1;
+			size_t right = 2 * root + 2;
+			if (left < count && _Pred(*(_First + largest), *(_First + left))) {
+				largest = left;
+			}
+			if (right < count && _Pred(*(_First + largest), *(_First + right))) {
+				largest = right;
+			}
+			if (largest == root) break;
+			std::swap(*(_First + root), *(_First + largest));
+			root = largest;
+		}
+	}
+	for (size_t i = count - 1;i > 0;--i) {
+		std::swap(*_First, *(_First + i));
+		size_t root = 0;
+		while (true) {
+			size_t largest = root;
+			size_t left = 2 * root + 1;
+			size_t right = 2 * root + 2;
+			if (left < i && _Pred(*(_First + largest), *(_First + left))) {
+				largest = left;
+			}
+			if (right < i && _Pred(*(_First + largest), *(_First + right))) {
+				largest = right;
+			}
+			if (largest == root) break;
+			std::swap(*(_First + root), *(_First + largest));
+			root = largest;
+		}
+	}
+}
 
 #pragma endregion
 

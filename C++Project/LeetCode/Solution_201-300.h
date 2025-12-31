@@ -397,7 +397,11 @@ namespace Solution_201_300 {
 				kthSmallest(root->left, k);
 			}
 		}
+		//231
 
+		//232
+
+		//233
 
 		//234
 		bool isPalindrome(ListNode* head) {
@@ -425,6 +429,24 @@ namespace Solution_201_300 {
 				p2 = p2->next;
 			}
 			return true;
+		}
+		//235
+
+		//236
+
+		//237
+		void deleteNode(ListNode* node) {
+			if (node == nullptr || node->next == nullptr) return;
+			ListNode* cur = node;
+			ListNode* next = node->next;
+			
+			while (next->next != nullptr) {
+				swap(cur->val, next->val);
+				cur = next;
+				next = next->next;
+			}
+			swap(cur->val, next->val);
+			cur->next = nullptr;
 		}
 
 
