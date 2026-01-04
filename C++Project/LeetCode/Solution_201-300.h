@@ -448,7 +448,183 @@ namespace Solution_201_300 {
 			swap(cur->val, next->val);
 			cur->next = nullptr;
 		}
+		//238
+		vector<int> productExceptSelf(vector<int>& nums) {
+			vector<int> result(nums.size());
+			for (int i = 0;i < nums.size();++i) {
+				int mulL = 1;
+				int mulR = 1;
+				for (int l = 0;l < i;++l) {
+					mulL *= nums[l];
+				}
+				for (int r = i + 1;r < nums.size();++r) {
+					mulR *= nums[r];
+				}
+				result[i] = mulL * mulR;
+			}
+			return result;
+		}
+		//239
+		vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+			if (nums.empty() || nums.size() == 1) return nums;
+			vector<int> result;
+			int curMax = nums[0];
+			for (int i = 1;i < k;++i) {
+				curMax = max(curMax, nums[i]);
+			}
+			result.push_back(curMax);
+			for (int i = k;i < nums.size();++i) {
+				if (nums[i] >= curMax) {
+					curMax = nums[i];
+				}
+				else {
+					if (nums[i - k] < curMax) {
+					}
+					else {
+						curMax = nums[i];
+						for (int j = i + 1 - k;j < i;++j) {
+							curMax = max(curMax, nums[j]);
+						}
+					}
 
+				}
+				result.push_back(curMax);
+			}
+
+		}
+		//240
+		bool searchMatrix(vector<vector<int>>& matrix, int target) {
+			for (vector<int> it : matrix) {
+
+				if (it[0] >= target && it[it.size() - 1]) {
+					for (int v : it) {
+						if (v == target) {
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
+		//241
+		
+		//242
+		bool isAnagram(string s, string t) {
+			if (s.size() != t.size()) return false;
+			unordered_map<char, int> dict;
+			for (char it : s) {
+				if (dict.count(it)) {
+					dict[it]++;
+				}
+				else {
+					dict[it] = 1;
+				}
+			}
+			for (char it : t) {
+				if (dict.count(it)) {
+					dict[it]--;
+					if (dict[it] == 0) {
+						dict.erase(it);
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			return dict.empty();
+		}
+		//243
+
+		//244
+
+		//245
+
+		//246
+
+		//247
+
+		//248
+
+		//249
+
+		//250
+
+		//251
+
+		//252
+
+		//253
+
+		//254
+
+		//255
+
+		//256
+
+		//257
+		vector<string> binaryTreePaths(TreeNode* root) {
+			vector<string> result;
+			binaryTreePathsExtension(root, result, "");
+			return result;
+		}
+	private:
+		void binaryTreePathsExtension(TreeNode* node, vector<string>& result, string path) {
+			if (node == nullptr) {
+				if (!path.empty()) result.push_back(path);
+				return;
+			}
+			if (path.empty()) {
+				path = node->val;
+			}
+			else {
+				path += ("->" + node->val);
+			}
+			binaryTreePathsExtension(node->left, result, path);
+			binaryTreePathsExtension(node->right, result, path);
+		}
+
+	public:
+		int addDigits(int num) {
+			int val = 0;
+			while (num > 0) {
+				val += (num % 10);
+				num /= 10;
+			}
+
+			if (val < 10) {
+				return val;
+			}
+			else {
+				return addDigits(val);
+			}
+
+			
+		}
+
+
+		bool isUgly(int n) {
+			if (n == 0)return false;
+			if (n == 1)return true;
+			while (n > 1) {
+				int temp = n;
+				if (n % 2 == 0) {
+					n /= 2;
+					continue;
+				}
+				if (n % 3 == 0) {
+					n /= 3;
+					continue;
+				}
+				if (n % 5 == 0) {
+					n /= 5;
+					continue;
+				}
+				if (n == temp) {
+					return false;
+				}
+			}
+			return true;
+		}
 
 		//740
 		int deleteAndEarn(vector<int>& nums) {

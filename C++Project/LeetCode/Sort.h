@@ -57,6 +57,7 @@ void quickSort(const _Ranlt _First, const _Ranlt _Last) {
 
 template<typename _Ranlt, typename _Pr>
 void _QuickSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
+	if (_First >= _Last) return;
 	_Ranlt _Low = _First;
 	_Ranlt _High = _Last;
 	--_High;
