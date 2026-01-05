@@ -582,8 +582,9 @@ namespace Solution_201_300 {
 			binaryTreePathsExtension(node->left, result, path);
 			binaryTreePathsExtension(node->right, result, path);
 		}
-
+		
 	public:
+		//258
 		int addDigits(int num) {
 			int val = 0;
 			while (num > 0) {
@@ -600,8 +601,15 @@ namespace Solution_201_300 {
 
 			
 		}
+		//259
 
+		//260
 
+		//261
+
+		//262
+
+		//263
 		bool isUgly(int n) {
 			if (n == 0)return false;
 			if (n == 1)return true;
@@ -625,6 +633,131 @@ namespace Solution_201_300 {
 			}
 			return true;
 		}
+		//264
+		int nthUglyNumber(int n) {
+			if (n == 1) return 1;
+			int cur = 1;
+			while (n > 1) {
+				cur = min(cur * 2, min(cur * 3, cur * 5));
+				--n;
+			}
+			return cur;
+		}
+		//265
+
+		//266
+
+		//267
+
+		//268
+		int missingNumber(vector<int>& nums) {
+			if (nums.empty()) return 0;
+			int sum = 1;
+			if (nums.size() > 1) {
+				sum = static_cast<int>(nums.size()) * (static_cast<int>(nums.size()) - 1);
+			}
+			int curSum = 0;
+			for (int it : nums) {
+				curSum += it;
+			}
+			return sum - curSum;
+		}
+		//269
+
+		//270
+
+		//271
+
+		//272
+
+		//273
+
+		//274
+		int hIndex_274(vector<int>& cittations) {
+			sort(cittations.begin(), cittations.end());
+			int maxh = 0;
+			for (int i = 0;i < cittations.size();++i) {
+				int cur = cittations[i];
+				int count = static_cast<int>(cittations.size()) - i;
+				if (cur > count) {
+					cur = count;
+				}
+				maxh = max(maxh, cur);
+			}
+			return maxh;
+		}
+		//275
+		int hIndex_275(vector<int>& cittations) {
+			int maxh = 0;
+			for (int i = 0;i < cittations.size();++i) {
+				int cur = cittations[i];
+				int count = static_cast<int>(cittations.size()) - i;
+				if (cur > count) {
+					cur = count;
+				}
+				maxh = max(maxh, cur);
+			}
+			return maxh;
+		}
+		//276
+
+		//277
+
+		//278
+		int firstBadVersion(int n) {
+			int l = 1, r = n;
+			while (l < r) {
+				int mid = (l + r) / 2;
+				if (isBadVersion(mid)) {
+					r = mid;
+				}
+				else {
+					l = mid + 1;
+				}
+			}
+			return l;
+		}
+	private:
+		bool isBadVersion(int version) {
+			return version >= 4;
+		}
+
+	public:
+		//279
+		int numSquares(int n) {
+			int count = 1;
+			while (count < n) {
+				int v = n / count;
+				int t = static_cast<int>(sqrt(v));
+				if (t * t == v) {
+					return count;
+				}
+				count++;
+			}
+			return count;
+		}
+
+		void moveZeros(vector<int>& nums) {
+			int frag = -1;
+			for (int i = 0;i < nums.size();++i) {
+				if (frag == -1) {
+					if (nums[i] == 0) {
+						frag = i;
+					}
+				}
+				else {
+					if (nums[i] > 0) {
+						nums[frag] = nums[i];
+						++frag;
+					}
+				}
+			}
+			
+			for (int i = frag;i < nums.size();++i) {
+				nums[i] = 0;
+			}
+		}
+
 
 		//740
 		int deleteAndEarn(vector<int>& nums) {
