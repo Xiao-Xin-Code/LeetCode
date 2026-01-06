@@ -17,43 +17,56 @@ using namespace std;
 
 namespace Solution_301_400 {
 	class Solution {
+		
+		//301
+
+		//302
+
+		//303
+
+		//304
+
+		//305
+
+
 	public:
-		bool add(string s) {
-			for (int i = 0;i < s.length();++i) {
+		//306
+		bool isAdditiveNumber(string num) {
+			for (int i = 0;i < num.length();++i) {
 				cout << "第一个数量：" << (i + 1) << endl;
-				int v1 = stoi(s.substr(0, i + 1));
-				for (int j = i + 1;j < s.length();++j) {
+				int v1 = stoi(num.substr(0, i + 1));
+				for (int j = i + 1;j < num.length();++j) {
 					cout << "第二个数量：" << (j - i) << endl;
-					int v2 = stoi(s.substr(i + 1, j - i));
-					bool state = addExtension(s, v1, v2, j + 1);
+					int v2 = stoi(num.substr(i + 1, j - i));
+					bool state = isAdditiveNumberExtension(num, v1, v2, j + 1);
 					if (state) return true;
-					if (s[i + 1] == '0') break;
+					if (num[i + 1] == '0') break;
 				}
-				if (s[0] == '0')break;
+				if (num[0] == '0')break;
 			}
 			return false;
 		}
 	private:
-		bool addExtension(string s, int one, int two, int index) {
-			if (index >= s.length())return false;
+		bool isAdditiveNumberExtension(string num, int one, int two, int index) {
+			if (index >= num.length())return false;
 			int value = one + two;
-			for (int i = index;i < s.length();++i) {
-				int three = stoi(s.substr(index, i - index + 1));
-				cout << "检测" << one << "+" << two << "=" << s.substr(index, i - index + 1)<< "相等" << (value == stoi(s.substr(index, i - index + 1))) << endl;
+			for (int i = index;i < num.length();++i) {
+				int three = stoi(num.substr(index, i - index + 1));
+				cout << "检测" << one << "+" << two << "=" << num.substr(index, i - index + 1)<< "相等" << (value == stoi(num.substr(index, i - index + 1))) << endl;
 
 				if (three > value) {
 					cout << "大于已经失败" << endl;
 					return false;
 				}
-				else if (value == stoi(s.substr(index, i - index + 1))) {
-					if (i + 1 == s.length()) {
+				else if (value == stoi(num.substr(index, i - index + 1))) {
+					if (i + 1 == num.length()) {
 						cout << "返回正确" << endl;
 						return true;
 					}
-					bool state = addExtension(s, two, value, i + 1);
+					bool state = isAdditiveNumberExtension(num, two, value, i + 1);
 					if (state) return true;
 				}
-				if (s[index] == '0') break;
+				if (num[index] == '0') break;
 			}
 			return false;
 		}
