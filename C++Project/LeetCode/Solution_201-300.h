@@ -736,7 +736,13 @@ namespace Solution_201_300 {
 			}
 			return count;
 		}
+		//280
 
+		//281
+
+		//282
+
+		//283
 		void moveZeros(vector<int>& nums) {
 			int frag = -1;
 			for (int i = 0;i < nums.size();++i) {
@@ -757,7 +763,13 @@ namespace Solution_201_300 {
 				nums[i] = 0;
 			}
 		}
+		//284
 
+		//285
+		
+		//286
+
+		//287
 		int findDuplicate(vector<int>& nums) {
 			for (int i = 0;i < nums.size();++i) {
 				int index = abs(nums[i]);
@@ -769,47 +781,117 @@ namespace Solution_201_300 {
 			return 0;
 		}
 
-		//740
-		int deleteAndEarn(vector<int>& nums) {
-			unordered_map<int, int> numSum;
-			for (int num : nums) {
-				numSum[num] += num;
+		void gameOfLife(vector<vector<int>>& board) {
+			//标记1，0为原本值可以直接使用
+			//标记2为从0变为1，标记3为从1变为0
+			for (int i = 0;i < board.size();++i) {
+				for (int j = 0;j < board[i].size();++j) {
+					int count = 0;
+					if (i >= 1) {
+						if (j >= 1) {
+							(board[i - 1][j - 1] == 1 || board[i - 1][j - 1] == 3) ? count++ : count;
+						}
+						if (j + 1 < board[i].size()) {
+							(board[i - 1][j + 1] == 1 || board[i - 1][j + 1] == 3) ? count++ : count;
+						}
+						(board[i - 1][j] == 1 || board[i - 1][j] == 3) ? count++ : count;
+					}
+					if (j >= 1) {
+						(board[i][j - 1] == 1 || board[i][j - 1] == 3) ? count++ : count;
+					}
+					if (j + 1 < board[i].size()) {
+						(board[i][j + 1] == 1|| board[i][j + 1] == 3) ? count++ : count;
+					}
+					if (i + 1 < board.size()) {
+						if (j >= 1) {
+							(board[i + 1][j - 1] == 1 || board[i + 1][j - 1] == 3) ? count++ : count;
+						}
+						if (j + 1 < board[i].size()) {
+							(board[i + 1][j + 1] == 1 || board[i + 1][j + 1] == 3) ? count++ : count;
+						}
+						(board[i + 1][j] == 1 || board[i + 1][j] == 3) ? count++ : count;
+					}
+					if (board[i][j] == 0) {
+						if (count == 3) board[i][j] = 2;
+					}
+					if (board[i][j] == 1) {
+						if (count < 2 || count > 3) board[i][j] = 3;
+					}
+				}
 			}
-			vector<int> uniqueNum;
-			for (auto& p : numSum) {
-				uniqueNum.push_back(p.first);
+			//更新状态
+			for (vector<int> it : board) {
+				for (int v : it) {
+					if (v == 2) v = 1;
+					if (v == 3) v = 0;
+				}
 			}
-			sort(uniqueNum.begin(), uniqueNum.end());
+		}
 
-			vector<int> dp(nums.size() + 1);
-			dp[0] = 0;
-			dp[1] = numSum[uniqueNum[0]];
-			for (int i = 2;i <= uniqueNum.size();i++) {
-				int curNum = uniqueNum[i - 1];
-				int prevNum = uniqueNum[i - 2];
+		bool wordPattern(string pattern, string s) {
+			unordered_map<char, string> dict;
+			int cur = 0;
+			for (int i = 0;i < pattern.length();++i) {
+				int start = cur;
+				int count = 0;
+				while (cur < s.length()) {
+					if (s[cur] == ' ') {
+						cur++;
+						break;
+					}
+					count++;
+					cur++;
+				}
+				string curStr = s.substr(start, count);
 
-				if (curNum == prevNum + 1) {
-					dp[i] = max(dp[i - 1], dp[i - 2] + numSum[curNum]);
+				if (dict.count(pattern[i])) {
+					if (dict[pattern[i]] != curStr)
+						return false;
 				}
 				else {
-					dp[i] = dp[i - 1] + numSum[curNum];
+					dict[pattern[i]] = curStr;
 				}
 			}
-			return dp[uniqueNum.size()];
+			return true;
 		}
-		//746
-		int minCostClimbingStairs(vector<int>& cost) {
-			vector<int> dp(cost.size() + 1);
-			dp[0] = 0;
-			dp[1] = 0;
-			dp[2] = min(dp[0] + cost[0], dp[1] + cost[1]);
-
-			for (int i = 3;i < cost.size();i++) {
-				dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
+		//299
+		string getHint(string secrt, string guess) {
+			if (secrt.length() != guess.length()) return "0A0B";
+			vector<int> countS(10, 0), countG(10, 0);
+			int acount = 0;
+			int bcount = 0;
+			for (int i = 0;i < secrt.length();++i) {
+				if (secrt[i] == guess[i]) {
+					acount++;
+				}
+				else {
+					countS[secrt[i] - '0']++;
+					countG[guess[i] - '0']++;
+				}
 			}
-			return dp[cost.size()];
-		}
 
+			for (int i = 0;i < 10;++i) {
+				bcount += max(countS[i], countG[i]);
+			}
+
+			return to_string(acount) + "A" + to_string(bcount) + "B";
+		}
+		//300
+		int lengthOfLTS(vector<int>& nums) {
+			vector<int> count(nums.size(), 1);
+			int maxcount = 0;
+			for (int i = 0;i < nums.size();++i) {
+				int tempcount = 0;
+				for (int j = 0;j < i;++j) {
+					if (nums[i] > nums[j]) {
+						tempcount = max(tempcount, count[j]);
+					}
+				}
+				count[i] += tempcount;
+				maxcount = max(maxcount, count[i]);
+			}
+			return maxcount;
+		}
 	};
 
 	
