@@ -16,6 +16,7 @@
 using namespace std;
 
 namespace Solution_301_400 {
+
 	class Solution {
 		
 		//301
@@ -27,7 +28,6 @@ namespace Solution_301_400 {
 		//304
 
 		//305
-
 
 	public:
 		//306
@@ -71,8 +71,23 @@ namespace Solution_301_400 {
 			return false;
 		}
 
+		//308
+
+		//309
+
+		//310
+
+		//311
+
+		//312
+
+		//313
+
+		//314
+
 	public:
-		vector<int> minCount(vector<int>& nums) {
+		//315
+		vector<int> countSmaller(vector<int>& nums) {
 			vector<int> counts(nums.size(), 0);
 			for (int i = 0;i < nums.size();++i) {
 				for (int j = 0;j < i - 1;++j) {
@@ -83,9 +98,11 @@ namespace Solution_301_400 {
 			}
 			return counts;
 		}
-
-		string minDict(string s) {
+		//316
+		string removeDuplicateLetters(string s) {
 			string result;
+			/***
+			* 方法一 O(n^2)
 			for (int i = 0;i < s.length();++i) {
 				bool hasSame = false;
 				for (int j = 0;j < result.length();++j) {
@@ -107,7 +124,8 @@ namespace Solution_301_400 {
 					cout << "添加" << s[i] << endl;
 				}
 			}
-
+			
+			*/
 			stack<char> stk;
 			unordered_set<char> inStack;
 			unordered_map<char, int> charMap;
@@ -135,6 +153,46 @@ namespace Solution_301_400 {
 			}
 			
 			return result;
+		}
+		//317
+
+		//318
+		int maxProduct(vector<string>& words) {
+			vector<int> masks(words.size());
+			for (int i = 0;i<words.size();++i) {
+				int mask = 0;
+				for (char c : words[i]) {
+					mask|=(1<< c-'a');
+				}
+				masks[i] = mask;
+			}
+			int mul = 0;
+			for (int i = 0;i < masks.size();++i) {
+				int len = 0;
+				for (int j = i + 1;j < masks.size();++j) {
+					if ((masks[i] & masks[j]) == 0) {
+						len = max(len, static_cast<int>(words[j].length()));
+					}
+				}
+				mul = max(mul, static_cast<int>(words[i].length())*len);
+			}
+			return mul;
+		}
+		//319
+		int bulbSwitch(int n) {
+			vector<bool> states(n,true);
+			int ncount = 2;
+			while (ncount <= n) {
+				for (int i = ncount-1;i < n;i+=ncount) {
+					states[i] = -states[i];
+				}
+			}
+
+			int count = 0;
+			for (bool it : states) {
+				if(it) count++;
+			}
+			return count;
 		}
 
 
