@@ -116,6 +116,9 @@ void _InsertSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 		while (pre >= _First && _Pred(*cur, *pre)) {
 			std::swap(*cur, *pre);
 			cur = pre;
+			if (pre == _First) {
+				break;
+			}
 			--pre;
 		}
 	}
@@ -147,18 +150,18 @@ void hillSort(const _Ranlt _First, const _Ranlt _Last) {
 
 template<typename _Ranlt, typename _Pr>
 void _HillSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
-	int space = std::distance(_First, _Last) / 2;
+	auto space = std::distance(_First, _Last) / 2;
 	while (space >= 1) {
-		//处理每一个分组
-		for (int i = 0;i < space;i++) {
-			for (_Ranlt it = _First + i + space;it < _Last;it = it + space) {
-				_Ranlt cur = it;
-				_Ranlt pre = it - space;
-				while (pre >= _First && _Pred(*cur, *pre)) {
-					std::swap(*cur, *pre);
-					cur = pre;
-					pre = pre - space;
+		for (_Ranlt it = _First + space;it < _Last;it = it + space) {
+			_Ranlt cur = it;
+			_Ranlt pre = it - space;
+			while (pre >= _First && _Pred(*cur, *pre)) {
+				std::swap(*cur, *pre);
+				cur = pre;
+				if (pre == _First) {
+					break;
 				}
+				pre = pre - space;
 			}
 		}
 		space = space / 2;
@@ -383,7 +386,7 @@ void heapSort(const _Ranlt _First, const _Ranlt _Last, _Pr _Pred) {
 
 	if (_First >= _Last)return;
 
-	_HeapSort_unchecked(_First, _Last);
+	_HeapSort_unchecked(_First, _Last, _Pred);
 }
 
 template<typename _Ranlt>
@@ -393,18 +396,18 @@ void heapSort(const _Ranlt _First, const _Ranlt _Last) {
 
 template<typename _Ranlt, typename _Pr>
 void _HeapSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
-	size_t count = _Last - _First;
+	ptrdiff_t  count = _Last - _First;
 	if (count <= 1) return;
-	for (size_t i = count / 2 - 1;i >= 0;--i) {
-		size_t root = i;
+	for (ptrdiff_t  i = count / 2 - 1;i >= 0;--i) {
+		ptrdiff_t  root = i;
 		while (true) {
-			size_t largest = root;
-			size_t left = 2 * root + 1;
-			size_t right = 2 * root + 2;
+			ptrdiff_t  largest = root;
+			ptrdiff_t  left = 2 * root + 1;
+			ptrdiff_t  right = 2 * root + 2;
 			if (left < count && _Pred(*(_First + largest), *(_First + left))) {
 				largest = left;
 			}
-			if (right < count && _Pred(*(_First + largest), *(_First + right))) {
+			if (right < count&& _Pred(*(_First + largest), *(_First + right))) {
 				largest = right;
 			}
 			if (largest == root) break;
@@ -412,13 +415,13 @@ void _HeapSort_unchecked(_Ranlt _First, _Ranlt _Last, _Pr _Pred) {
 			root = largest;
 		}
 	}
-	for (size_t i = count - 1;i > 0;--i) {
+	for (ptrdiff_t  i = count - 1;i > 0;--i) {
 		std::swap(*_First, *(_First + i));
-		size_t root = 0;
+		ptrdiff_t  root = 0;
 		while (true) {
-			size_t largest = root;
-			size_t left = 2 * root + 1;
-			size_t right = 2 * root + 2;
+			ptrdiff_t  largest = root;
+			ptrdiff_t  left = 2 * root + 1;
+			ptrdiff_t  right = 2 * root + 2;
 			if (left < i && _Pred(*(_First + largest), *(_First + left))) {
 				largest = left;
 			}

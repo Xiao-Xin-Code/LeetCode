@@ -71,7 +71,71 @@ namespace Solution_301_400 {
 			return false;
 		}
 
+	public:
+		vector<int> minCount(vector<int>& nums) {
+			vector<int> counts(nums.size(), 0);
+			for (int i = 0;i < nums.size();++i) {
+				for (int j = 0;j < i - 1;++j) {
+					if (nums[j] > nums[i]) {
+						counts[i]++;
+					}
+				}
+			}
+			return counts;
+		}
 
+		string minDict(string s) {
+			string result;
+			for (int i = 0;i < s.length();++i) {
+				bool hasSame = false;
+				for (int j = 0;j < result.length();++j) {
+					if (result[j] == s[i]) {
+						hasSame = true;
+						if (j + 1 < result.length()) {
+							if (result[j + 1] < result[j]) {
+								cout << "ÒÆ³ý" << j << ":" << result[j] << endl;
+								result.erase(j, 1);
+								result = result + s[i];
+								cout << "Ìí¼Ó" << s[i] << endl;
+								break;
+							}
+						}
+					}
+				}
+				if (!hasSame) {
+					result = result + s[i];
+					cout << "Ìí¼Ó" << s[i] << endl;
+				}
+			}
+
+			stack<char> stk;
+			unordered_set<char> inStack;
+			unordered_map<char, int> charMap;
+
+			for (int i = 0;i < s.length();++i) {
+				charMap[s[i]] = i;
+			}
+
+			for (int i = 0;i < s.length();++i) {
+				if (inStack.count(s[i])) {
+					continue;
+				}
+				else {
+					while (!stk.empty() && i<charMap[stk.top()] && stk.top()>s[i]) {
+						inStack.erase(stk.top());
+						stk.pop();
+					}
+					stk.push(s[i]);
+					inStack.insert(s[i]);
+				}
+			}
+			while (!stk.empty()) {
+				result += stk.top();
+				stk.pop();
+			}
+			
+			return result;
+		}
 
 
 		//740
