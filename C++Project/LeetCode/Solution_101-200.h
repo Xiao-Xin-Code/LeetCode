@@ -254,7 +254,7 @@ namespace Solution_101_200 {
 			if (root == nullptr) return nullptr;
 			TreeNode* node = new TreeNode(root->val);
 			node->right = flatten(root->left);
-			if (node->right != nullptr) {
+			if (node->right == nullptr) {
 				node->right = flatten(root->right);
 			}
 			else {

@@ -162,7 +162,7 @@ namespace Solution_301_400 {
 			for (int i = 0;i<words.size();++i) {
 				int mask = 0;
 				for (char c : words[i]) {
-					mask|=(1<< c-'a');
+					mask |= (1 << (c - 'a'));
 				}
 				masks[i] = mask;
 			}
@@ -193,6 +193,115 @@ namespace Solution_301_400 {
 				if(it) count++;
 			}
 			return count;
+		}
+
+		int coinChange(vector<int>& coins, int amount) {
+			sort(coins.begin(), coins.end());
+			return coinChangeExtension(coins, amount, static_cast<int>(coins.size()) - 1, 0);
+		}
+		int coinChangeExtension(vector<int>& coins, int amount, int index, int curcount) {
+			if (index < 0)return -1;
+			int count = amount / coins[index];
+			int mod = amount % coins[index];
+			if (count == 0) {
+				cout << "直接下一个" << endl;
+				return coinChangeExtension(coins, amount, index-1, curcount);
+			}
+			if (mod == 0) {
+				cout << "整除" << index << endl;
+				return curcount + count;
+			}
+			else {
+				for (int c = count;c >= 0;--c) {
+					cout << "数量：" << c << endl;
+					int temp = coinChangeExtension(coins, amount - coins[index] * c, index-1, curcount + c);
+					if (temp > 0) {
+						return temp;
+					}
+				}
+			}
+			return -1;
+		}
+
+		void wiggleSort(vector<int>& nums) {
+			for (int i = 1;i < nums.size();++i) {
+				int mode = i % 2;
+				if ((mode == 1 && nums[i] < nums[i - 1]) || (mode == 0 && nums[i] > nums[i - 1])) {
+					swap(nums[i - 1], nums[i]);
+				}
+			}
+		}
+
+		bool isPowerOfThree(int n) {
+			return n > 0 && (1162261467 % n == 0);
+		}
+
+		ListNode* oddEvenList(ListNode* head) {
+			if (head == nullptr) return head;
+			ListNode* jFirst = nullptr;
+			ListNode* jLast = nullptr;
+			ListNode* oFirst = nullptr;
+			ListNode* oLast = nullptr;
+			while (head != nullptr) {
+				ListNode* next = head->next;
+				if (head->val % 2 == 0) {
+					if (oLast != nullptr) {
+						oLast->next = head;
+					}
+					else {
+						oFirst = head;
+					}
+					oLast = head;
+					oLast->next = nullptr;
+				}
+				else {
+					if (jLast != nullptr) {
+						jLast->next = head;
+					}
+					else {
+						jFirst = head;
+					}
+					jLast = head;
+				}
+				head = next;
+			}
+
+			if (oLast != nullptr) {
+				oLast->next = nullptr;
+			}
+			if (jLast != nullptr) {
+				jLast->next = oFirst;
+				return jFirst;
+			}
+			else {
+				return oFirst;
+			}
+		}
+
+		int isListNode(vector<int>& nums) {
+			int index = 0;
+			isListNodeExtension(nums, index);
+			return index;
+		}
+
+		void isListNodeExtension(vector<int>& nums,int& index) {
+			if (nums[index] == 0) {
+				return;
+			}
+			if (index + 1 < nums.size()) {
+				index++;
+				if (nums[index] != 0) {
+					isListNodeExtension(nums, index);
+				}
+			}
+			if (index + 1 < nums.size()) {
+				index++;
+				if (nums[index] != 0) {
+					isListNodeExtension(nums, index);
+				}
+			}
+			index--;
+			
 		}
 
 
