@@ -304,6 +304,115 @@ namespace Solution_301_400 {
 			
 		}
 
+		bool isValidSerialization(string preorder) {
+			if (preorder.empty())return false;
+			if (preorder[0] == '#') return false;
+			int last = static_cast<int>(preorder.length()) - 1;
+			while (last >= 0) {
+				if (preorder[last] != '#') {
+					break;
+				}
+				last--;
+			}
+			if (last > 2) {
+				int start = 0;
+				string one;
+				string two;
+				while (start < preorder.length()) {
+					if (preorder[start] == ',') {
+						if (one == "#" && two == "#") {
+							return false;
+						}
+						one = two;
+						two = "";
+					}
+					else {
+						two = two + preorder[start];
+					}
+					start++;
+				}
+			}
+			return true;
+		}
+
+		bool increasingTriplet(vector<int>& nums) {
+			int first = INT_MAX, second = INT_MAX;
+			for (int it : nums) {
+				if (it < first) first = it;
+				else if (it < second) second = it;
+				else return true;
+			}
+			return false;
+		}
+
+		int price(TreeNode* root) {
+			if (root == nullptr) return 0;
+			int choose_root = root->val;
+			if (root->left) {
+				choose_root += price(root->left->left) + price(root->left->right);
+			}
+			if (root->right) {
+				choose_root += price(root->right->left) + price(root->right->right);
+			}
+			int unchoose_root = price(root->left) + price(root->right);
+			return max(choose_root, unchoose_root);
+		}
+
+		//338
+		vector<int> cuntBits(int n) {
+			vector<int> ans(n + 1, 0);
+			for (int i = 1;i <= n;++i) {
+				ans[i] = ans[i >> 1] & (i & 1);
+			}
+			return ans;
+		}
+
+		bool isPowerOfFour(int n) {
+			return n > 0 && (1073741824 % n) == 0 && (n & 0xAAAAAAAA) == 0;
+		}
+		//343
+		int integerBreak(int n) {
+			int count = n / 3;
+			int mod = n % 3;
+			if (mod == 0) {
+				return (int)pow(3, count);
+			}
+			else if (mod == 1) {
+				return (int)pow(3, count - 1) * 4;
+			}
+			else {
+				return (int)pow(3, count)* mod;
+			}
+		}
+
+		void reverseString(vector<char>& s) {
+			int l = 0;
+			int r = s.size() - 1;
+			while (l < r) {
+				swap(s[l], s[r]);
+				l++;
+				r--;
+			}
+		}
+
+		string reverseVowels(string s) {
+			unordered_set<char> vowels = { 'a','e','i','o','u','A','E','I','O','U' };
+			int l = 0;
+			int r = s.length() - 1;
+
+			while (l < r) {
+				while (l < r && !vowels.count(s[l])) l++;
+				while (l < r && !vowels.count(s[r])) r--;
+				if (l < r) {
+					swap(s[l], s[r]);
+				}
+				l++;
+				r--;
+			}
+
+			return s;
+		}
+
 
 		//740
 		int deleteAndEarn(vector<int>& nums) {
