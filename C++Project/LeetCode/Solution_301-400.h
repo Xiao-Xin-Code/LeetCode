@@ -413,6 +413,42 @@ namespace Solution_301_400 {
 			return s;
 		}
 
+		vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+			vector<int> result;
+			unordered_set<int> frags;
+			for (int it : nums1) {
+				if (!frags.count(it)) {
+					frags.insert(it);
+				}
+			}
+			for (int it : nums2) {
+				if (frags.count(it)) {
+					result.push_back(it);
+					frags.erase(it);
+				}
+			}
+			return result;
+		}
+
+		vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+			unordered_map<int, int> fragscount;
+			vector<int> result;
+			for (int it : nums1) {
+				if (fragscount.count(it)) {
+					fragscount[it]++;
+				}
+				else {
+					fragscount[it] = 1;
+				}
+			}
+			for (int it : nums2) {
+				if (fragscount.count(it) && fragscount[it] > 0) {
+					result.push_back(it);
+					fragscount[it]--;
+				}
+			}
+			return result;
+		}
 
 		//740
 		int deleteAndEarn(vector<int>& nums) {
