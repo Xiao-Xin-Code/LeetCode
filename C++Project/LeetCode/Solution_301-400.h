@@ -194,7 +194,7 @@ namespace Solution_301_400 {
 			}
 			return count;
 		}
-
+		//322
 		int coinChange(vector<int>& coins, int amount) {
 			sort(coins.begin(), coins.end());
 			return coinChangeExtension(coins, amount, static_cast<int>(coins.size()) - 1, 0);
@@ -222,7 +222,7 @@ namespace Solution_301_400 {
 			}
 			return -1;
 		}
-
+		//324
 		void wiggleSort(vector<int>& nums) {
 			for (int i = 1;i < nums.size();++i) {
 				int mode = i % 2;
@@ -231,11 +231,11 @@ namespace Solution_301_400 {
 				}
 			}
 		}
-
+		//326
 		bool isPowerOfThree(int n) {
 			return n > 0 && (1162261467 % n == 0);
 		}
-
+		//328
 		ListNode* oddEvenList(ListNode* head) {
 			if (head == nullptr) return head;
 			ListNode* jFirst = nullptr;
@@ -303,7 +303,7 @@ namespace Solution_301_400 {
 			index--;
 			
 		}
-
+		//331
 		bool isValidSerialization(string preorder) {
 			if (preorder.empty())return false;
 			if (preorder[0] == '#') return false;
@@ -334,7 +334,7 @@ namespace Solution_301_400 {
 			}
 			return true;
 		}
-
+		//334
 		bool increasingTriplet(vector<int>& nums) {
 			int first = INT_MAX, second = INT_MAX;
 			for (int it : nums) {
@@ -344,20 +344,19 @@ namespace Solution_301_400 {
 			}
 			return false;
 		}
-
-		int price(TreeNode* root) {
+		//337
+		int rob(TreeNode* root) {
 			if (root == nullptr) return 0;
 			int choose_root = root->val;
 			if (root->left) {
-				choose_root += price(root->left->left) + price(root->left->right);
+				choose_root += rob(root->left->left) + rob(root->left->right);
 			}
 			if (root->right) {
-				choose_root += price(root->right->left) + price(root->right->right);
+				choose_root += rob(root->right->left) + rob(root->right->right);
 			}
-			int unchoose_root = price(root->left) + price(root->right);
+			int unchoose_root = rob(root->left) + rob(root->right);
 			return max(choose_root, unchoose_root);
 		}
-
 		//338
 		vector<int> cuntBits(int n) {
 			vector<int> ans(n + 1, 0);
@@ -366,7 +365,7 @@ namespace Solution_301_400 {
 			}
 			return ans;
 		}
-
+		//342
 		bool isPowerOfFour(int n) {
 			return n > 0 && (1073741824 % n) == 0 && (n & 0xAAAAAAAA) == 0;
 		}
@@ -384,7 +383,7 @@ namespace Solution_301_400 {
 				return (int)pow(3, count)* mod;
 			}
 		}
-
+		//344
 		void reverseString(vector<char>& s) {
 			int l = 0;
 			int r = s.size() - 1;
@@ -394,7 +393,7 @@ namespace Solution_301_400 {
 				r--;
 			}
 		}
-
+		//345
 		string reverseVowels(string s) {
 			unordered_set<char> vowels = { 'a','e','i','o','u','A','E','I','O','U' };
 			int l = 0;
@@ -412,7 +411,7 @@ namespace Solution_301_400 {
 
 			return s;
 		}
-
+		//349
 		vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
 			vector<int> result;
 			unordered_set<int> frags;
@@ -429,7 +428,7 @@ namespace Solution_301_400 {
 			}
 			return result;
 		}
-
+		//350
 		vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
 			unordered_map<int, int> fragscount;
 			vector<int> result;
