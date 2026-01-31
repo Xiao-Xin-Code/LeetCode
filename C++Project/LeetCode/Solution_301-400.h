@@ -277,6 +277,10 @@ namespace Solution_301_400 {
 				return oFirst;
 			}
 		}
+		//329
+
+		//330
+
 
 		int isListNode(vector<int>& nums) {
 			int index = 0;
@@ -334,6 +338,10 @@ namespace Solution_301_400 {
 			}
 			return true;
 		}
+		//332
+		
+		//333
+		
 		//334
 		bool increasingTriplet(vector<int>& nums) {
 			int first = INT_MAX, second = INT_MAX;
@@ -344,6 +352,10 @@ namespace Solution_301_400 {
 			}
 			return false;
 		}
+		//335
+
+		//336
+
 		//337
 		int rob(TreeNode* root) {
 			if (root == nullptr) return 0;
@@ -365,6 +377,12 @@ namespace Solution_301_400 {
 			}
 			return ans;
 		}
+		//339
+
+		//340
+
+		//341
+
 		//342
 		bool isPowerOfFour(int n) {
 			return n > 0 && (1073741824 % n) == 0 && (n & 0xAAAAAAAA) == 0;
@@ -411,6 +429,26 @@ namespace Solution_301_400 {
 
 			return s;
 		}
+		//346
+
+		//347
+		vector<int> topKFrequent(vector<int>& nums, int k) {
+			unordered_map<int, int> countFrag;
+			vector<int> result;
+			for (int it : nums) {
+				if (countFrag.count(it)) {
+					countFrag[it]++;
+				}
+				else {
+					countFrag[it] = 1;
+					result.push_back(it);
+				}
+			}
+			sort(result.begin(), result.end(), [&countFrag](int a, int b) { return countFrag[a] > countFrag[b]; });
+			return vector<int>(result.begin(), result.begin() + k);
+		}
+		//348
+
 		//349
 		vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
 			vector<int> result;
@@ -448,9 +486,19 @@ namespace Solution_301_400 {
 			}
 			return result;
 		}
+		//351
 
+		//352
 
+		//353
 
+		//354
+
+		//355
+
+		//356
+
+		//357
 
 
 		//740
