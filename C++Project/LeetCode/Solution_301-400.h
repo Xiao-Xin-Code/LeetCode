@@ -18,7 +18,7 @@ using namespace std;
 namespace Solution_301_400 {
 
 	class Solution {
-		
+
 		//301
 
 		//302
@@ -52,7 +52,7 @@ namespace Solution_301_400 {
 			int value = one + two;
 			for (int i = index;i < num.length();++i) {
 				int three = stoi(num.substr(index, i - index + 1));
-				cout << "检测" << one << "+" << two << "=" << num.substr(index, i - index + 1)<< "相等" << (value == stoi(num.substr(index, i - index + 1))) << endl;
+				cout << "检测" << one << "+" << two << "=" << num.substr(index, i - index + 1) << "相等" << (value == stoi(num.substr(index, i - index + 1))) << endl;
 
 				if (three > value) {
 					cout << "大于已经失败" << endl;
@@ -70,6 +70,7 @@ namespace Solution_301_400 {
 			}
 			return false;
 		}
+		//307
 
 		//308
 
@@ -124,7 +125,7 @@ namespace Solution_301_400 {
 					cout << "添加" << s[i] << endl;
 				}
 			}
-			
+
 			*/
 			stack<char> stk;
 			unordered_set<char> inStack;
@@ -151,7 +152,7 @@ namespace Solution_301_400 {
 				result += stk.top();
 				stk.pop();
 			}
-			
+
 			return result;
 		}
 		//317
@@ -159,7 +160,7 @@ namespace Solution_301_400 {
 		//318
 		int maxProduct(vector<string>& words) {
 			vector<int> masks(words.size());
-			for (int i = 0;i<words.size();++i) {
+			for (int i = 0;i < words.size();++i) {
 				int mask = 0;
 				for (char c : words[i]) {
 					mask |= (1 << (c - 'a'));
@@ -174,38 +175,43 @@ namespace Solution_301_400 {
 						len = max(len, static_cast<int>(words[j].length()));
 					}
 				}
-				mul = max(mul, static_cast<int>(words[i].length())*len);
+				mul = max(mul, static_cast<int>(words[i].length()) * len);
 			}
 			return mul;
 		}
 		//319
 		int bulbSwitch(int n) {
-			vector<bool> states(n,true);
+			vector<bool> states(n, true);
 			int ncount = 2;
 			while (ncount <= n) {
-				for (int i = ncount-1;i < n;i+=ncount) {
+				for (int i = ncount - 1;i < n;i += ncount) {
 					states[i] = -states[i];
 				}
 			}
 
 			int count = 0;
 			for (bool it : states) {
-				if(it) count++;
+				if (it) count++;
 			}
 			return count;
 		}
+		//320
+
+		//321
+
 		//322
 		int coinChange(vector<int>& coins, int amount) {
 			sort(coins.begin(), coins.end());
 			return coinChangeExtension(coins, amount, static_cast<int>(coins.size()) - 1, 0);
 		}
+	private:
 		int coinChangeExtension(vector<int>& coins, int amount, int index, int curcount) {
 			if (index < 0)return -1;
 			int count = amount / coins[index];
 			int mod = amount % coins[index];
 			if (count == 0) {
 				cout << "直接下一个" << endl;
-				return coinChangeExtension(coins, amount, index-1, curcount);
+				return coinChangeExtension(coins, amount, index - 1, curcount);
 			}
 			if (mod == 0) {
 				cout << "整除" << index << endl;
@@ -214,7 +220,7 @@ namespace Solution_301_400 {
 			else {
 				for (int c = count;c >= 0;--c) {
 					cout << "数量：" << c << endl;
-					int temp = coinChangeExtension(coins, amount - coins[index] * c, index-1, curcount + c);
+					int temp = coinChangeExtension(coins, amount - coins[index] * c, index - 1, curcount + c);
 					if (temp > 0) {
 						return temp;
 					}
@@ -222,6 +228,10 @@ namespace Solution_301_400 {
 			}
 			return -1;
 		}
+
+	public:
+		//323
+
 		//324
 		void wiggleSort(vector<int>& nums) {
 			for (int i = 1;i < nums.size();++i) {
@@ -231,10 +241,14 @@ namespace Solution_301_400 {
 				}
 			}
 		}
+		//325
+
 		//326
 		bool isPowerOfThree(int n) {
 			return n > 0 && (1162261467 % n == 0);
 		}
+		//327
+
 		//328
 		ListNode* oddEvenList(ListNode* head) {
 			if (head == nullptr) return head;
@@ -288,7 +302,7 @@ namespace Solution_301_400 {
 			return index;
 		}
 
-		void isListNodeExtension(vector<int>& nums,int& index) {
+		void isListNodeExtension(vector<int>& nums, int& index) {
 			if (nums[index] == 0) {
 				return;
 			}
@@ -305,7 +319,7 @@ namespace Solution_301_400 {
 				}
 			}
 			index--;
-			
+
 		}
 		//331
 		bool isValidSerialization(string preorder) {
@@ -339,9 +353,9 @@ namespace Solution_301_400 {
 			return true;
 		}
 		//332
-		
+
 		//333
-		
+
 		//334
 		bool increasingTriplet(vector<int>& nums) {
 			int first = INT_MAX, second = INT_MAX;
@@ -398,7 +412,7 @@ namespace Solution_301_400 {
 				return (int)pow(3, count - 1) * 4;
 			}
 			else {
-				return (int)pow(3, count)* mod;
+				return (int)pow(3, count) * mod;
 			}
 		}
 		//344
@@ -500,47 +514,118 @@ namespace Solution_301_400 {
 
 		//357
 
+		//358
 
-		//740
-		int deleteAndEarn(vector<int>& nums) {
-			unordered_map<int, int> numSum;
-			for (int num : nums) {
-				numSum[num] += num;
+		//359
+
+		//360
+
+		//361
+
+		//362
+
+		//363
+
+		//364
+
+		//365
+		bool canMeasureWater(int x, int y, int target) {
+			if (target == 0) return true;
+			if (x == 0) return y == target;
+			if (y == 0)return x == target;
+			if (x + y < target) return false;
+			while (x % y != 0) {
+				int z = x % y;
+				x = y;
+				y = z;
 			}
-			vector<int> uniqueNum;
-			for (auto& p : numSum) {
-				uniqueNum.push_back(p.first);
+			return target % y == 0;
+		}
+		//366
+
+		//367
+		bool isPerfectSquare(int num) {
+			if (num == 0 || num == 1) return true;
+			int n = num / 2;
+			while (n > 0) {
+				if (num % n == 0 && num / n == n) {
+					return true;
+				}
+				n--;
 			}
-			sort(uniqueNum.begin(), uniqueNum.end());
+			return false;
+		}
+		//368
+		vector<int> largestDivisbleSubset(vector<int>& nums) {
+			sort(nums.begin(), nums.end());
+			vector<int> maxResult = {};
+			for (int i = 0;i < nums.size();i++) {
+				vector<int> result = { nums[i] };
+				largestDivisbleSubsetExtension(nums, result, i + 1);
+				if (result.size() > maxResult.size()) {
+					maxResult = result;
+				}
+			}
+			return maxResult;
+		}
+	private:
+		void largestDivisbleSubsetExtension(vector<int>& nums, vector<int> result, int curindex) {
+			if (curindex >= nums.size()) return;
+			for (int it : result) {
+				if (nums[curindex] % it != 0) {
+					return;
+				}
+			}
+			result.push_back(nums[curindex]);
+			largestDivisbleSubsetExtension(nums, result, curindex + 1);
+		}
 
-			vector<int> dp(nums.size() + 1);
-			dp[0] = 0;
-			dp[1] = numSum[uniqueNum[0]];
-			for (int i = 2;i <= uniqueNum.size();i++) {
-				int curNum = uniqueNum[i - 1];
-				int prevNum = uniqueNum[i - 2];
+	public:
+		//369
 
-				if (curNum == prevNum + 1) {
-					dp[i] = max(dp[i - 1], dp[i - 2] + numSum[curNum]);
+		//370
+
+		//371
+
+		//372
+		int suoerPow(int a, vector<int>& b) {
+			int count = 0;
+			for (int it : b) {
+				count = count * 10 + it;
+			}
+			return pow(a % 1337, count);
+		}
+		//373
+
+		//374
+		int guessNumber(int n) {
+			int l = 1, r = n;
+			while (l <= r) {
+				int half = (l + r) / 2;
+				int res = guess(half);
+				if (res == 1) {
+					r = half - 1;
+				}
+				else if (res == -1) {
+					l = half + 1;
 				}
 				else {
-					dp[i] = dp[i - 1] + numSum[curNum];
+					return half;
 				}
 			}
-			return dp[uniqueNum.size()];
+			return l;
 		}
-		//746
-		int minCostClimbingStairs(vector<int>& cost) {
-			vector<int> dp(cost.size() + 1);
-			dp[0] = 0;
-			dp[1] = 0;
-			dp[2] = min(dp[0] + cost[0], dp[1] + cost[1]);
+	private:
+		int guess(int num) {
 
-			for (int i = 3;i < cost.size();i++) {
-				dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
-			}
-			return dp[cost.size()];
 		}
+		
+	public:
+		//375
+
+		//376
+
+
 
 	};
 }

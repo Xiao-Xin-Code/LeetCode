@@ -266,8 +266,6 @@ namespace Solution_101_200 {
 		int numDistinct(string s, string t) {
 
 		}
-
-	public:
 		//116
 		BinaryTree::Node* connect_116(BinaryTree::Node* root) {
 			using BinaryTree::Node;
@@ -1246,8 +1244,8 @@ namespace Solution_101_200 {
 
 		//197
 
-		//198
 	public:
+		//198
 		int rob(vector<int>& nums) {
 			vector<int> dp(nums.size());
 			dp[0] = nums[0];

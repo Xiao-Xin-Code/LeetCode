@@ -780,7 +780,9 @@ namespace Solution_201_300 {
 			}
 			return 0;
 		}
+		//288
 
+		//289
 		void gameOfLife(vector<vector<int>>& board) {
 			//标记1，0为原本值可以直接使用
 			//标记2为从0变为1，标记3为从1变为0
@@ -827,7 +829,7 @@ namespace Solution_201_300 {
 				}
 			}
 		}
-
+		//290
 		bool wordPattern(string pattern, string s) {
 			unordered_map<char, string> dict;
 			int cur = 0;
@@ -854,6 +856,22 @@ namespace Solution_201_300 {
 			}
 			return true;
 		}
+		//291
+
+		//292
+
+		//293
+
+		//294
+
+		//295
+
+		//296
+
+		//297
+
+		//298
+
 		//299
 		string getHint(string secrt, string guess) {
 			if (secrt.length() != guess.length()) return "0A0B";
