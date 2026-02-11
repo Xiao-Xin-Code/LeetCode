@@ -624,7 +624,43 @@ namespace Solution_301_400 {
 		//375
 
 		//376
+		int wiggleMaxLength(vector<int>& nums) {
 
+
+			for (int i = 0;i < nums.size();i++) {
+				int value = nums[i + 1] - nums[i];
+
+				if (value == 0) {
+					continue;
+				}
+				else if (value < 0) {
+					wiggleMaxLengthExtension(nums, i, i + 1, i + 2, 0);
+				}
+				else {
+					wiggleMaxLengthExtension(nums, i, i + 1, i + 2, 0);
+				}
+			}
+
+		}
+	private:
+		void wiggleMaxLengthExtension(vector<int>& nums,int one,int two, int three,int count) {
+			if (three >= nums.size()) {
+				return;
+			}
+
+
+			if (two > one && two > three) {
+				one = two;
+				two = three;
+			}
+			else if (two < one && two < three) {
+				one = two;
+				two = three;
+			}
+			three = three + 1;
+
+			wiggleMaxLengthExtension(nums, one, two, three, count + 1);
+		}
 
 
 	};
